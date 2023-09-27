@@ -3,6 +3,7 @@ package baseNoStates;
 public class User {
   private final String name;
   private final String credential;
+  private int role;
 
   public User(String name, String credential) {
     this.name = name;

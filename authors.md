@@ -1,4 +1,4 @@
-# Authors:
+# Authors                       - NIU:
 - GERARD JOSEP GUARIN VELEZ     - 1605947 
 - POL COLOMER CAMPOY            - 1605612
 - JOSIAS MICAEL CUEVA CASTRO    - 1603392

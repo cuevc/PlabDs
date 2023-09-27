@@ -1,0 +1,30 @@
+@startuml
+skinparam classAttributeIconSize 0
+' this is to use the standard notation for public, protected, private
+
+class User {
+- name
+- credential
++ setCredential()
++ toString()
+}
+User -right-> "n..1" Role : role
+
+
+abstract class Role{
+
+}
+
+class Admin extends Role{
+}
+class Manger extends Role{
+}
+class Employee extends Role{
+}
+class Blank extends Role{
+}
+
+
+
+
+@enduml
