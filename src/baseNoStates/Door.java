@@ -7,13 +7,10 @@ import org.json.JSONObject;
 public class Door {
   private final String id;
   private boolean closed; // physically
-  private int status; //To determine if its lock or unlock
-  private boolean lock; // To determine if its lock or unlock, if its lock (true), otherwise (false)
 
   public Door(String id) {
     this.id = id;
     closed = true;
-    lock = true;
   }
 
   public void processRequest(RequestReader request) {
@@ -71,10 +68,6 @@ public class Door {
   public String getStateName() {
     return "unlocked";
   }
-
-  public boolean isLock() { return lock;  }
-
-  public void setLock(boolean newState) {lock = newState;}
 
   @Override
   public String toString() {

@@ -23,6 +23,7 @@ public final class DirectoryUsers {
     users.add(new User("Ernest", "74984"));
     users.add(new User("Eulalia", "43295"));
 
+
     // managers :
     // Sep. 1 2023 to Mar. 1 2024
     // week days + saturday, 8-20h

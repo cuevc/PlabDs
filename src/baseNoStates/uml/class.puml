@@ -3,28 +3,112 @@ skinparam classAttributeIconSize 0
 ' this is to use the standard notation for public, protected, private
 
 class User {
-- name
-- credential
+- name:string
+- credential:int
+- rol:Rol
+
++ User(name:string, credential:int, rol: Rol)
 + setCredential()
 + toString()
 }
-User -right-> "n..1" Role : role
 
 
 abstract class Role{
+   #workDays:List<DayOfWeek>
+   #workHours[]:List<pair<LocalTime,LocalTime>>
+   #workDate:List<LocalDate>
+   #actions[]:List<Action>
+   #areas[]:List<Area> //everywhere
 
+   {abstract}+setPermissions;
 }
 
 class Admin extends Role{
+   #workDays = {MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY, SUNDAY}:List<DayOfWeek>
+   #workHours[]={(12:00, 12:00))}:List<pair<LocalTime,LocalTime>>
+   #workDate={}:List<LocalDate>
+   #actions[]:{OPEN, CLOSE, LOCK, UNLOCK, UNLOCK_SHORTLY}:List<Action>
+   #areas[]:List<Area> //everywhere
+
+   +setPermissions()
 }
-class Manger extends Role{
+
+class Manager extends Role{
+    #workDays = {MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY}:List<DayOfWeek>
+    #workHours[]={(8:00, 20:00)}:List<pair<LocalTime,LocalTime>>
+    #workDate={Sept 1 2023, Mar. 1 2024}:List<LocalDate>
+    #actions[]={OPEN, CLOSE, LOCK, UNLOCK_SHORTLY}:List<Action>
+    #areas[]={}:List<Area> //everywhere
+
+    +setPermissions()
 }
 
 class Employee extends Role{
+    #workDays = {MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY}:DayOfWeek
+    #workHours[]={(9:00, 17:00))}:List<pair<LocalTime,LocalTime>>
+    #workDate={Sept 1 2023, Mar 1 2024}:List<LocalDate>
+    #actions[]={OPEN, CLOSE, LOCK, UNLOCK, UNLOCK_SHORTLY}:List<Action>
+    #areas[]:List<Area> //everywhere except parking
+
+    +setPermissions()
 }
 
 class Blank extends Role{
+    +setPermissions()
 }
+
+class Action{
+    OPEN=1
+    CLOSE=0
+    LOCK = 3
+    UNLOCK = 4
+    UNLOCK_SHORTLY = 5
+}
+
+class Door{
+    -id:string
+    -close:boolean
+    -status:State
+    -to:Area
+    -from:Area
+}
+
+Interface State{
+    {abstract}+setUnlock();
+    {abstract}+setLock();
+    {abstract}+setPropped();
+}
+
+class Unlock extends State{
+    +setUnlock()
+}
+
+class Propped extends State{
+    +setPropped()
+}
+
+class Lock extends State{
+    +setLock()
+}
+
+class Area Extends Building{
+    -doors:List<Doors>
+}
+
+class Partition extends Building{
+    -partitions:List<Partition>
+    -areas:List<Area>
+}
+
+abstract class Building{
+
+
+}
+
+class Clock{
+}
+
+User --right*"n..1" Role : role
 
 
 Role -up- "n..n" Action : action
