@@ -19,10 +19,18 @@ class Admin extends Role{
 }
 class Manger extends Role{
 }
+
 class Employee extends Role{
 }
+
 class Blank extends Role{
 }
+
+
+Role -up- "n..n" Action : action
+Door -right-*"n..1" State : status
+Door --up--"2..n" Area: to, from
+Partition --right*"n..1" Partition : partition
 
 
 
