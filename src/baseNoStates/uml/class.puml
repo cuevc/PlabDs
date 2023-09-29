@@ -3,67 +3,53 @@ skinparam classAttributeIconSize 0
 ' this is to use the standard notation for public, protected, private
 
 class User {
-- name:string
-- credential:int
-- rol:Rol
+- name : string
+- credential : int
 
-+ User(name:string, credential:int, rol: Rol)
++ User(name:string, credential:int)
 + setCredential()
++ getName()
++ getCredential()
 + toString()
 }
 
 
-abstract class Role{
-   #workDays:List<DayOfWeek>
-   #workHours[]:List<pair<LocalTime,LocalTime>>
-   #workDate:List<LocalDate>
-   #actions[]:List<Action>
-   #areas[]:List<Area> //everywhere
 
-   {abstract}+setPermissions;
+class Group{
+    - typeGroup : string
+    - users : vector<User>
+    - schedules : Schedules
+    - actions : vector <actions>
+   + Group(typeGroup : string)
+   + addUser(name:string, credential: int)
+   + removeUser(credential : int)
+   + addActions(permission : string)
+   - removeActions(permission : string)
+
+}
+Group -left-> "n..1" Action : actions
+Group -down-> "n..1" Schedule : schedules
+Group -down-> "1..n"  User: users
+
+
+class Schedule{
+    - workDays : ArrayList <DayOfWeek>
+    - workHours : ArrayList <LocalTime>
+    - workDate : ArrayList <LocalDate>
+
+    + Schedule()
+    + setAdmin()
+    + setManager()
+    + setEmployee()
+    + setBlank()
+    + addWorkDay(day:string)
+    + removeWorkDay(day:string)
+    + addHour (hour : int)
+    + removeHour (hour: int)
+    + editWorkDate ( newDate:LocalDate)
+
 }
 
-class Admin extends Role{
-   #workDays = {MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY, SUNDAY}:List<DayOfWeek>
-   #workHours[]={(12:00, 12:00))}:List<pair<LocalTime,LocalTime>>
-   #workDate={}:List<LocalDate>
-   #actions[]:{OPEN, CLOSE, LOCK, UNLOCK, UNLOCK_SHORTLY}:List<Action>
-   #areas[]:List<Area> //everywhere
-
-   +setPermissions()
-}
-
-class Manager extends Role{
-    #workDays = {MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY}:List<DayOfWeek>
-    #workHours[]={(8:00, 20:00)}:List<pair<LocalTime,LocalTime>>
-    #workDate={Sept 1 2023, Mar. 1 2024}:List<LocalDate>
-    #actions[]={OPEN, CLOSE, LOCK, UNLOCK_SHORTLY}:List<Action>
-    #areas[]={}:List<Area> //everywhere
-
-    +setPermissions()
-}
-
-class Employee extends Role{
-    #workDays = {MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY}:DayOfWeek
-    #workHours[]={(9:00, 17:00))}:List<pair<LocalTime,LocalTime>>
-    #workDate={Sept 1 2023, Mar 1 2024}:List<LocalDate>
-    #actions[]={OPEN, CLOSE, LOCK, UNLOCK, UNLOCK_SHORTLY}:List<Action>
-    #areas[]:List<Area> //everywhere except parking
-
-    +setPermissions()
-}
-
-class Blank extends Role{
-    +setPermissions()
-}
-
-class Action{
-    OPEN=1
-    CLOSE=0
-    LOCK = 3
-    UNLOCK = 4
-    UNLOCK_SHORTLY = 5
-}
 
 class Door{
     -id:string
@@ -102,16 +88,18 @@ class Partition extends Building{
 
 abstract class Building{
 
-
 }
 
-class Clock{
+class Action{
+    OPEN=1
+    CLOSE=0
+    LOCK = 3
+    UNLOCK = 4
+    UNLOCK_SHORTLY = 5
 }
 
-User --right*"n..1" Role : role
 
 
-Role -up- "n..n" Action : action
 Door -right-*"n..1" State : status
 Door --up--"2..n" Area: to, from
 Partition --right*"n..1" Partition : partition
