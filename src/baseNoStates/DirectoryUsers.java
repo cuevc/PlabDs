@@ -1,5 +1,6 @@
 package baseNoStates;
 
+import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,17 +18,7 @@ public final class DirectoryUsers {
     // users without any privilege, just to keep temporally users instead of deleting them,
     // this is to withdraw all permissions but still to keep user data to give back
     // permissions later
-
-
-    //Gets the root with all doors and areas, everything inside root!
-    DirectoryAreas myAreas = new DirectoryAreas();
-    myAreas.makeAreas();
-    Area root = myAreas.getRootArea();
-
-
-
-
-    Group Blank = new Group("Blank",null,null,null);
+    Group Blank = new Group("Blank",null,null);
     Blank.addUser(new User("Bernat", "12345", Blank));
 
     rols.add(Blank);
@@ -38,19 +29,9 @@ public final class DirectoryUsers {
     // just shortly unlock
     // ground floor, floor1, exterior, stairs (this, for all), that is, everywhere but the parking
     Schedule employeesSchedule = new Schedule(LocalDate.of(2023,9,1),
-        LocalDate.of(2024,3,1), LocalTime.of(9,0), LocalTime.of(21,0),
+        LocalDate.of(2024,3,1), LocalTime.of(9,0), LocalTime.of(17,0),
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
-
-    ArrayList<Area> employeeArea = new ArrayList<Area>();
-    employeeArea.add(root.findPartitionById("ground_floor",root));
-    employeeArea.add(root.findPartitionById("floor1",root));
-    employeeArea.add(root.findPartitionById("exterior",root));
-    employeeArea.add(root.findPartitionById("stairs",root));
-
-
-
-    Group employees = new Group("Employees", employeesSchedule, new ArrayList<>(Arrays.asList (Actions.OPEN, Actions.CLOSE, Actions.UNLOCK_SHORTLY)),employeeArea);
-
+    Group employees = new Group("Employees", employeesSchedule, new ArrayList<>(Arrays.asList (Actions.UNLOCK_SHORTLY)));
     employees.addUser(new User("Eulalia","43295", employees));
 
     rols.add(employees);
@@ -62,17 +43,10 @@ public final class DirectoryUsers {
     // all actions
     // all spaces
     Schedule managersSchedule = new Schedule(LocalDate.of(2023,9,1),
-        LocalDate.of(2024,3,1), LocalTime.of(8,0), LocalTime.of(20,0),
-        new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
+        LocalDate.of(2024,3,1), LocalTime.of(9,0), LocalTime.of(20,0),
+        new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
 
-    ArrayList<Area> managersAreas = new ArrayList<Area>();
-    managersAreas.add(root.findPartitionById("ground_floor",root));
-    managersAreas.add(root.findPartitionById("floor1",root));
-    managersAreas.add(root.findPartitionById("exterior",root));
-    managersAreas.add(root.findPartitionById("stairs",root));
-    managersAreas.add(root.findPartitionById("basement", root));
-
-    Group managers = new Group("Manager", managersSchedule, new ArrayList<>(Arrays.asList (Actions.OPEN, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK, Actions.UNLOCK_SHORTLY)), managersAreas);
+    Group managers = new Group("Manager", managersSchedule, new ArrayList<>(Arrays.asList (Actions.LOCK, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK, Actions.UNLOCK_SHORTLY)));
     managers.addUser(new User("Manel", "95783",managers));
     managers.addUser(new User("Marta", "05827",managers));
     rols.add(managers);
@@ -87,21 +61,11 @@ public final class DirectoryUsers {
     // all spaces
 
     Schedule AdminSchedule = new Schedule(LocalDate.of(2023,1,1),
-        LocalDate.of(2100,1,1), LocalTime.of(0,0), LocalTime.of(23,59),
+        LocalDate.of(20100,1,1), LocalTime.of(0,0), LocalTime.of(23,59),
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY,DayOfWeek.SUNDAY)));
-
-    ArrayList<Area> adminArea = new ArrayList<Area>();
-    //adminArea.add();
-
-    Group Admin = new Group("Admin", AdminSchedule, new ArrayList<>(Arrays.asList (Actions.OPEN, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK,Actions.UNLOCK_SHORTLY)),managersAreas);
+    Group Admin = new Group("Admin", AdminSchedule, new ArrayList<>(Arrays.asList (Actions.LOCK, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK,Actions.UNLOCK_SHORTLY)));
     Admin.addUser(new User("Ana", "11343",Admin));
     rols.add(Admin);
-
-
-
-
-
-
   }
 
 

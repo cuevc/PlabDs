@@ -1,11 +1,10 @@
 package baseNoStates.requests;
 
-import baseNoStates.*;
-
-import java.lang.reflect.Array;
-import java.time.LocalDate;
+import baseNoStates.DirectoryDoors;
+import baseNoStates.DirectoryUsers;
+import baseNoStates.Door;
+import baseNoStates.User;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -46,18 +45,6 @@ public class RequestReader implements Request {
     reasons.add(reason);
   }
 
-  public boolean setAllAddReason(boolean[] printable) {
-    String[] reasons = {"This user can't make this action", "At this moment the user doesn't have access. Try in a day/hour of your schedule.",
-        "You don't access to this area"};
-    boolean allFalse = true;
-    for (int i = 0; i < printable.length; i++){
-      if (printable[i])
-        addReason(reasons[i]);
-      else
-        allFalse = false;
-    }
-    return allFalse;
-  }
 
   @Override
   public String toString() {
@@ -104,21 +91,19 @@ public class RequestReader implements Request {
   // the result is put into the request object plus, if not authorized, why not,
   // only for testing
   private void authorize(User user, Door door) {
-    //Check if this user is not null
     if (user == null) {
       authorized = false;
-      addReason("User doesn't exists");
+      addReason("user doesn't exists");
+    } else {
+      if (user.hasPermision("open") || user.hasPermision("close")) {
+        authorized = true;
+      }
+      else{
+        addReason("user doesn't has permissions, ask your manager");
+      }
     }
-
-    //Check if this user has the action
-    else{
-      LocalDate date = now.toLocalDate();
-      LocalTime hour = now.toLocalTime();
-      authorized = user.hasAccess(door.getTo(), date, hour, this.action, this.reasons);
-      //authorized = setAllAddReason(user.hasAccess(door.getTo(), date, hour, this.action));
-      //TODO: get the who, where, when and what in order to decide, and if not
-      // authorized add the reason(s)
-    }
+    //TODO: get the who, where, when and what in order to decide, and if not
+    // authorized add the reason(s)
   }
 }
 
