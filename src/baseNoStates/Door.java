@@ -5,12 +5,24 @@ import org.json.JSONObject;
 
 
 public class Door {
-  private final String id;
+  private String id;
   private boolean closed; // physically
 
   // In order to determine the States we add a DoorState attribute.
   private DoorState doorState;
 
+  // From and To: to know from where to where the Door has access.
+  private String from;
+  private String to;
+
+
+  public Door(String door_id, String door_from, String door_to){
+    id = door_id;
+    from = door_from;
+    to = door_to;
+    closed = true;
+    doorState = new Unlocked();
+  }
 
   public Door(String id) {
     this.id = id;
@@ -101,5 +113,9 @@ public class Door {
 
   public void setClosed(boolean closed) {
     this.closed = closed;
+  }
+
+  public String gitId() {
+    return null;
   }
 }
