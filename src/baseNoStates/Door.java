@@ -8,9 +8,14 @@ public class Door {
   private final String id;
   private boolean closed; // physically
 
+  // In order to determine the States we add a DoorState attribute.
+  private DoorState doorState;
+
+
   public Door(String id) {
     this.id = id;
     closed = true;
+    doorState = new Unlocked(); // Initialize doorState attribute as Unlocked.
   }
 
   public void processRequest(RequestReader request) {
@@ -84,5 +89,17 @@ public class Door {
     json.put("state", getStateName());
     json.put("closed", closed);
     return json;
+  }
+
+  // GETTERS AND SETTERS
+  public DoorState getDoorState() {
+    return doorState;
+  }
+  public void setDoorState(DoorState doorState) {
+    this.doorState = doorState;
+  }
+
+  public void setClosed(boolean closed) {
+    this.closed = closed;
   }
 }
