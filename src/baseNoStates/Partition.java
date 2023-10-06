@@ -11,6 +11,11 @@ public class Partition extends Area {
         return null;
     }
 
+    @Override
+    public Door[] getDoorsGivingAccess() {
+        return new Door[0];
+    }
+
     public List<Partition> getPartitionlist() {
         return partitionlist;
     }
