@@ -5,7 +5,6 @@ skinparam classAttributeIconSize 0
 class User {
 - name : string
 - credential : int
-
 + User(name:string, credential:int)
 + setCredential()
 + getName()
@@ -20,6 +19,9 @@ class Group{
     - users : vector<User>
     - schedules : Schedules
     - actions : vector <actions>
+    - accesAreas: List<Area>
+
+
    + Group(typeGroup : string)
    + addUser(name:string, credential: int)
    + removeUser(credential : int)
@@ -27,9 +29,6 @@ class Group{
    - removeActions(permission : string)
 
 }
-Group -left-> "n..1" Action : actions
-Group -down-> "n..1" Schedule : schedules
-Group -down-> "1..n"  User: users
 
 
 class Schedule{
@@ -54,57 +53,104 @@ class Schedule{
 class Door{
     -id:string
     -close:boolean
-    -status:State
+    -status:DoorState
     -to:Area
     -from:Area
 }
 
-Interface State{
-    {abstract}+setUnlock();
-    {abstract}+setLock();
-    {abstract}+setPropped();
+namespace doorState #DDDDDD{
+    class States{
+       +{static}LOCKED:String
+       +{static}UNLOCKED:String
+    }
+
+    class Action{
+        {static}OPEN:String
+        {static}CLOSE:String
+        {static}LOCK:String
+        {static}UNLOCK:String
+        {static}UNLOCK_SHORTLY:String
+    }
+
+    abstract DoorState{
+        #door: Door
+        #name: String
+        +setUnlock()
+        +setPropped()
+        +setLock()
+        +setUnlockShortly()
+    }
+
+    class Unlocked extends DoorState{
+
+    }
+
+    class UnlockedShortly extends DoorState{
+
+    }
+
+    class Propped extends DoorState{
+
+    }
+
+    class Locked extends DoorState{
+
+    }
 }
 
-class Unlock extends State{
-    +setUnlock()
+
+abstract Area{
+    {abstract}+findAreaById(id:String): Area
+    {abstract}+getDoorsGivingAcces(): Door[]
 }
 
-class Propped extends State{
-    +setPropped()
-}
-
-class Lock extends State{
-    +setLock()
-}
-
-class Area Extends Building{
-    -doors:List<Doors>
-}
-
-class Partition extends Building{
+class Partition extends Area{
     -partitions:List<Partition>
     -areas:List<Area>
+
+    +findAreaById(id:String): Area
 }
 
-abstract class Building{
+ class Space Extends Area{
+    -doorsList:List<Door>
 
-}
-
-class Action{
-    OPEN=1
-    CLOSE=0
-    LOCK = 3
-    UNLOCK = 4
-    UNLOCK_SHORTLY = 5
+    +getDoorsGivingAcces(): Door[]
 }
 
 
+abstract Observable{
+    +addObserver(ob:Observer)
+    +deleteObserver(ob:Observer)
+    +setChanged()
+    +notifyObserver(arg0:Observable, arg1:Object)
+}
 
-Door -right-*"n..1" State : status
-Door --up--"2..n" Area: to, from
+interface Observer{
+    +update(arg0:Observable, obj2:Object)
+}
+
+
+class ClockThread extends Observable{
+
+}
+
+Group -left-> "n..1" Action : actions
+Group -down-> "n..1" Schedule : schedules
+Group -down-> "1..n"  User: users
+
+
+Door --up->"1..n" Space: to
+Door --up->"1..n" Space: from
+Door -right-*"n..1" DoorState : status
+
 Partition --right*"n..1" Partition : partition
+Partition --down*"n..1" Area: areas
 
+Space --down->"*" Door:doorsList
 
+Group -->"*" Area: accesAreas
 
+Observable o-right-> "observers *" Observer
 
+DoorState ..Up.> Observer
 @enduml

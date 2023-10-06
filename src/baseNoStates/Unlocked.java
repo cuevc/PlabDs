@@ -5,14 +5,13 @@ public class Unlocked extends DoorState{
     public void DoorSate(Door door){
 
     }
-//gygygr
+
     @Override
     public void open(){
         if (door.getStateName() == States.UNLOCKED){
             // We can open the Door freely.
             if (door.isClosed()) {
                 door.setClosed(false);
-
             }
         }
     }
