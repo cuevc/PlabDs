@@ -4,11 +4,12 @@ skinparam classAttributeIconSize 0
 
 class User {
 - name : string
-- credential : int
-+ User(name:string, credential:int)
-+ setCredential()
-+ getName()
-+ getCredential()
+- credential : String
+- adjecentGroup : Group
++ User(name:string, credential:String, groupies : Group)
++ getCredential() : String
++ getName() : String
++ hasPermision(String act) : Boolean
 + toString()
 }
 
@@ -16,36 +17,41 @@ class User {
 
 class Group{
     - typeGroup : string
-    - users : vector<User>
+    - users : ArrayList<User>
     - schedules : Schedules
-    - actions : vector <actions>
+    - actions : ArrayList<String>
     - accesAreas: List<Area>
 
-
-   + Group(typeGroup : string)
-   + addUser(name:string, credential: int)
-   + removeUser(credential : int)
-   + addActions(permission : string)
-   - removeActions(permission : string)
+   + Group(typeGroup : string, setSchedule : Schedule, operativeAction : ArrayList<String>)
+   + getTypeGroup() : String
+   + getUsers() : ArrayList<User>
+   + getSchedules() : Schedule
+   + getActions() : ArrayList<String>
+   + isOnUser(User searchUser) : Boolean
+   + searchUser(String userCredentuial) : User
+   + addUser(User newUser)
+   + removeUser(User deleteUser)
+   - hasAction(String act) : boolean
 
 }
 
 
 class Schedule{
-    - workDays : ArrayList <DayOfWeek>
-    - workHours : ArrayList <LocalTime>
-    - workDate : ArrayList <LocalDate>
+    - fromDate : LocalDate
+    - toDate : LocalDate
+    - workDays : List <DayOfWeek>
+    - fromHour : LocalTime
+    - to Hour : LocalTime
 
-    + Schedule()
-    + setAdmin()
-    + setManager()
-    + setEmployee()
-    + setBlank()
-    + addWorkDay(day:string)
-    + removeWorkDay(day:string)
-    + addHour (hour : int)
-    + removeHour (hour: int)
-    + editWorkDate ( newDate:LocalDate)
+    + Schedule(initialDate : LocalDate, finalDate : LocalDate,initialHour : LocalTime, finalHour: LocalTime,
+    weekDays : List<DayOfWeek>)
+    + getFromDate() : LocalDate
+    + getToDate() : LocalDate
+    + getFromHour() : LocalTime
+    + getToHour() : LocalTime
+    + getWorkDays() : List<DayOfWeek>
+    + isOnTime(LocalTime hour) : Boolean
+    + isOnDate(LocalDate date) : Boolean
 
 }
 
@@ -137,6 +143,7 @@ class ClockThread extends Observable{
 Group -left-> "n..1" Action : actions
 Group -down-> "n..1" Schedule : schedules
 Group -down-> "1..n"  User: users
+User -up-> "1..n" Group:adjecentGroup
 
 
 Door --up->"1..n" Space: to
