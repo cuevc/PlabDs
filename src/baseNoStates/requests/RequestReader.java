@@ -52,15 +52,15 @@ public class RequestReader implements Request {
       userName = "unknown";
     }
     return "Request{"
-            + "credential=" + credential
-            + ", userName=" + userName
-            + ", action=" + action
-            + ", now=" + now
-            + ", doorID=" + doorId
-            + ", closed=" + doorClosed
-            + ", authorized=" + authorized
-            + ", reasons=" + reasons
-            + "}";
+        + "credential=" + credential
+        + ", userName=" + userName
+        + ", action=" + action
+        + ", now=" + now
+        + ", doorID=" + doorId
+        + ", closed=" + doorClosed
+        + ", authorized=" + authorized
+        + ", reasons=" + reasons
+        + "}";
   }
 
   public JSONObject answerToJson() {
@@ -95,10 +95,16 @@ public class RequestReader implements Request {
       authorized = false;
       addReason("user doesn't exists");
     } else {
-      //TODO: get the who, where, when and what in order to decide, and if not
-      // authorized add the reason(s)
-      authorized = true;
+      if (user.hasPermision("open") || user.hasPermision("close")) {
+        authorized = true;
+      }
+      else{
+        addReason("user doesn't has permissions, ask your manager");
+      }
     }
+    //TODO: get the who, where, when and what in order to decide, and if not
+    // authorized add the reason(s)
   }
 }
+
 

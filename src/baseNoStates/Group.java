@@ -1,23 +1,25 @@
 package baseNoStates;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Group {
     private String typeGroup;
-    private List<User> users;
+    private ArrayList<User> users;
     private Schedule schedules;
-    private List<Actions> actions;
+    private ArrayList<String> actions;
 
-    public Group(String name, Schedule setSchedule, List<Actions> operativeActions) {
+    public Group(String name, Schedule setSchedule, ArrayList<String> operativeActions) {
         typeGroup = name;
         schedules = setSchedule;
         actions = operativeActions;
+        users = new ArrayList<>();
     }
-    public String getString() {return typeGroup;}
-    public List<User> getUsers() {return users;}
+    public String getTypeGroup() {return typeGroup;}
+    public ArrayList<User> getUsers() {return users;}
     public Schedule getSchedules() {return schedules;}
-    public List<Actions> getActions () {return actions;}
+    public ArrayList<String> getActions () {return actions;}
 
     public boolean isOnUsers(User searchUser)
     {
@@ -31,14 +33,15 @@ public class Group {
         }
         return false;
     }
-    public User searchUser(String userCredential, String userName){
+    public User searchUser(String userCredential){
         for( User actualUser:users)
         {
-            if(actualUser.getCredential() == userCredential &&actualUser.getName() == userName ){
+            if(userCredential.equals(actualUser.getCredential()))
+            {
                 return actualUser;
             }
         }
-        System.out.println("The user: " + userName + " with credential: " + userCredential + " has not been found");
+        System.out.println("The user with credential: " + userCredential + " has not been found");
         return null;
     }
     public void addUser(User newUser)
@@ -63,11 +66,19 @@ public class Group {
 
         }
     }
-    public boolean hasAction(Actions searchedAction)
+    public boolean hasAction(String act)
     {
-        if(actions.contains(searchedAction)){
-            return true;
+        boolean hasIt  = false;
+        if(actions != null){
+            for(String Activision : actions){
+                if(Activision.equals(act)){
+                    hasIt = true;
+                }
+            }
         }
-        return false;
+
+        return hasIt;
     }
+
+
 }
