@@ -152,5 +152,5 @@ Group -->"*" Area: accesAreas
 
 Observable o-right-> "observers *" Observer
 
-DoorState ..Up.> Observer
+Door ..Up.> Observer
 @enduml

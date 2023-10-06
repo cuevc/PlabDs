@@ -1,10 +1,14 @@
 package baseNoStates;
 
 import baseNoStates.requests.RequestReader;
+import doorState.*;
 import org.json.JSONObject;
 
+import java.util.Observer;
+import java.util.Observable;
 
-public class Door {
+
+public class Door implements Observer {
   private final String id;
   private boolean closed; // physically
 
@@ -14,8 +18,23 @@ public class Door {
 
   public Door(String id) {
     this.id = id;
+
+    // Initialize doorState attribute as Locked and closed.
     closed = true;
-    doorState = new Unlocked(); // Initialize doorState attribute as Unlocked.
+    doorState = new Locked(this);
+  }
+
+  @Override
+  public void update(Observable o, Object arg) {
+
+    //if the door is closed, it will be locked
+    if(getClosed()){
+      getDoorState().lock();
+
+    }else{
+
+      getDoorState().propped();
+    }
   }
 
   public void processRequest(RequestReader request) {
@@ -102,4 +121,5 @@ public class Door {
   public void setClosed(boolean closed) {
     this.closed = closed;
   }
+  public Boolean getClosed(){ return this.closed; }
 }
