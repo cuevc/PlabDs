@@ -1,16 +1,40 @@
 package baseNoStates;
 
 import baseNoStates.requests.RequestReader;
+import doorState.*;
 import org.json.JSONObject;
 
+import java.util.Observer;
+import java.util.Observable;
 
-public class Door {
+
+public class Door implements Observer {
   private final String id;
   private boolean closed; // physically
 
+  // In order to determine the States we add a DoorState attribute.
+  private DoorState doorState;
+
+
   public Door(String id) {
     this.id = id;
+
+    // Initialize doorState attribute as Locked and closed.
     closed = true;
+    doorState = new Locked(this);
+  }
+
+  @Override
+  public void update(Observable o, Object arg) {
+
+    //if the door is closed, it will be locked
+    if(getClosed()){
+      getDoorState().lock();
+
+    }else{
+
+      getDoorState().propped();
+    }
   }
 
   public void processRequest(RequestReader request) {
@@ -85,4 +109,17 @@ public class Door {
     json.put("closed", closed);
     return json;
   }
+
+  // GETTERS AND SETTERS
+  public DoorState getDoorState() {
+    return doorState;
+  }
+  public void setDoorState(DoorState doorState) {
+    this.doorState = doorState;
+  }
+
+  public void setClosed(boolean closed) {
+    this.closed = closed;
+  }
+  public Boolean getClosed(){ return this.closed; }
 }
