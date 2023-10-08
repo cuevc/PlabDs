@@ -1,8 +1,6 @@
 package baseNoStates.requests;
 
 import baseNoStates.Actions;
-import baseNoStates.Area;
-import baseNoStates.Door;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -88,15 +86,5 @@ public class RequestArea implements Request {
       }
     }
      */
-
-    Area area = baseNoStates.DirectoryAreas.findAreaById(areaId);
-    if (area != null){
-      //make all the door requests, one for each door in the area, and process them.
-      for (Door door : area.getDoorsGivingAccess()){
-        RequestReader requestReader =
-                new RequestReader(credential, action, now, door.gitId());
-        requestReader.process();
-      }
-    }
   }
 }

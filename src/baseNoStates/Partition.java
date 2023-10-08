@@ -1,15 +1,15 @@
 package baseNoStates;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Partition extends Area {
 
-    private List<Partition> partitionList;
-    private List<Area> areaList;
+    private ArrayList<Partition> partitionList;
+    private ArrayList<Space> spacesList;
     private String partition_name;
     private String father_name;
 
-    public Partition(String part_name, List<Area> areas, List<Partition> partitions, String fathers_name){
+    public Partition(String part_name, ArrayList<Space> spaces, ArrayList<Partition> partitions, String fathers_name){
         partition_name = part_name;
         areaList = areas;
         partitionList = partitions;
@@ -17,29 +17,45 @@ public class Partition extends Area {
     }
 
     @Override
-    public Area findAreaById(String id){
+    public Space findAreaById(String id) {
         return null;
     }
 
     @Override
-    public Door[] getDoorsGivingAccess() {
-        return new Door[0];
+    public ArrayList<Door> getDoorsGivingAccess() {
+        throw new UnsupportedOperationException("This method shouldn't be used.");
     }
 
-    public List<Partition> getPartitionlist() {
+    @Override
+    public ArrayList<Partition> getPartitionlist() {
         return partitionList;
     }
-
-    public List<Area> getAreaList() {
-        return areaList;
+    @Override
+    public ArrayList<Space> getSpacesList() {
+        return spacesList;
     }
-
-    public void setAreaList(List<Area> areaList) {
-        this.areaList = areaList;
+    @Override
+    public void setSpacesList(ArrayList<Space> spaceList) {
+        this.spacesList = spaceList;
     }
-
-    public void setPartitionlist(List<Partition> partitionlist) {
+    @Override
+    public void setPartitionlist(ArrayList<Partition> partitionlist) {
         this.partitionList = partitionlist;
     }
+    @Override
+    public String getPartition_name(){return partition_name;}
+
+    @Override
+    public Partition findPartitionById(String id, Area rootArea) {
+        // We search the given Partition on the root.
+        for(Partition looking : rootArea.getPartitionlist()){
+            if (looking.getPartition_name().equals(id)){
+                return looking;
+            }
+        }
+        return null;
+    }
+
+
 }
 

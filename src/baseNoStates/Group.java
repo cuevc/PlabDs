@@ -1,6 +1,7 @@
 package baseNoStates;
 
 import java.lang.reflect.Type;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +10,14 @@ public class Group {
     private ArrayList<User> users;
     private Schedule schedules;
     private ArrayList<String> actions;
+    private ArrayList<Area> accesAreas;
 
-    public Group(String name, Schedule setSchedule, ArrayList<String> operativeActions) {
+    public Group(String name, Schedule setSchedule, ArrayList<String> operativeActions, ArrayList<Area> myArea) {
         typeGroup = name;
         schedules = setSchedule;
         actions = operativeActions;
         users = new ArrayList<>();
+        accesAreas = myArea;
     }
     public String getTypeGroup() {return typeGroup;}
     public ArrayList<User> getUsers() {return users;}
@@ -79,6 +82,8 @@ public class Group {
 
         return hasIt;
     }
+    ArrayList<Area> getSpaces() {return accesAreas;}
+
 
 
 }

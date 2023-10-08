@@ -1,9 +1,7 @@
 package baseNoStates.requests;
 
-import baseNoStates.DirectoryDoors;
-import baseNoStates.DirectoryUsers;
-import baseNoStates.Door;
-import baseNoStates.User;
+import baseNoStates.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -94,13 +92,32 @@ public class RequestReader implements Request {
     if (user == null) {
       authorized = false;
       addReason("user doesn't exists");
+
     } else {
-      if (user.hasPermision("open") || user.hasPermision("close")) {
-        authorized = true;
-      }
-      else{
-        addReason("user doesn't has permissions, ask your manager");
-      }
+      switch (user.getNameGroup()){
+        case "Admin":
+          authorized = true;
+          break;
+        case "Manager":
+          authorized = true;
+          break;
+        case "Employees":
+          authorized = user.canBeInSpace(door);
+          if(!authorized)
+          {
+            addReason("You don't have access to this space: " + door.toString());
+          }
+          break;
+
+        case "Blank":
+          authorized = false;
+          addReason("Blank does not have access.");
+
+          break;
+
+        default:
+          addReason("Not a valid group.");
+    }
     }
     //TODO: get the who, where, when and what in order to decide, and if not
     // authorized add the reason(s)

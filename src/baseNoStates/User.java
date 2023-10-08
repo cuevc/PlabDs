@@ -13,6 +13,8 @@ public class User {
     this.adjecentGroup = groupies;
   }
 
+  public String getNameGroup() {return adjecentGroup.getTypeGroup();}
+
   public String getCredential() {
     return credential;
   }
@@ -20,6 +22,37 @@ public class User {
   public Boolean hasPermision(String act){
     Boolean aux = adjecentGroup.hasAction(act);
     return aux;
+  }
+
+  public boolean canBeInSpace(Door searchDoor)
+  {
+    boolean foundDoor = false;
+    ArrayList<Area> myAreas = adjecentGroup.getSpaces();
+    for( Area currentArea : myAreas){
+      //get me the list of spaces of the current area
+      ArrayList<Space> spacesList = currentArea.getSpacesList();
+      if (spacesList != null)
+      {
+        for(Space eachSpace : spacesList){
+          if (eachSpace != null){
+            System.out.println(eachSpace);
+          ArrayList<Door> doorsList = eachSpace.getDoorsGivingAccess();
+
+            for(Door eachDoor : doorsList)
+            {
+              if(eachDoor.getId().equals(searchDoor.getId())){
+                System.out.println("bicho pelao");
+                foundDoor = true;
+                return foundDoor;
+              }
+            }
+          }
+        }
+
+      }
+      // throw new RuntimeException("Not a Space or Door.");
+    }
+    return foundDoor;
   }
 
   public String getName() { return name;}
