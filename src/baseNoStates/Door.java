@@ -32,7 +32,7 @@ public class Door implements Observer {
       getDoorState().lock();
 
     }else{
-
+      //if door is not closed after 10 sec, It will be propped
       getDoorState().propped();
     }
   }
