@@ -1,6 +1,7 @@
 package baseNoStates;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DirectoryAreas {
     private static ArrayList<Door> allDoors;
@@ -74,11 +75,23 @@ public class DirectoryAreas {
     public Door findDoorById(String id) {
         // We search the given Door on the ArrayList of allDoors.
         if (allDoors.contains(new Door(id))) {
-            return new Door(id);
+            // If allDoors contains the Door we are searching, we get it and return it.
+            for (Door doorFounded:allDoors) {
+                if (doorFounded.getId().equals(id)){  // Searching through the id.
+                    return doorFounded;
+                }
+            }
         }
         else {
             return null;
         }
         return null;
     }
+
+
+    public Area getRootArea() {
+        return rootArea;
+    }
+
+
 }

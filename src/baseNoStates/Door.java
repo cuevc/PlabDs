@@ -22,6 +22,14 @@ public class Door implements Observer {
     closed = true;
     doorState = new Locked(this);
   }
+  public Door(Door door) {
+    this.id = door.id;
+
+    // Initialize doorState attribute as Locked and closed.
+    closed = door.getClosed();
+    doorState = door.getDoorState();
+  }
+
 
   @Override
   public void update(Observable o, Object arg) {

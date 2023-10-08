@@ -42,4 +42,16 @@ public final class DirectoryDoors {
     return allDoors;
   }
 
+  /*
+  public Door getDoor(String id){
+    Door returned = new Door("null");
+    if (found == true) {
+
+    }
+    }
+    return Door;
+  }
+
+   */
+
 }
