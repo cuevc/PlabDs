@@ -121,7 +121,6 @@ public class RequestReader implements Request {
         case "Blank":
           authorized = false;
           addReason("Blank does not have access.");
-
           break;
 
         default:

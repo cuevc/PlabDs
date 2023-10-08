@@ -28,7 +28,7 @@ public class Schedule {
     public List<DayOfWeek> getWorkDays() { return workDays;}
     public boolean isOnTime(LocalTime hour) {
         //If the hour is after inital hour and before end time, the function will return true, otherwise false.
-        if( (fromHour.isAfter(hour)) && (toHour.isBefore(hour)) ){
+        if( (fromHour.isBefore(hour)) && (toHour.isAfter(hour)) ){
             return true;
         }
         else{

@@ -49,7 +49,7 @@ public final class DirectoryUsers {
 
 
 
-    Group employees = new Group("Employees", employeesSchedule, new ArrayList<>(Arrays.asList (Actions.UNLOCK_SHORTLY)),employeeArea);
+    Group employees = new Group("Employees", employeesSchedule, new ArrayList<>(Arrays.asList (Actions.OPEN, Actions.CLOSE, Actions.UNLOCK_SHORTLY)),employeeArea);
 
     employees.addUser(new User("Eulalia","43295", employees));
 
@@ -87,7 +87,7 @@ public final class DirectoryUsers {
     // all spaces
 
     Schedule AdminSchedule = new Schedule(LocalDate.of(2023,1,1),
-        LocalDate.of(20100,1,1), LocalTime.of(0,0), LocalTime.of(23,59),
+        LocalDate.of(2100,1,1), LocalTime.of(0,0), LocalTime.of(23,59),
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY,DayOfWeek.SUNDAY)));
 
     ArrayList<Area> adminArea = new ArrayList<Area>();
