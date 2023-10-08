@@ -11,7 +11,7 @@ public class Partition extends Area {
 
     public Partition(String part_name, ArrayList<Space> spaces, ArrayList<Partition> partitions, String fathers_name){
         partition_name = part_name;
-        areaList = areas;
+        spacesList = spaces;
         partitionList = partitions;
         father_name = fathers_name;
     }

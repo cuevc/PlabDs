@@ -1,7 +1,11 @@
 package baseNoStates;
 
+import java.util.ArrayList;
+
 public abstract class Area {
 
+
+    protected abstract Area findPartitionById(String id, Area rootArea);
 
     public abstract Area findAreaById(String id);
 

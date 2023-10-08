@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Space extends Area{
-    private List<Door> doorList;
+    private ArrayList<Door> doorList;
     private String space_name;
     private String father_name;
 
@@ -14,9 +14,13 @@ public class Space extends Area{
         father_name = fathers_name;
     }
 
-
     @Override
     public Area findAreaById(String id) {
+        return null;
+    }
+
+    @Override
+    public Area findPartitionById(String id, Area rootArea) {
         return null;
     }
     @Override

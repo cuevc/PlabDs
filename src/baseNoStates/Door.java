@@ -3,31 +3,45 @@ package baseNoStates;
 import baseNoStates.requests.RequestReader;
 import org.json.JSONObject;
 
+import java.util.Observer;
+import java.util.Observable;
 
-public class Door {
-  private String id;
+
+public class Door implements Observer {
+  private final String id;
   private boolean closed; // physically
 
   // In order to determine the States we add a DoorState attribute.
   private DoorState doorState;
 
-  // From and To: to know from where to where the Door has access.
-  private String from;
-  private String to;
-
-
-  public Door(String door_id, String door_from, String door_to){
-    id = door_id;
-    from = door_from;
-    to = door_to;
-    closed = true;
-    doorState = new Unlocked();
-  }
 
   public Door(String id) {
     this.id = id;
+
+    // Initialize doorState attribute as Locked and closed.
     closed = true;
-    doorState = new Unlocked(); // Initialize doorState attribute as Unlocked.
+    doorState = new Locked(this);
+  }
+  public Door(Door door) {
+    this.id = door.id;
+
+    // Initialize doorState attribute as Locked and closed.
+    closed = door.getClosed();
+    doorState = door.getDoorState();
+  }
+
+
+  @Override
+  public void update(Observable o, Object arg) {
+
+    //if the door is closed, it will be locked
+    if(getClosed()){
+      getDoorState().lock();
+
+    }else{
+
+      getDoorState().propped();
+    }
   }
 
   public void processRequest(RequestReader request) {
@@ -114,8 +128,5 @@ public class Door {
   public void setClosed(boolean closed) {
     this.closed = closed;
   }
-
-  public String gitId() {
-    return null;
-  }
+  public Boolean getClosed(){ return this.closed; }
 }

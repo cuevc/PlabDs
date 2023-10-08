@@ -1,6 +1,5 @@
 package baseNoStates;
 
-import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
