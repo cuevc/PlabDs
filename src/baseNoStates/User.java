@@ -1,4 +1,8 @@
 package baseNoStates;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.DayOfWeek;
+
 
 import java.util.ArrayList;
 
@@ -14,6 +18,13 @@ public class User {
   }
 
   public String getNameGroup() {return adjecentGroup.getTypeGroup();}
+  public boolean youHaveThisAction(String searchAction){return adjecentGroup.getActions().contains(searchAction);}
+  public boolean isOntime() {
+    boolean a = adjecentGroup.getSchedules().isOnTime(LocalTime.now());
+    boolean b = adjecentGroup.getSchedules().isOnDate(LocalDate.now());
+    boolean c = adjecentGroup.getSchedules().getWorkDays().contains(LocalDate.now().getDayOfWeek()); // Check if the actual day is on the work days.
+    return a && b && c;
+  }
 
   public String getCredential() {
     return credential;

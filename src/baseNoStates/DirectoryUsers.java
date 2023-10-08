@@ -38,7 +38,7 @@ public final class DirectoryUsers {
     // just shortly unlock
     // ground floor, floor1, exterior, stairs (this, for all), that is, everywhere but the parking
     Schedule employeesSchedule = new Schedule(LocalDate.of(2023,9,1),
-        LocalDate.of(2024,3,1), LocalTime.of(9,0), LocalTime.of(17,0),
+        LocalDate.of(2024,3,1), LocalTime.of(9,0), LocalTime.of(21,0),
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
 
     ArrayList<Area> employeeArea = new ArrayList<Area>();
@@ -62,8 +62,8 @@ public final class DirectoryUsers {
     // all actions
     // all spaces
     Schedule managersSchedule = new Schedule(LocalDate.of(2023,9,1),
-        LocalDate.of(2024,3,1), LocalTime.of(9,0), LocalTime.of(20,0),
-        new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
+        LocalDate.of(2024,3,1), LocalTime.of(8,0), LocalTime.of(20,0),
+        new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
 
     ArrayList<Area> managersAreas = new ArrayList<Area>();
     managersAreas.add(root.findPartitionById("ground floor",root));
@@ -72,7 +72,7 @@ public final class DirectoryUsers {
     managersAreas.add(root.findPartitionById("stairs",root));
     managersAreas.add(root.findPartitionById("basement", root));
 
-    Group managers = new Group("Manager", managersSchedule, new ArrayList<>(Arrays.asList (Actions.LOCK, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK, Actions.UNLOCK_SHORTLY)), managersAreas);
+    Group managers = new Group("Manager", managersSchedule, new ArrayList<>(Arrays.asList (Actions.OPEN, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK, Actions.UNLOCK_SHORTLY)), managersAreas);
     managers.addUser(new User("Manel", "95783",managers));
     managers.addUser(new User("Marta", "05827",managers));
     rols.add(managers);
@@ -93,7 +93,7 @@ public final class DirectoryUsers {
     ArrayList<Area> adminArea = new ArrayList<Area>();
     //adminArea.add();
 
-    Group Admin = new Group("Admin", AdminSchedule, new ArrayList<>(Arrays.asList (Actions.LOCK, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK,Actions.UNLOCK_SHORTLY)),managersAreas);
+    Group Admin = new Group("Admin", AdminSchedule, new ArrayList<>(Arrays.asList (Actions.OPEN, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK,Actions.UNLOCK_SHORTLY)),managersAreas);
     Admin.addUser(new User("Ana", "11343",Admin));
     rols.add(Admin);
 

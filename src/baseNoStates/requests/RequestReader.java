@@ -89,12 +89,22 @@ public class RequestReader implements Request {
   // the result is put into the request object plus, if not authorized, why not,
   // only for testing
   private void authorize(User user, Door door) {
+
     if (user == null) {
       authorized = false;
       addReason("user doesn't exists");
-
-    } else {
-      switch (user.getNameGroup()){
+    }
+    else if (!user.youHaveThisAction(action))
+    {
+      authorized = false;
+      addReason("This user can't make this action");
+    }
+    else if (!user.isOntime()) {
+      authorized = false;
+      addReason("At this moment the user doesn't have access. Try in a day/hour of your schedule.");
+    }
+    else {
+      switch (user.getNameGroup()) {
         case "Admin":
           authorized = true;
           break;
@@ -103,8 +113,7 @@ public class RequestReader implements Request {
           break;
         case "Employees":
           authorized = user.canBeInSpace(door);
-          if(!authorized)
-          {
+          if (!authorized) {
             addReason("You don't have access to this space: " + door.toString());
           }
           break;
@@ -117,10 +126,10 @@ public class RequestReader implements Request {
 
         default:
           addReason("Not a valid group.");
+      }
     }
-    }
-    //TODO: get the who, where, when and what in order to decide, and if not
-    // authorized add the reason(s)
+      //TODO: get the who, where, when and what in order to decide, and if not
+      // authorized add the reason(s)
   }
 }
 

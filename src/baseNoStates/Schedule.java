@@ -38,7 +38,7 @@ public class Schedule {
     }
     public boolean isOnDate (LocalDate date){
         //If the date is after initial date and before end date it will return true, otherwise false.
-        if( (fromDate.isAfter(date)) && (toDate.isBefore(date)) ){
+        if( (fromDate.isBefore(date)) && (toDate.isAfter(date)) ){
             return true;
         }
         else{return false;}
