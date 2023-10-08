@@ -1,4 +1,4 @@
-package doorState;
+package baseNoStates;
 
 public final class Actions {
   // possible actions in reader and area requests
