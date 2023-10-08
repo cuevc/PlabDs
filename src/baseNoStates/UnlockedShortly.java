@@ -1,5 +1,4 @@
-package doorState;
-import baseNoStates.Door;
+package baseNoStates;
 
 public class UnlockedShortly extends DoorState{
 

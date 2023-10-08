@@ -1,6 +1,6 @@
 package baseNoStates.requests;
 
-import doorState.Actions;
+import baseNoStates.Actions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

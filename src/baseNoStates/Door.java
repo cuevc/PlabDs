@@ -1,7 +1,6 @@
 package baseNoStates;
 
 import baseNoStates.requests.RequestReader;
-import doorState.*;
 import org.json.JSONObject;
 
 import java.util.Observer;
