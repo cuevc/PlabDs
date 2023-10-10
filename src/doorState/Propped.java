@@ -7,7 +7,6 @@ public class Propped extends DoorState{
 
     protected Propped(Door door) {
         doorAttr=door;
-        doorAttr.setClosed(false);//if it is Propped, it could not be open.
         name="Propped";
     }
 
@@ -18,12 +17,17 @@ public class Propped extends DoorState{
 
     @Override
     public void close() {
-        System.out.print("Door could not be closed");
+        doorAttr.setClosed(false);
     }
 
     @Override
     public void lock() {
-        System.out.print("Door could not be locked");
+        if(doorAttr.getClosed()){
+            doorAttr.setDoorState(new Locked(doorAttr));
+            System.out.println("Door Locked");
+
+        }else
+            System.out.println("Door isn't closed");
     }
 
     @Override
