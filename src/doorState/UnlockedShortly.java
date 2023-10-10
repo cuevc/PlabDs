@@ -3,9 +3,17 @@ import baseNoStates.Door;
 
 public class UnlockedShortly extends DoorState{
 
+    private static Clock clock;
+
     public UnlockedShortly(Door door){
         doorAttr=door;
-        doorAttr.setClosed(false);
+        doorAttr.setClosed(true);
+        name="Unlocked shortly";
+        clock= new Clock();
+        clock.addObserver(doorAttr);
+
+        Thread threadClock=new Thread(clock);
+        threadClock.start();
     }
     @Override
     public void open() {
@@ -35,5 +43,10 @@ public class UnlockedShortly extends DoorState{
     public void propped() {
         doorAttr.setDoorState(new Propped(doorAttr));
         System.out.println("Door Propped");
+    }
+
+    @Override
+    public void unlockedShortly() {
+        System.out.println("Door already unlocked");
     }
 }

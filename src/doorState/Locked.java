@@ -5,9 +5,9 @@ import baseNoStates.Door;
 public class Locked extends DoorState {
 
     public Locked(Door door){
-        doorAttr=door;
         door.setClosed(true);
-
+        doorAttr=door;
+        name="Locked";
     }
     @Override
     public void open(){
@@ -34,6 +34,12 @@ public class Locked extends DoorState {
     @Override
     public void propped() {
         System.out.println("Door locked, It could not be Propped");
+    }
+
+    @Override
+    public void unlockedShortly() {
+        doorAttr.setDoorState(new UnlockedShortly(doorAttr));
+        System.out.println("Door Unlocked shortly");
     }
 
 }

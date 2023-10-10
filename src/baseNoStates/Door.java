@@ -27,6 +27,8 @@ public class Door implements Observer {
   @Override
   public void update(Observable o, Object arg) {
 
+    System.out.println("Time runs out");
+
     //if the door is closed, it will be locked
     if(getClosed()){
       getDoorState().lock();
@@ -67,13 +69,16 @@ public class Door implements Observer {
         break;
       case Actions.LOCK:
         // TODO
-        // fall through
+        doorState.lock();
+        break;
       case Actions.UNLOCK:
         // TODO
-        // fall through
+        doorState.unlock();
+        break;
       case Actions.UNLOCK_SHORTLY:
         // TODO
-        System.out.println("Action " + action + " not implemented yet");
+        doorState.unlockedShortly();
+        //System.out.println("Action " + action + " not implemented yet");
         break;
       default:
         assert false : "Unknown action " + action;
@@ -90,7 +95,7 @@ public class Door implements Observer {
   }
 
   public String getStateName() {
-    return "unlocked";
+    return doorState.getName();
   }
 
   @Override
