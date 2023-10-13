@@ -1,16 +1,19 @@
 package doorState;
 import baseNoStates.Door;
 
-public class UnlockedShortly extends DoorState{
+import java.util.Observable;
+import java.util.Observer;
+
+public class UnlockedShortly extends DoorState implements Observer {
 
     private static Clock clock;
 
     public UnlockedShortly(Door door){
         doorAttr=door;
         doorAttr.setClosed(true);
-        name="Unlocked shortly";
+        name="unlocked_shortly";
         clock= new Clock();
-        clock.addObserver(doorAttr);
+        clock.addObserver(this);
 
         Thread threadClock=new Thread(clock);
         threadClock.start();
@@ -48,5 +51,20 @@ public class UnlockedShortly extends DoorState{
     @Override
     public void unlockedShortly() {
         System.out.println("Door already unlocked");
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        System.out.println("Time runs out");
+
+        //if the door is closed, it will be locked
+        if(doorAttr.isClosed()){
+            lock();
+
+        }else{
+            //if door is not closed after 10 sec, It will be propped
+            propped();
+        }
     }
 }

@@ -7,7 +7,7 @@ public class Locked extends DoorState {
     public Locked(Door door){
         door.setClosed(true);
         doorAttr=door;
-        name="Locked";
+        name="locked";
     }
     @Override
     public void open(){
@@ -18,6 +18,7 @@ public class Locked extends DoorState {
     public void close(){
         doorAttr.setClosed(true);
         System.out.println("Door closed");
+
 
     }
 

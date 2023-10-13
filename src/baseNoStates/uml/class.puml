@@ -56,6 +56,8 @@ class Door{
     -status:DoorState
     -to:Area
     -from:Area
+
+    +update(arg0:Observable, obj2:Object)
 }
 
 namespace doorState #DDDDDD{
@@ -75,26 +77,50 @@ namespace doorState #DDDDDD{
     abstract DoorState{
         #door: Door
         #name: String
+        {abstract}+setUnlock()
+        {abstract}+setPropped()
+        {abstract}+setLock()
+        {abstract}+setUnlockShortly()
+        {abstract}+setOpen()
+        {abstract}+setClose()
+
+    }
+
+    class Unlocked extends DoorState{
         +setUnlock()
         +setPropped()
         +setLock()
         +setUnlockShortly()
+        +setOpen()
+        +setClose()
+
     }
 
-    class Unlocked extends DoorState{
-
-    }
-
-    class UnlockedShortly extends DoorState{
-
+    class UnlockedShortly extends DoorState implements Observer{
+        +setUnlock()
+        +setPropped()
+        +setLock()
+        +setUnlockShortly()
+        +setOpen()
+        +setClose()
     }
 
     class Propped extends DoorState{
-
+        +setUnlock()
+        +setPropped()
+        +setLock()
+        +setUnlockShortly()
+        +setOpen()
+        +setClose()
     }
 
     class Locked extends DoorState{
-
+        +setUnlock()
+        +setPropped()
+        +setLock()
+        +setUnlockShortly()
+        +setOpen()
+        +setClose()
     }
 }
 
@@ -126,13 +152,21 @@ abstract Observable{
 }
 
 interface Observer{
-    +update(arg0:Observable, obj2:Object)
+    {abstract}+update(arg0:Observable, obj2:Object)
 }
 
 
-class ClockThread extends Observable{
+class ClockThread extends Observable implements Runnable{
+
+    +ClockThread()
+    +run()
 
 }
+interface Runnable{
+    +run()
+}
+
+
 
 Group -left-> "n..1" Action : actions
 Group -down-> "n..1" Schedule : schedules

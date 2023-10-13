@@ -8,7 +8,7 @@ public class Unlocked extends DoorState {
     public  Unlocked(Door door){
         doorAttr=door;
         door.setClosed(true);
-        name="Unlocked";
+        name="unlocked";
     }
 
     @Override

@@ -4,11 +4,8 @@ import baseNoStates.requests.RequestReader;
 import doorState.*;
 import org.json.JSONObject;
 
-import java.util.Observer;
-import java.util.Observable;
 
-
-public class Door implements Observer {
+public class Door{
   private final String id;
   private boolean closed; // physically
 
@@ -24,20 +21,6 @@ public class Door implements Observer {
     doorState = new Locked(this);
   }
 
-  @Override
-  public void update(Observable o, Object arg) {
-
-    System.out.println("Time runs out");
-
-    //if the door is closed, it will be locked
-    if(getClosed()){
-      getDoorState().lock();
-
-    }else{
-      //if door is not closed after 10 sec, It will be propped
-      getDoorState().propped();
-    }
-  }
 
   public void processRequest(RequestReader request) {
     // it is the Door that process the request because the door has and knows
@@ -54,18 +37,10 @@ public class Door implements Observer {
   private void doAction(String action) {
     switch (action) {
       case Actions.OPEN:
-        if (closed) {
-          closed = false;
-        } else {
-          System.out.println("Can't open door " + id + " because it's already open");
-        }
+        doorState.open();
         break;
       case Actions.CLOSE:
-        if (closed) {
-          System.out.println("Can't close door " + id + " because it's already closed");
-        } else {
-          closed = true;
-        }
+        doorState.close();
         break;
       case Actions.LOCK:
         // TODO
@@ -126,5 +101,5 @@ public class Door implements Observer {
   public void setClosed(boolean closed) {
     this.closed = closed;
   }
-  public Boolean getClosed(){ return this.closed; }
+
 }
