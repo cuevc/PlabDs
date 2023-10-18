@@ -1,7 +1,6 @@
 package baseNoStates;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.DayOfWeek;
 
 
 import java.util.ArrayList;
@@ -41,10 +40,10 @@ public class User {
     ArrayList<Area> myAreas = adjecentGroup.getSpaces();
     for( Area currentArea : myAreas){
       //get me the list of spaces of the current area
-      ArrayList<Space> spacesList = currentArea.getSpacesList();
+      ArrayList<Area> spacesList = currentArea.getAreaList();
       if (spacesList != null)
       {
-        for(Space eachSpace : spacesList){
+        for(Area eachSpace : spacesList){
           if (eachSpace != null){
             System.out.println(eachSpace);
           ArrayList<Door> doorsList = eachSpace.getDoorsGivingAccess();

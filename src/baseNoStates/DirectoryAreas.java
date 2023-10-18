@@ -15,13 +15,8 @@ public class DirectoryAreas {
         DirectoryDoors initializer = new DirectoryDoors();
         initializer.makeDoors();
         allDoors = initializer.getAllDoors();
-
-
-
-
         //--------------------------------//
         //Partition parking = new Partition("parking", areas, partitionForSpace, "building");
-
 
 
         // ==============================================================
@@ -29,13 +24,13 @@ public class DirectoryAreas {
         // ==============================================================
 
         // Spaces Definition
-        Space parking = new Space("parking",new ArrayList<Door>(){{add(initializer.findDoorById("D1"));add(initializer.findDoorById("D2"));}}, "basement");
-        Space hall = new Space("hall",new ArrayList<Door>(){{add(initializer.findDoorById("D3"));add(initializer.findDoorById("D4"));}}, "ground floor");
-        Space room1 = new Space("room1",new ArrayList<Door>(){{add(initializer.findDoorById("D5"));}}, "ground floor");
-        Space room2 = new Space("room2",new ArrayList<Door>(){{add(initializer.findDoorById("D6"));}}, "ground floor");
-        Space room3 = new Space("room3",new ArrayList<Door>(){{add(initializer.findDoorById("D8"));}}, "floor1");
-        Space corridor = new Space("corridor",new ArrayList<Door>(){{add(initializer.findDoorById("D7"));}}, "floor1");
-        Space IT = new Space("IT",new ArrayList<Door>(){{add(initializer.findDoorById("D9"));}}, "floor1");
+        Space parking = new Space("parking",new ArrayList<Door>(){{add(initializer.findDoorById("D1"));add(initializer.findDoorById("D2"));}}, null);
+        Space hall = new Space("hall",new ArrayList<Door>(){{add(initializer.findDoorById("D3"));add(initializer.findDoorById("D4"));}}, null);
+        Space room1 = new Space("room1",new ArrayList<Door>(){{add(initializer.findDoorById("D5"));}}, null);
+        Space room2 = new Space("room2",new ArrayList<Door>(){{add(initializer.findDoorById("D6"));}}, null);
+        Space room3 = new Space("room3",new ArrayList<Door>(){{add(initializer.findDoorById("D8"));}}, null);
+        Space corridor = new Space("corridor",new ArrayList<Door>(){{add(initializer.findDoorById("D7"));}}, null);
+        Space IT = new Space("IT",new ArrayList<Door>(){{add(initializer.findDoorById("D9"));}}, null);
 
         // Partitions Definition
         ArrayList<Space> basementSpace = new ArrayList<Space>();
@@ -52,15 +47,37 @@ public class DirectoryAreas {
         floor1Space.add(IT);
 
 
-        Partition basement = new Partition("basement", basementSpace, null, "building" );
-        Partition groundFloor =  new Partition("ground floor", groundFloorSpace, null, "building" );
-        Partition floor1 = new Partition("floor1", floor1Space, null, "building" );
-        Partition stairs =  new Partition("stairs", null, null, "building" );
-        Partition exterior =  new Partition("exterior", null, null, "building" );
+        Partition basement = new Partition("basement",new ArrayList<>(), null );
+        Partition groundFloor =  new Partition("ground floor", new ArrayList<>(), null );
+        Partition floor1 = new Partition("floor1", new ArrayList<>(), null );
+        Partition stairs =  new Partition("stairs", new ArrayList<>(), null );
+        Partition exterior =  new Partition("exterior",  new ArrayList<>(), null );
+
+        basement.addArea(parking);
+
+        groundFloor.addArea(hall);
+        groundFloor.addArea(room1);
+        groundFloor.addArea(room2);
+
+        floor1.addArea(room3);
+        floor1.addArea(corridor);
+        floor1.addArea(IT);
+
+        //Setting Space's Fathers
+        parking.setFather(basement);
+
+        hall.setFather(groundFloor);
+        room1.setFather(groundFloor);
+        room2.setFather(groundFloor);
+
+        room3.setFather(floor1);
+        corridor.setFather(floor1);
+        IT.setFather(floor1);
+
 
 
         // Declaring the Root partitions.
-        ArrayList<Partition> buildingPartitions = new ArrayList<Partition>();
+        ArrayList<Area> buildingPartitions = new ArrayList<Area>();
         buildingPartitions.add(basement);
         buildingPartitions.add(groundFloor);
         buildingPartitions.add(floor1);
@@ -68,8 +85,14 @@ public class DirectoryAreas {
         buildingPartitions.add(exterior);
 
         //declaring rootArea
-        rootArea =  new Partition("building", null, buildingPartitions, null );
+        rootArea =  new Partition("building", buildingPartitions, null );
 
+        // Setting "Partition's Father"
+        basement.setFather(rootArea);
+        groundFloor.setFather(rootArea);
+        floor1.setFather(rootArea);
+        stairs.setFather(rootArea);
+        exterior.setFather(rootArea);
     }
 
     public Door findDoorById(String id) {
@@ -87,8 +110,7 @@ public class DirectoryAreas {
         }
         return null;
     }
-
-
+    
     public Area getRootArea() {
         return rootArea;
     }

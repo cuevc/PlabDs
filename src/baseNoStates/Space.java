@@ -6,12 +6,20 @@ import java.util.List;
 public class Space extends Area{
     private ArrayList<Door> doorList;
     private String space_name;
-    private String father_name;
+    private Area partFather;
 
-    public Space(String spa_name, List<Door> doors, String fathers_name){
+    public Space(String spa_name, List<Door> doors, Partition partitionFather){
         space_name = spa_name;
         doorList = (ArrayList<Door>) doors;
-        father_name = fathers_name;
+        partFather = partitionFather;
+    }
+    @Override
+    public void setPartFather(Partition father){partFather = father;}
+
+    @Override
+    public void setPartFather(Area father) {
+        throw new UnsupportedOperationException("This method shouldn't be used.");
+
     }
 
     @Override
@@ -20,7 +28,7 @@ public class Space extends Area{
     }
 
     @Override
-    public Area findPartitionById(String id, Area rootArea) {
+    public Partition findPartitionById(String id, Area rootArea) {
         return null;
     }
     @Override
@@ -31,20 +39,21 @@ public class Space extends Area{
         return null;
     }
     @Override
-    public ArrayList<Space> getSpacesList() {
+    public ArrayList<Area> getAreaList() {
         return null;
     }
 
     @Override
-    public void setSpacesList(ArrayList<Space> spaceList) {
-
+    public void setFather(Area father) {
+        partFather = father;
     }
+
 
     @Override
-    public void setPartitionlist(ArrayList<Partition> partitionlist) {
+    public void setAreaList(ArrayList<Area> areasList){}
 
-    }
-
+    @Override
+    public void setPartitionlist(ArrayList<Partition> partitionlist) {}
     @Override
     public String getPartition_name() {
         return null;
