@@ -2,6 +2,8 @@ package baseNoStates;
 
 import java.lang.reflect.Type;
 import java.security.PrivateKey;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,5 +87,48 @@ public class Group {
     ArrayList<Area> getSpaces() {return accesAreas;}
 
 
+    public boolean hasAccessToArea(String areaToAccess,Area currentArea, LocalDate date, LocalTime hour, String action, ArrayList<String> reason) {
+        boolean permissionConced = false;
+        if(currentArea.getPartition_name().equals(areaToAccess)) {
+            //In this if we check if the user can do the action required and if is on time and date
+            if (this.actions.contains(action)) {
+                if (this.schedules.isOnTime(hour)) {
+                    if (this.schedules.isOnDate(date)) {
+                        permissionConced = true;
+                    } else {
+                        reason.add("This user is not on date");
+                    }
+                } else {
+                    reason.add("This user is not on hour");
+                }
+            } else {
+                reason.add("This user can't do the action: " + action);
+            }
+        }
+        //If we are in a space class and does exist partition list it will return null
+        else if(currentArea.getAreaList() != null){
 
+            for(Area actualArea : currentArea.getAreaList()){
+                //General case: if reason is not empty and permissionConced is false, means that area has not been found
+                if (reason.isEmpty() && !permissionConced)
+                {
+                    permissionConced = hasAccessToArea(areaToAccess, actualArea,  date,  hour, action, reason);
+                }
+                else{
+                    break;
+                }
+            }
+        }
+
+
+        return permissionConced;
+        //We check if the name is equal to recursive name node
+
+        /* CÓDIGO POLILLA
+        boolean[] printable = {false, false, false};
+        printable[0] = !hasAction(action);
+        printable[1] = !schedules.isOnDate(date) && schedules.isOnTime(hour);
+        //printable[2] = !(accesAreas.get);
+        return true; */
+    }
 }

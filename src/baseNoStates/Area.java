@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public abstract class Area {
 
-
     protected abstract Area findPartitionById(String id, Area rootArea);
 
     public abstract void setPartFather(Partition father);

@@ -33,8 +33,16 @@ public class Partition extends Area {
 
     @Override // Used on the Space Class
     public ArrayList<Door> getDoorsGivingAccess() {
-        throw new UnsupportedOperationException("This method shouldn't be used.");
+        ArrayList<Door> recollectedDoors = new ArrayList<>();
+        for(Area actualArea : this.areaList){
+            actualArea.getDoorsGivingAccess();
+            recollectedDoors.addAll(actualArea.getDoorsGivingAccess());
+
+        }
+        return recollectedDoors;
     }
+
+
 
     @Override
     public ArrayList<Partition> getPartitionlist() {

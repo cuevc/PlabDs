@@ -2,6 +2,7 @@ package baseNoStates;
 import baseNoStates.requests.Request;
 import baseNoStates.requests.RequestReader;
 
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -31,8 +32,29 @@ public class User {
     return result;
   }
 
-public boolean[] hasAccess(Door door, LocalDate date, LocalTime hour, String action){
-    return userGroup.hasAccessToArea(door, date, hour, action);}
+  public boolean hasAccess(Area areaToAcces,LocalDate date, LocalTime hour, String action, ArrayList<String> reason)
+  {
+    //This function is calling another action from Group
+    //This checks if the destination area is inside the users group area list
+    //At the beggining of the first iteration of this function is null, because once it's executed it will get the first
+    //element of the areas tree.
+    boolean access = false;
+    for(Area actualArea : this.userGroup.getSpaces()) {
+      if(reason.isEmpty() && !access){
+        access =  userGroup.hasAccessToArea(areaToAcces.getPartition_name(), actualArea ,date, hour, action, reason);
+      }
+      else {
+        break;
+      }
+    }
+
+    //If reason is still empty and permission is fall it means that area has not been found
+    if(reason.isEmpty() && !access){
+      reason.add("You don't have access to this area");
+    }
+
+    return access;
+  }
   public String getCredential() {
     return credential;
   }

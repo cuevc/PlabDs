@@ -13,14 +13,7 @@ public class Space extends Area{
         doorList = (ArrayList<Door>) doors;
         partFather = partitionFather;
     }
-    @Override
-    public void setPartFather(Partition father){partFather = father;}
 
-    @Override
-    public void setPartFather(Area father) {
-        throw new UnsupportedOperationException("This method shouldn't be used.");
-
-    }
 
     @Override
     public Area findAreaById(String id) {
@@ -31,16 +24,15 @@ public class Space extends Area{
     public Partition findPartitionById(String id, Area rootArea) {
         return null;
     }
+
+    ///////////////////////////////SETTERS//////////////////////////////
     @Override
-    public ArrayList<Door> getDoorsGivingAccess(){return doorList;}
+    public void setPartFather(Partition father){partFather = father;}
 
     @Override
-    public ArrayList<Partition> getPartitionlist() {
-        return null;
-    }
-    @Override
-    public ArrayList<Area> getAreaList() {
-        return null;
+    public void setPartFather(Area father) {
+        throw new UnsupportedOperationException("This method shouldn't be used.");
+
     }
 
     @Override
@@ -54,9 +46,22 @@ public class Space extends Area{
 
     @Override
     public void setPartitionlist(ArrayList<Partition> partitionlist) {}
+
+
+    ////////////////////////////GETERS///////////////////////////////////
+
+    @Override
+    public ArrayList<Door> getDoorsGivingAccess(){return doorList;}
+    @Override
+    public ArrayList<Partition> getPartitionlist() {
+        return null;
+    }
+    @Override
+    public ArrayList<Area> getAreaList() {return null;}
+
     @Override
     public String getPartition_name() {
-        return null;
+        return space_name;
     }
 
 }

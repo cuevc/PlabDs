@@ -112,10 +112,10 @@ public class RequestReader implements Request {
 
     //Check if this user has the action
     else{
-
       LocalDate date = now.toLocalDate();
       LocalTime hour = now.toLocalTime();
-      authorized = setAllAddReason(user.hasAccess(door, date, hour, this.action));
+      authorized = user.hasAccess(door.getTo(), date, hour, this.action, this.reasons);
+      //authorized = setAllAddReason(user.hasAccess(door.getTo(), date, hour, this.action));
       //TODO: get the who, where, when and what in order to decide, and if not
       // authorized add the reason(s)
     }

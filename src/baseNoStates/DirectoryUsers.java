@@ -42,7 +42,7 @@ public final class DirectoryUsers {
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
 
     ArrayList<Area> employeeArea = new ArrayList<Area>();
-    employeeArea.add(root.findPartitionById("ground floor",root));
+    employeeArea.add(root.findPartitionById("ground_floor",root));
     employeeArea.add(root.findPartitionById("floor1",root));
     employeeArea.add(root.findPartitionById("exterior",root));
     employeeArea.add(root.findPartitionById("stairs",root));

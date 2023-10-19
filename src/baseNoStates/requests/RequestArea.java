@@ -1,4 +1,5 @@
 package baseNoStates.requests;
+import baseNoStates.*;
 
 import baseNoStates.Actions;
 import org.json.JSONArray;
@@ -66,10 +67,10 @@ public class RequestArea implements Request {
   public void process() {
     // commented out until Area, Space and Partition are implemented
 
-    /*
+
     // make the door requests and put them into the area request to be authorized later and
     // processed later
-    Area area = DirectoryAreas.findAreaById(areaId);
+    Area area = DirectoryAreas.findAreaById(areaId, DirectoryAreas.getRootArea());
     // an Area is a Space or a Partition
     if (area != null) {
       // is null when from the app we click on an action but no place is selected because
@@ -85,6 +86,5 @@ public class RequestArea implements Request {
         requests.add(requestReader);
       }
     }
-    */
   }
 }
