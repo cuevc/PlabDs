@@ -34,11 +34,10 @@ public class Schedule {
         else{
             return false;
         }
-
     }
     public boolean isOnDate (LocalDate date){
         //If the date is after initial date and before end date it will return true, otherwise false.
-        if( (fromDate.isBefore(date)) && (toDate.isAfter(date)) ){
+        if( (fromDate.isBefore(date)) && (toDate.isAfter(date)) && (this.workDays.contains(date.getDayOfWeek()))){
             return true;
         }
         else{return false;}

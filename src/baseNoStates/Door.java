@@ -10,13 +10,26 @@ import java.util.Observable;
 public class Door implements Observer {
   private final String id;
   private boolean closed; // physically
+  private Area to;
+  private Area from;
 
   // In order to determine the States we add a DoorState attribute.
   private DoorState doorState;
 
-
-  public Door(String id) {
+  public Door(String id){
     this.id = id;
+    this.to = null;
+    this.from = null;
+
+    // Initialize doorState attribute as Locked and closed.
+    closed = true;
+    doorState = new Locked(this);
+  }
+
+  public Door(String id, Area to, Area from) {
+    this.id = id;
+    this.to = to;
+    this.from = from;
 
     // Initialize doorState attribute as Locked and closed.
     closed = true;
@@ -29,6 +42,12 @@ public class Door implements Observer {
     closed = door.getClosed();
     doorState = door.getDoorState();
   }
+
+  public void setTo(Area to){this.to = to;}
+  public void setFrom(Area from){this.from = from;}
+
+  public Area getTo(){return this.to;}
+  public Area getFrom(){return this.from;}
 
 
   @Override
@@ -129,4 +148,5 @@ public class Door implements Observer {
     this.closed = closed;
   }
   public Boolean getClosed(){ return this.closed; }
+
 }

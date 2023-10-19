@@ -2,7 +2,10 @@ package baseNoStates.requests;
 
 import baseNoStates.*;
 
+import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -43,6 +46,18 @@ public class RequestReader implements Request {
     reasons.add(reason);
   }
 
+  public boolean setAllAddReason(boolean[] printable) {
+    String[] reasons = {"This user can't make this action", "At this moment the user doesn't have access. Try in a day/hour of your schedule.",
+        "You don't access to this area"};
+    boolean allFalse = true;
+    for (int i = 0; i < printable.length; i++){
+      if (printable[i])
+        addReason(reasons[i]);
+      else
+        allFalse = false;
+    }
+    return allFalse;
+  }
 
   @Override
   public String toString() {
@@ -89,46 +104,21 @@ public class RequestReader implements Request {
   // the result is put into the request object plus, if not authorized, why not,
   // only for testing
   private void authorize(User user, Door door) {
-
+    //Check if this user is not null
     if (user == null) {
       authorized = false;
-      addReason("user doesn't exists");
+      addReason("User doesn't exists");
     }
-    else if (!user.youHaveThisAction(action))
-    {
-      authorized = false;
-      addReason("This user can't make this action");
-    }
-    else if (!user.isOntime()) {
-      authorized = false;
-      addReason("At this moment the user doesn't have access. Try in a day/hour of your schedule.");
-    }
-    else {
-      switch (user.getNameGroup()) {
-        case "Admin":
-          authorized = true;
-          break;
-        case "Manager":
-          authorized = true;
-          break;
-        case "Employees":
-          authorized = user.canBeInSpace(door);
-          if (!authorized) {
-            addReason("You don't have access to this space: " + door.toString());
-          }
-          break;
 
-        case "Blank":
-          authorized = false;
-          addReason("Blank does not have access.");
-          break;
+    //Check if this user has the action
+    else{
 
-        default:
-          addReason("Not a valid group.");
-      }
-    }
+      LocalDate date = now.toLocalDate();
+      LocalTime hour = now.toLocalTime();
+      authorized = setAllAddReason(user.hasAccess(door, date, hour, this.action));
       //TODO: get the who, where, when and what in order to decide, and if not
       // authorized add the reason(s)
+    }
   }
 }
 

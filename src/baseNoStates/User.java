@@ -1,5 +1,9 @@
 package baseNoStates;
+import baseNoStates.requests.Request;
+import baseNoStates.requests.RequestReader;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
@@ -8,36 +12,40 @@ import java.util.ArrayList;
 public class User {
   private final String name;
   private final String credential;
-  private Group adjecentGroup;
+  private Group userGroup;
 
   public User(String name, String credential, Group groupies) {
     this.name = name;
     this.credential = credential;
-    this.adjecentGroup = groupies;
+    this.userGroup = groupies;
   }
 
-  public String getNameGroup() {return adjecentGroup.getTypeGroup();}
-  public boolean youHaveThisAction(String searchAction){return adjecentGroup.getActions().contains(searchAction);}
-  public boolean isOntime() {
-    boolean a = adjecentGroup.getSchedules().isOnTime(LocalTime.now());
-    boolean b = adjecentGroup.getSchedules().isOnDate(LocalDate.now());
-    boolean c = adjecentGroup.getSchedules().getWorkDays().contains(LocalDate.now().getDayOfWeek()); // Check if the actual day is on the work days.
-    return a && b && c;
+  public String getNameGroup() {return userGroup.getTypeGroup();}
+  public boolean youHaveThisAction(String searchAction, RequestReader req){
+
+
+    boolean result = userGroup.getActions().contains(searchAction);
+    if (!result){
+      req.addReason("This user can't make this Action: " + searchAction+ ". ");
+    }
+    return result;
   }
 
+public boolean[] hasAccess(Door door, LocalDate date, LocalTime hour, String action){
+    return userGroup.hasAccessToArea(door, date, hour, action);}
   public String getCredential() {
     return credential;
   }
 
   public Boolean hasPermision(String act){
-    Boolean aux = adjecentGroup.hasAction(act);
+    Boolean aux = userGroup.hasAction(act);
     return aux;
   }
 
   public boolean canBeInSpace(Door searchDoor)
   {
     boolean foundDoor = false;
-    ArrayList<Area> myAreas = adjecentGroup.getSpaces();
+    ArrayList<Area> myAreas = userGroup.getSpaces();
     for( Area currentArea : myAreas){
       //get me the list of spaces of the current area
       ArrayList<Area> spacesList = currentArea.getAreaList();
@@ -70,5 +78,6 @@ public class User {
   public String toString() {
     return "User{name=" + name + ", credential=" + credential + "}";
   }
+
 
 }
