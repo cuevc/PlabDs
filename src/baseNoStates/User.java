@@ -39,20 +39,24 @@ public class User {
     //At the beggining of the first iteration of this function is null, because once it's executed it will get the first
     //element of the areas tree.
     boolean access = false;
-    for(Area actualArea : this.userGroup.getSpaces()) {
-      if(reason.isEmpty() && !access){
-        access =  userGroup.hasAccessToArea(areaToAcces.getPartition_name(), actualArea ,date, hour, action, reason);
-      }
-      else {
-        break;
+
+    //For those users that doesn't has access to areas (Blank) they don't have access to no area (their areas tree null)
+    //so we have to check it before
+    if(userGroup.getSpaces() != null)
+    {
+      for(Area actualArea : this.userGroup.getSpaces()) {
+        if(reason.isEmpty() && !access){
+          access =  userGroup.hasAccessToArea(areaToAcces.getPartition_name(), actualArea ,date, hour, action, reason);
+        }
+        else {
+          break;
+        }
       }
     }
-
     //If reason is still empty and permission is fall it means that area has not been found
     if(reason.isEmpty() && !access){
       reason.add("You don't have access to this area");
     }
-
     return access;
   }
   public String getCredential() {
