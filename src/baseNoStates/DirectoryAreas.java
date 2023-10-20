@@ -57,6 +57,35 @@ public class DirectoryAreas {
         Partition floor1 = new Partition("floor1", floor1Space, null, "building" );
         Partition stairs =  new Partition("stairs", null, null, "building" );
         Partition exterior =  new Partition("exterior", null, null, "building" );
+=======
+        Partition basement = new Partition("basement",new ArrayList<>(), null );
+        Partition groundFloor =  new Partition("ground floor", new ArrayList<>(), null );
+        Partition floor1 = new Partition("floor1", new ArrayList<>(), null );
+        Partition stairs =  new Partition("stairs", new ArrayList<>(), null );
+        Partition exterior =  new Partition("exterior",  new ArrayList<>(), null );
+
+        basement.addArea(parking);
+
+        groundFloor.addArea(hall);
+        groundFloor.addArea(room1);
+        groundFloor.addArea(room2);
+
+        floor1.addArea(room3);
+        floor1.addArea(corridor);
+        floor1.addArea(IT);
+
+        //Setting Space's Fathers
+        parking.setFather(basement);
+
+        hall.setFather(groundFloor);
+        room1.setFather(groundFloor);
+        room2.setFather(groundFloor);
+
+        room3.setFather(floor1);
+        corridor.setFather(floor1);
+        IT.setFather(floor1);
+
+>>>>>>> parent of ed36531 (We correct null tree and ground_floor)
 
 
         // Declaring the Root partitions.
