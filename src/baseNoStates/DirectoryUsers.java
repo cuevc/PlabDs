@@ -66,7 +66,7 @@ public final class DirectoryUsers {
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
 
     ArrayList<Area> managersAreas = new ArrayList<Area>();
-    managersAreas.add(root.findPartitionById("ground floor",root));
+    managersAreas.add(root.findPartitionById("ground_floor",root));
     managersAreas.add(root.findPartitionById("floor1",root));
     managersAreas.add(root.findPartitionById("exterior",root));
     managersAreas.add(root.findPartitionById("stairs",root));

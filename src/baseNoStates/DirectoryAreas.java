@@ -70,7 +70,7 @@ public class DirectoryAreas {
 
 
         Partition basement = new Partition("basement",new ArrayList<>(), null );
-        Partition groundFloor =  new Partition("ground floor", new ArrayList<>(), null );
+        Partition groundFloor =  new Partition("ground_floor", new ArrayList<>(), null );
         Partition floor1 = new Partition("floor1", new ArrayList<>(), null );
         Partition stairs =  new Partition("stairs", new ArrayList<>(), null );
         Partition exterior =  new Partition("exterior",  new ArrayList<>(), null );
