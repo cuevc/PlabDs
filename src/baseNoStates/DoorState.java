@@ -1,9 +1,10 @@
 package baseNoStates;
 
+import baseNoStates.Door;
+
 public abstract class DoorState {
-    protected Door door;
+    protected Door doorAttr;
     protected String name;
-    protected abstract void DoorSate(Door door);
 
     public abstract void open();
 
@@ -12,4 +13,7 @@ public abstract class DoorState {
     public abstract void lock();
 
     public abstract void unlock();
+
+    public abstract void propped();
+
 }

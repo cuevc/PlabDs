@@ -5,8 +5,10 @@ package baseNoStates;
 
 public class Main {
   public static void main(String[] args) {
-    DirectoryDoors.makeDoors();
+    //DirectoryDoors.makeDoors();
     DirectoryUsers.makeUsers();
+    DirectoryAreas.makeAreas();
     new WebServer();
   }
 }
+

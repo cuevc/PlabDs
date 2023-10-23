@@ -143,7 +143,7 @@ class ClockThread extends Observable{
 Group -left-> "n..1" Action : actions
 Group -down-> "n..1" Schedule : schedules
 Group -down-> "1..n"  User: users
-User -up-> "1..n" Group:adjecentGroup
+User -up-> "1..1" Group:adjecentGroup
 
 
 Door --up->"1..n" Space: to
