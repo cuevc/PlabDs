@@ -16,4 +16,9 @@ public abstract class DoorState {
 
     public abstract void propped();
 
+    public abstract void unlockedShortly();
+
+    public String getName() {
+        return name;
+    }
 }

@@ -1,13 +1,11 @@
 package baseNoStates;
 
 import baseNoStates.requests.RequestReader;
+import doorState.*;
 import org.json.JSONObject;
 
-import java.util.Observer;
-import java.util.Observable;
 
-
-public class Door implements Observer {
+public class Door{
   private final String id;
   private boolean closed; // physically
   private Area to;
@@ -35,13 +33,6 @@ public class Door implements Observer {
     closed = true;
     doorState = new Locked(this);
   }
-  public Door(Door door) {
-    this.id = door.id;
-
-    // Initialize doorState attribute as Locked and closed.
-    closed = door.getClosed();
-    doorState = door.getDoorState();
-  }
 
   public void setTo(Area to){this.to = to;}
   public void setFrom(Area from){this.from = from;}
@@ -49,19 +40,6 @@ public class Door implements Observer {
   public Area getTo(){return this.to;}
   public Area getFrom(){return this.from;}
 
-
-  @Override
-  public void update(Observable o, Object arg) {
-
-    //if the door is closed, it will be locked
-    if(getClosed()){
-      getDoorState().lock();
-
-    }else{
-
-      getDoorState().propped();
-    }
-  }
 
   public void processRequest(RequestReader request) {
     // it is the Door that process the request because the door has and knows
@@ -78,28 +56,23 @@ public class Door implements Observer {
   private void doAction(String action) {
     switch (action) {
       case Actions.OPEN:
-        if (closed) {
-          closed = false;
-        } else {
-          System.out.println("Can't open door " + id + " because it's already open");
-        }
+        doorState.open();
         break;
       case Actions.CLOSE:
-        if (closed) {
-          System.out.println("Can't close door " + id + " because it's already closed");
-        } else {
-          closed = true;
-        }
+        doorState.close();
         break;
       case Actions.LOCK:
         // TODO
-        // fall through
+        doorState.lock();
+        break;
       case Actions.UNLOCK:
         // TODO
-        // fall through
+        doorState.unlock();
+        break;
       case Actions.UNLOCK_SHORTLY:
         // TODO
-        System.out.println("Action " + action + " not implemented yet");
+        doorState.unlockedShortly();
+        //System.out.println("Action " + action + " not implemented yet");
         break;
       default:
         assert false : "Unknown action " + action;
@@ -116,7 +89,7 @@ public class Door implements Observer {
   }
 
   public String getStateName() {
-    return "unlocked";
+    return doorState.getName();
   }
 
   @Override
@@ -148,5 +121,6 @@ public class Door implements Observer {
     this.closed = closed;
   }
   public Boolean getClosed(){ return this.closed; }
+
 
 }

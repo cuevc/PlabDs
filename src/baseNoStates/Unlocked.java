@@ -5,6 +5,7 @@ public class Unlocked extends DoorState {
     public  Unlocked(Door door){
         doorAttr=door;
         door.setClosed(true);
+        name="unlocked";
     }
 
     @Override
@@ -28,7 +29,7 @@ public class Unlocked extends DoorState {
 
         //only if Door is closed, it could be locked
         if (doorAttr.isClosed()) {
-
+            doorAttr.setDoorState(new Locked(doorAttr));
             System.out.println("Door locked");
 
         }
@@ -49,6 +50,11 @@ public class Unlocked extends DoorState {
         doorAttr.setDoorState(new Propped(doorAttr));
         System.out.println("Door Propped");
 
+    }
+
+    @Override
+    public void unlockedShortly() {
+        System.out.println("Door already unlocked");
     }
 
 }
