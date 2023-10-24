@@ -2,13 +2,12 @@ package baseNoStates;
 
 import java.util.ArrayList;
 
+// Partition is a part of the Composite between Area (abstract), Partition and Space. A Partition instance can have a list of Partitions or Spaces.
 public class Partition extends Area {
 
-    //deberia de ser una lista de areas una sobra
-    //private ArrayList<Partition> partitionList;
-    private ArrayList<Area> areaList;
-    private String partition_name;
-    private Area father;
+    private ArrayList<Area> areaList; // List of Partitions or Spaces in this instance of Partition.
+    private String partition_name;  // Name of the Partition (used to find a Partition by Id).
+    private Area father; // Father of this Partition, very useful to build the building Areas tree.
 
     public Partition(String part_name, ArrayList<Area> areas, Area fatherNode){
         partition_name = part_name;
@@ -17,22 +16,36 @@ public class Partition extends Area {
         father = fatherNode;
     }
 
-    void addArea(Area addingArea){
-        this.areaList.add(addingArea);
-    }
+
+    // =====================================================
+    // ||              Setters and Getters                ||
+    // =====================================================
+
 
     @Override
     public void setFather(Area father) {
         this.father = father;
-    }
+    } // Sets the father of the current Partition, useful to make the building Areas tree.
 
-    @Override // Used on the Space Class
-    public Space findAreaById(String id) {
-        return null;
-    }
+    @Override
+    public ArrayList<Area> getAreaList() {
+        return areaList;
+    } // Get the current Areas List
 
-    @Override // Used on the Space Class
-    public ArrayList<Door> getDoorsGivingAccess() {
+    @Override
+    public String getPartitionName(){return partition_name;} // Get the name of this instance of Partition.
+
+    // =====================================================
+    // ||           Other methods of this class           ||
+    // =====================================================
+
+
+    void addArea(Area addingArea){
+        this.areaList.add(addingArea);
+    } // Adds an Area to the current AreasList.
+
+    @Override // Used also in the Space Class
+    public ArrayList<Door> getDoorsGivingAccess() { // Special Getter that gives all the Doors of the current Area. This method has a recursive call, so at the end the Space will give us its Doors.
         ArrayList<Door> recollectedDoors = new ArrayList<>();
         for(Area actualArea : this.areaList){
             actualArea.getDoorsGivingAccess();
@@ -42,50 +55,18 @@ public class Partition extends Area {
         return recollectedDoors;
     }
 
-
-
     @Override
-    public ArrayList<Partition> getPartitionlist() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Area> getAreaList() {
-        return areaList;
-    }
-    @Override
-    public void setAreaList(ArrayList<Area> areaLists) {
-        this.areaList = areaLists;
-    }
-
-    @Override
-    public void setPartitionlist(ArrayList<Partition> partitionlist) {
-
-    }
-
-    @Override
-    public String getPartition_name(){return partition_name;}
-
-    @Override
-    public Area findPartitionById(String id, Area rootArea) {
+    public Area findPartitionById(String id, Area rootArea) {  // Searches an Area (Partition), and if it's in the given Area, we return the instance. Otherwise, we return null.
         // We search the given Partition on the root.
         for(Area looking : rootArea.getAreaList()){
-            if (looking.getPartition_name().equals(id)){
+            if (looking.getPartitionName().equals(id)){
                 return looking;
             }
         }
         return null;
     }
 
-    @Override
-    public void setPartFather(Partition father) {
 
-    }
-
-    @Override
-    public void setPartFather(Area father) {
-
-    }
 
 }
 

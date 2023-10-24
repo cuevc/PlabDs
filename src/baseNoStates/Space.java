@@ -3,65 +3,47 @@ package baseNoStates;
 import java.util.ArrayList;
 import java.util.List;
 
+// Space is the lowest level of the Composite between Area (abstract), Partition and Space. A Space instance can have a list of Doors and its Father is a Partition.
 public class Space extends Area{
-    private ArrayList<Door> doorList;
-    private String space_name;
-    private Area partFather;
+    private ArrayList<Door> doorList; // List of Doors in this instance of Space.
+    private String spaceName; // The name of this Space
+    private Area partFather;  // Its Father (its a Partition)
 
-    public Space(String spa_name, List<Door> doors, Partition partitionFather){
-        space_name = spa_name;
+    public Space(String mySpaceName, List<Door> doors, Partition partitionFather){
+        spaceName = mySpaceName;
         doorList = (ArrayList<Door>) doors;
         partFather = partitionFather;
     }
 
 
-    @Override
-    public Area findAreaById(String id) {
-        return null;
-    }
-
-    @Override
-    public Partition findPartitionById(String id, Area rootArea) {
-        return null;
-    }
-
-    ///////////////////////////////SETTERS//////////////////////////////
-    @Override
-    public void setPartFather(Partition father){partFather = father;}
-
-    @Override
-    public void setPartFather(Area father) {
-        throw new UnsupportedOperationException("This method shouldn't be used.");
-
-    }
+    // =====================================================
+    // ||              Setters and Getters                ||
+    // =====================================================
 
     @Override
     public void setFather(Area father) {
         partFather = father;
-    }
+    } // Sets the father of the current Space, useful to make the building Areas tree.
+
+    @Override
+    public ArrayList<Area> getAreaList() {return null;} // Get the current Areas List
+
+    @Override
+    public String getPartitionName() {
+        return spaceName;
+    } // Get the name of this instance of Space.
 
 
     @Override
-    public void setAreaList(ArrayList<Area> areasList){}
+    public ArrayList<Door> getDoorsGivingAccess(){return doorList;}  // In this case, this is not a special getter method because Space has a DoorList that we can return without any recursive call.
+
+    // =====================================================
+    // ||           Other methods of this class           ||
+    // =====================================================
 
     @Override
-    public void setPartitionlist(ArrayList<Partition> partitionlist) {}
-
-
-    ////////////////////////////GETERS///////////////////////////////////
-
-    @Override
-    public ArrayList<Door> getDoorsGivingAccess(){return doorList;}
-    @Override
-    public ArrayList<Partition> getPartitionlist() {
+    public Partition findPartitionById(String id, Area rootArea) {
         return null;
-    }
-    @Override
-    public ArrayList<Area> getAreaList() {return null;}
-
-    @Override
-    public String getPartition_name() {
-        return space_name;
-    }
+    }  // Due to the fact that Space doesn't have Spaces or Partitions, we don't use this method with an Space instance, but we have to implement it somehow because Area (the father class of Space) has it.
 
 }

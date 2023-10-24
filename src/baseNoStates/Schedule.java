@@ -5,13 +5,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+// Each group have a Schedule. The Schedule tells us the time and date when the user can make an action.
 public class Schedule {
 
-    private LocalDate fromDate;
-    private LocalDate toDate;
-    private List<DayOfWeek> workDays;
-    private LocalTime fromHour;
-    private LocalTime toHour;
+    private LocalDate fromDate;  // From which date (the date when the user started working on the company
+    private LocalDate toDate;  // To which date (the date when the user started working on the company
+    private List<DayOfWeek> workDays;  // To check if in this day of the week the user is working (can access to the building).
+    private LocalTime fromHour;  // From which hour (the hour when the user start the shift).
+    private LocalTime toHour;  // To which hour (the hour when the user start the shift).
 
     public Schedule(LocalDate initalDate, LocalDate finalDate, LocalTime initalHour, LocalTime finalHour, List<DayOfWeek> weekDays){
         fromDate = initalDate;
@@ -21,13 +22,12 @@ public class Schedule {
         workDays = weekDays;
     }
 
-    public LocalDate getFromDate(){ return fromDate;}
-    public LocalDate getToDate() { return toDate;}
-    public LocalTime getFromHour() { return fromHour;}
-    public LocalTime getToHour() { return toHour;}
-    public List<DayOfWeek> getWorkDays() { return workDays;}
-    public boolean isOnTime(LocalTime hour) {
-        //If the hour is after inital hour and before end time, the function will return true, otherwise false.
+
+    // =====================================================
+    // ||           Other methods of this class           ||
+    // =====================================================
+
+    public boolean isOnTime(LocalTime hour) {  //If the hour is after initial hour and before end time, the function will return true, otherwise false.
         if( (fromHour.isBefore(hour)) && (toHour.isAfter(hour)) ){
             return true;
         }
@@ -35,9 +35,8 @@ public class Schedule {
             return false;
         }
     }
-    public boolean isOnDate (LocalDate date){
-        //If the date is after initial date and before end date it will return true, otherwise false.
-        if( (fromDate.isBefore(date)) && (toDate.isAfter(date)) && (this.workDays.contains(date.getDayOfWeek()))){
+    public boolean isOnDate (LocalDate date){  //If the date is after initial date and before end date it will return true, otherwise false.
+        if( (fromDate.isBefore(date.minusDays(1))) && (toDate.isAfter(date)) && (this.workDays.contains(date.getDayOfWeek()))){
             return true;
         }
         else{return false;}

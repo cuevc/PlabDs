@@ -1,19 +1,17 @@
 package baseNoStates;
-import baseNoStates.requests.Request;
-import baseNoStates.requests.RequestReader;
 
-import javax.imageio.plugins.tiff.GeoTIFFTagSet;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
 import java.util.ArrayList;
 
+// The User class contains the crucial information of a worker.
 public class User {
-  private final String name;
-  private final String credential;
-  private Group userGroup;
+  private final String name;  // The name of the worker.
+  private final String credential;  // The credential or Id given to this worker by the company.
+  private Group userGroup;  // The group of this User. The group contains information about the group where this worker belongs in the company.(Permissions, actions, schedule, etc).
 
   public User(String name, String credential, Group groupies) {
     this.name = name;
@@ -21,85 +19,48 @@ public class User {
     this.userGroup = groupies;
   }
 
-  public String getNameGroup() {return userGroup.getTypeGroup();}
-  public boolean youHaveThisAction(String searchAction, RequestReader req){
+  // =====================================================
+  // ||              Setters and Getters                ||
+  // =====================================================
 
-
-    boolean result = userGroup.getActions().contains(searchAction);
-    if (!result){
-      req.addReason("This user can't make this Action: " + searchAction+ ". ");
-    }
-    return result;
+  public String getCredential() {
+    return credential;
   }
+
+  public String getName() { return name;}
+
+  // =====================================================
+  // ||           Other methods of this class           ||
+  // =====================================================
 
   public boolean hasAccess(Area areaToAcces,LocalDate date, LocalTime hour, String action, ArrayList<String> reason)
   {
     //This function is calling another action from Group
     //This checks if the destination area is inside the users group area list
-    //At the beggining of the first iteration of this function is null, because once it's executed it will get the first
+    //At the beginning of the first iteration of this function is null, because once it's executed it will get the first
     //element of the areas tree.
     boolean access = false;
 
-    //For those users that doesn't has access to areas (Blank) they don't have access to no area (their areas tree null)
-    //so we have to check it before
+    //For those users that doesn't have access to areas (Blank). They have access to no area (their areas tree is null)
+    //so we have to check it before trying to iterate.
     if(userGroup.getSpaces() != null)
     {
       for(Area actualArea : this.userGroup.getSpaces()) {
         if(reason.isEmpty() && !access){
-          access =  userGroup.hasAccessToArea(areaToAcces.getPartition_name(), actualArea ,date, hour, action, reason);
+          access =  userGroup.hasAccessToArea(areaToAcces.getPartitionName(), actualArea ,date, hour, action, reason);
         }
         else {
           break;
         }
       }
     }
-    //If reason is still empty and permission is fall it means that area has not been found
+    //If reason is still empty and access is false it means that area has not been found, so the User doesn't have acces to this Area.
     if(reason.isEmpty() && !access){
       reason.add("You don't have access to this area");
     }
     return access;
   }
-  public String getCredential() {
-    return credential;
-  }
 
-  public Boolean hasPermision(String act){
-    Boolean aux = userGroup.hasAction(act);
-    return aux;
-  }
-
-  public boolean canBeInSpace(Door searchDoor)
-  {
-    boolean foundDoor = false;
-    ArrayList<Area> myAreas = userGroup.getSpaces();
-    for( Area currentArea : myAreas){
-      //get me the list of spaces of the current area
-      ArrayList<Area> spacesList = currentArea.getAreaList();
-      if (spacesList != null)
-      {
-        for(Area eachSpace : spacesList){
-          if (eachSpace != null){
-            System.out.println(eachSpace);
-          ArrayList<Door> doorsList = eachSpace.getDoorsGivingAccess();
-
-            for(Door eachDoor : doorsList)
-            {
-              if(eachDoor.getId().equals(searchDoor.getId())){
-                System.out.println("bicho pelao");
-                foundDoor = true;
-                return foundDoor;
-              }
-            }
-          }
-        }
-
-      }
-      // throw new RuntimeException("Not a Space or Door.");
-    }
-    return foundDoor;
-  }
-
-  public String getName() { return name;}
   @Override
   public String toString() {
     return "User{name=" + name + ", credential=" + credential + "}";

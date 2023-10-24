@@ -1,4 +1,6 @@
-package baseNoStates;
+package doorState;
+
+import baseNoStates.Door;
 
 import java.util.Observable;
 import java.util.Observer;

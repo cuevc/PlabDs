@@ -1,4 +1,6 @@
-package baseNoStates;
+package doorState;
+
+import baseNoStates.Door;
 
 public class Locked extends DoorState {
 

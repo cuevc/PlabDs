@@ -1,4 +1,5 @@
 package baseNoStates;
+import doorState.Actions;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -7,12 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class DirectoryUsers {
-  //private static final ArrayList<User> users = new ArrayList<>();
+
   private static final ArrayList<Group> rols = new ArrayList<>();
 
   public static void makeUsers() {
-    //TODO: make user groups according to the specifications in the comments, because
-    // now all are the same
 
     // users without any privilege, just to keep temporally users instead of deleting them,
     // this is to withdraw all permissions but still to keep user data to give back
@@ -26,6 +25,9 @@ public final class DirectoryUsers {
 
 
 
+    // =====================================================
+    // ||  Declare Users, Groups, Schedules and Actions   ||
+    // =====================================================
 
     Group Blank = new Group("Blank",null,null,null);
     Blank.addUser(new User("Bernat", "12345", Blank));
@@ -77,9 +79,6 @@ public final class DirectoryUsers {
     managers.addUser(new User("Marta", "05827",managers));
     rols.add(managers);
 
-    //users.add(new User("Manel", "95783"));
-    //users.add(new User("Marta", "05827"));
-
     // admin :
     // always=2023 to 2100
     // all days of the week
@@ -91,21 +90,14 @@ public final class DirectoryUsers {
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY,DayOfWeek.SUNDAY)));
 
     ArrayList<Area> adminArea = new ArrayList<Area>();
-    //adminArea.add();
 
     Group Admin = new Group("Admin", AdminSchedule, new ArrayList<>(Arrays.asList (Actions.OPEN, Actions.CLOSE,Actions.LOCK, Actions.UNLOCK,Actions.UNLOCK_SHORTLY)),managersAreas);
     Admin.addUser(new User("Ana", "11343",Admin));
     rols.add(Admin);
-
-
-
-
-
-
   }
 
 
-  public static User findUserByCredential(String credential) {
+  public static User findUserByCredential(String credential) {  // Find a User in any rol (group) by its Credential.
 
     for (Group aux : rols) {
       if (aux.searchUser(credential) != null)

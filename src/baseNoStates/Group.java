@@ -1,18 +1,16 @@
 package baseNoStates;
 
-import java.lang.reflect.Type;
-import java.security.PrivateKey;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 
+// This class contains Users in a Group. Each group has determined permissons, access areas and Schedules.
 public class Group {
-    private String typeGroup;
-    private ArrayList<User> users;
-    private Schedule schedules;
-    private ArrayList<String> actions;
-    private ArrayList<Area> accesAreas;
+    private String typeGroup;  // The name of this type of Group
+    private ArrayList<User> users;  // The list of Users that belong to this Group. (who)
+    private Schedule schedules;  // The determined schedules of the Users of this Group (when they can access).
+    private ArrayList<String> actions;  // The determined actions that the Users of this Group can make (what).
+    private ArrayList<Area> accesAreas;  // The determined areas that the Users of this Group can access (where).
 
     public Group(String name, Schedule setSchedule, ArrayList<String> operativeActions, ArrayList<Area> myArea) {
         typeGroup = name;
@@ -21,24 +19,32 @@ public class Group {
         users = new ArrayList<>();
         accesAreas = myArea;
     }
-    public String getTypeGroup() {return typeGroup;}
-    public ArrayList<User> getUsers() {return users;}
-    public Schedule getSchedules() {return schedules;}
-    public ArrayList<String> getActions () {return actions;}
+
+    // =====================================================
+    // ||              Setters and Getters                ||
+    // =====================================================
+
+    ArrayList<Area> getSpaces() {return accesAreas;}
+
+
+
+    // =====================================================
+    // ||           Other methods of this class           ||
+    // =====================================================
+
 
     public boolean isOnUsers(User searchUser)
-    {
-        //Looking for user with the same credential and same name
-        //if already exists then return true, otherwise false.
+    { //Looking for user with the same credential and same name. If already exists then return true, otherwise false.
         for( User actualUser:users)
         {
-            if(actualUser.getCredential() == searchUser.getCredential() &&actualUser.getName() == searchUser.getName() ){
+            if(actualUser.getCredential().equals(searchUser.getCredential()) && actualUser.getName().equals(searchUser.getName())  ){
                 return true;
             }
         }
         return false;
     }
-    public User searchUser(String userCredential){
+
+    public User searchUser(String userCredential){ // Search for user with the same credential and returns it if its find (Instance of User), otherwise a null value will be returned.
         for( User actualUser:users)
         {
             if(userCredential.equals(actualUser.getCredential()))
@@ -49,9 +55,10 @@ public class Group {
         System.out.println("The user with credential: " + userCredential + " has not been found");
         return null;
     }
-    public void addUser(User newUser)
+
+    public void addUser(User newUser) // Add a User to the current userList of this Group.
     {
-        //
+        // Check if the User is actually added. In this case, we won't add it to the list. Otherwise we will.
         if( !isOnUsers(newUser)) {
             users.add(newUser);
             System.out.println(newUser.toString() + " added succesfully");
@@ -60,36 +67,11 @@ public class Group {
             System.out.println(newUser.toString() + " is already on the list");
         }
     }
-    public void removeUser(User deleteUser)
-    {
-        if(isOnUsers(deleteUser)){
-            users.remove(deleteUser);
-            System.out.println(deleteUser.toString() + " remove succesfully.");
-        }
-        else{
-            System.out.println(deleteUser.toString() + " does not exist in this group.");
 
-        }
-    }
-    public boolean hasAction(String act)
-    {
-        boolean hasIt  = false;
-        if(actions != null){
-            for(String Activision : actions){
-                if(Activision.equals(act)){
-                    hasIt = true;
-                }
-            }
-        }
-
-        return hasIt;
-    }
-    ArrayList<Area> getSpaces() {return accesAreas;}
-
-
+// Method that returns true if the user have access to an Area (correct: Action, Date, Time, and current Area).
     public boolean hasAccessToArea(String areaToAccess,Area currentArea, LocalDate date, LocalTime hour, String action, ArrayList<String> reason) {
         boolean permissionConced = false;
-        if(currentArea.getPartition_name().equals(areaToAccess)) {
+        if(currentArea.getPartitionName().equals(areaToAccess)) {
             //In this if we check if the user can do the action required and if is on time and date
             if (this.actions.contains(action)) {
                 if (this.schedules.isOnTime(hour)) {
@@ -105,7 +87,7 @@ public class Group {
                 reason.add("This user can't do the action: " + action);
             }
         }
-        //If we are in a space class and does exist partition list it will return null
+        //If we are in a Space class and does exist partition list it will return null.
         else if(currentArea.getAreaList() != null){
 
             for(Area actualArea : currentArea.getAreaList()){
@@ -121,14 +103,6 @@ public class Group {
         }
 
 
-        return permissionConced;
-        //We check if the name is equal to recursive name node
-
-        /* CÓDIGO POLILLA
-        boolean[] printable = {false, false, false};
-        printable[0] = !hasAction(action);
-        printable[1] = !schedules.isOnDate(date) && schedules.isOnTime(hour);
-        //printable[2] = !(accesAreas.get);
-        return true; */
+        return permissionConced; // If true then the user have access to this area else, the user doesn't have access.
     }
 }

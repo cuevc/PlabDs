@@ -6,8 +6,11 @@ import java.util.Arrays;
 public final class DirectoryDoors {
   private static ArrayList<Door> allDoors;
 
+  public DirectoryDoors makeDoors() {  // Declare all the Doors and put all them in the allDoors ArrayList.
 
-  public static void makeDoors() {
+    // =====================================================
+    // ||               Declaring the Doors               ||
+    // =====================================================
 
     // basement
     Door d1 = new Door("D1"); // exterior, parking
@@ -25,9 +28,10 @@ public final class DirectoryDoors {
     Door d9 = new Door("D9"); // corridor, IT
 
     allDoors = new ArrayList<>(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9));
+    return this;
   }
 
-  public static Door findDoorById(String id) {
+  public static Door findDoorById(String id) {  // Finds a Door in the allDoors list by its Id.
     for (Door door : allDoors) {
       if (door.getId().equals(id)) {
         return door;
