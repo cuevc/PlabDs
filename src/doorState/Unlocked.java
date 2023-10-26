@@ -2,6 +2,8 @@ package doorState;
 
 import baseNoStates.Door;
 
+
+// The Unlocked DoorState let open the door.
 public class Unlocked extends DoorState {
 
     public  Unlocked(Door door){

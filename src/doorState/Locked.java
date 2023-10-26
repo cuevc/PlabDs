@@ -2,6 +2,8 @@ package doorState;
 
 import baseNoStates.Door;
 
+
+// The Locked DoorState doesn't let to open the door until its unlocked.
 public class Locked extends DoorState {
 
     public Locked(Door door){

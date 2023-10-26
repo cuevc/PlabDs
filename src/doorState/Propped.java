@@ -2,6 +2,8 @@ package doorState;
 
 import baseNoStates.Door;
 
+
+// Door State consequence of UnlockedShortly, just in case that the Door can't be locked passed the time due the Door is open.
 public class Propped extends DoorState{
 
 
