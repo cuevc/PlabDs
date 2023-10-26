@@ -1,15 +1,14 @@
 @startuml
 skinparam classAttributeIconSize 0
 ' this is to use the standard notation for public, protected, private
-
+title AccessControlSystem
 class User {
 - name : string
 - credential : String
-- adjecentGroup : Group
+- userGroup : Group
+
 + User(name:string, credential:String, groupies : Group)
-+ getCredential() : String
-+ getName() : String
-+ hasPermision(String act) : Boolean
++hasAccess(areaToAccess : Area, date : LocalDate, hour : LocalTime, action : String, reason : ArrayList<String>)
 + toString()
 }
 
@@ -18,21 +17,15 @@ class User {
 class Group{
     - typeGroup : string
     - users : ArrayList<User>
-    - schedules : Schedules
+    - schedules : Schedule
     - actions : ArrayList<String>
-    - accesAreas: List<Area>
+    - accesAreas: ArrayList<Area>
 
-   + Group(typeGroup : string, setSchedule : Schedule, operativeAction : ArrayList<String>)
-   + getTypeGroup() : String
-   + getUsers() : ArrayList<User>
-   + getSchedules() : Schedule
-   + getActions() : ArrayList<String>
+   + Group(name : string, setSchedule : Schedule, operativeAction : ArrayList<String>, myArea : ArrayList<Area>)
    + isOnUser(User searchUser) : Boolean
    + searchUser(String userCredentuial) : User
    + addUser(User newUser)
-   + removeUser(User deleteUser)
-   - hasAction(String act) : boolean
-
+   + hasAccessToArea(areToAccess : String, currentArea : Area, date : LocalDate, hour : LocalTime, action : String, reason : ArrayList<String>)
 }
 
 
@@ -41,15 +34,10 @@ class Schedule{
     - toDate : LocalDate
     - workDays : List <DayOfWeek>
     - fromHour : LocalTime
-    - to Hour : LocalTime
+    - toHour : LocalTime
 
     + Schedule(initialDate : LocalDate, finalDate : LocalDate,initialHour : LocalTime, finalHour: LocalTime,
     weekDays : List<DayOfWeek>)
-    + getFromDate() : LocalDate
-    + getToDate() : LocalDate
-    + getFromHour() : LocalTime
-    + getToHour() : LocalTime
-    + getWorkDays() : List<DayOfWeek>
     + isOnTime(LocalTime hour) : Boolean
     + isOnDate(LocalDate date) : Boolean
 
@@ -57,11 +45,18 @@ class Schedule{
 
 
 class Door{
-    -id:string
-    -close:boolean
-    -status:DoorState
-    -to:Area
-    -from:Area
+    -id : string
+    -closed : boolean
+    -doorState : DoorState
+    -to : Area
+    -from : Area
+    + Door(id : String)
+    + update(o : Observable , arg : Object)
+    + processRequest(request RequestReader)
+    - doAction(action : String)
+    + isClosed() : boolean
+    + toString() : String
+    +toJson() : JSONObject
 }
 
 namespace doorState #DDDDDD{
@@ -70,7 +65,7 @@ namespace doorState #DDDDDD{
        +{static}UNLOCKED:String
     }
 
-    class Action{
+    class Actions{
         {static}OPEN:String
         {static}CLOSE:String
         {static}LOCK:String
@@ -79,48 +74,89 @@ namespace doorState #DDDDDD{
     }
 
     abstract DoorState{
-        #door: Door
+        #doorAttr: Door
         #name: String
-        +setUnlock()
-        +setPropped()
-        +setLock()
-        +setUnlockShortly()
+        {abstract}+open()
+        {abstract}+close()
+        {abstract}+lock()
+        {abstract}+unlock()
+        {abstract}+propped()
+        {abstract}+unlockedShortly()
     }
 
     class Unlocked extends DoorState{
+        +Unlock(door:Door)
+        +open()
+        +close()
+        +lock()
+        +unlock()
+        +propped()
+        +unlockedShortly()
 
     }
 
     class UnlockedShortly extends DoorState{
+        +UnlockedShortly(door : Door)
+        +open()
+        +close()
+        +lock()
+        +unlock()
+        +propped()
+        +unlockedShortly()
+        +update(o : Observable, arg : Object)
+
 
     }
 
     class Propped extends DoorState{
-
+        +Propped(door : Door)
+        +UnlockedShortly(door : Door)
+        +open()
+        +close()
+        +lock()
+        +unlock()
+        +propped()
+        +unlockedShortly()
     }
 
     class Locked extends DoorState{
+        +Locked(door : Door)
+        +open()
+        +close()
+        +lock()
+        +unlock()
+        +propped()
+        +unlockedShortly()
 
     }
 }
 
 
 abstract Area{
-    {abstract}+findAreaById(id:String): Area
-    {abstract}+getDoorsGivingAcces(): Door[]
+    {abstract}#findPartitionById(id:String, rootArea:Area): Area
+    {abstract}+getAreaList() : ArrayList<Area>
+    {abstract}+getDoorsGivingAcces(): ArrayList<Door>
+    {abstract}+getPartitionName() : String
+    {abstract}+setFather(Area father)
 }
 
 class Partition extends Area{
-    -partitions:List<Partition>
-    -areas:List<Area>
+    - areaList : ArrayList<Area>
+    - partitionName : String
+    - father : Area
 
-    +findAreaById(id:String): Area
+    + Partition(part_naeme : String, areas : ArrayList<Area>, fatherNode : Area)
+    + getDoorsGivingAcces() : ArrayList<Door>
+    + findPartitionById(id:String, rootArea:Area): Area
 }
 
  class Space Extends Area{
-    -doorsList:List<Door>
-
-    +getDoorsGivingAcces(): Door[]
+    - doorList : ArrayList<Door>
+    - spaceName : String
+    - partFather : Area
+    + Space(mySpaceName: String, doors : List<Door> , partitionFather <Partition>)
+    + findPartitionById(id:String, rootArea:Area): Area
+    + getDoorsGivingAcces() : ArrayList<Door>
 }
 
 
@@ -136,22 +172,25 @@ interface Observer{
 }
 
 
-class ClockThread extends Observable{
+class Clock extends Observable{
+    +Clock()
+    +run()
+
 
 }
 
-Group -left-> "n..1" Action : actions
+Group -left-> "n..1" Actions : actions
 Group -down-> "n..1" Schedule : schedules
-Group -down-> "1..n"  User: users
-User -up-> "1..1" Group:adjecentGroup
+Group -down-* "0..n"  User: users
+User -up-> "1..1" Group:userGroup
 
 
 Door --up->"1..n" Space: to
 Door --up->"1..n" Space: from
 Door -right-*"n..1" DoorState : status
 
-Partition --right*"n..1" Partition : partition
-Partition --down*"n..1" Area: areas
+
+Area --down*"n..1" Partition:partition
 
 Space --down->"*" Door:doorsList
 
@@ -159,7 +198,11 @@ Group -->"*" Area: accesAreas
 
 Observable o-right-> "observers *" Observer
 
-DoorState ..Up.> Observer
+UnlockedShortly ..Up.> Observer
+
+
+
+
 @enduml
 
 //manito no se hacer un commit

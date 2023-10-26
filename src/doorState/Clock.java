@@ -14,6 +14,7 @@ public class Clock extends Observable implements Runnable{
     @Override
     public void run() {
         Timer timer= new Timer();
+
         TimerTask task= new TimerTask(){
             @Override
             public void run(){

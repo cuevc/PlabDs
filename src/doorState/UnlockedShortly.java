@@ -11,11 +11,9 @@ public class UnlockedShortly extends DoorState implements Observer {
 
     public UnlockedShortly(Door door){
         doorAttr=door;
-        doorAttr.setClosed(true);
         name="unlocked_shortly";
         clock= new Clock();
         clock.addObserver(this);
-
         Thread threadClock=new Thread(clock);
         threadClock.start();
     }
