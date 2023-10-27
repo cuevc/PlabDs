@@ -28,11 +28,6 @@ public class Door{
   // In order to determine the States we add a DoorState attribute.
   private DoorState doorState;
 
-  /**
-   * Class constructor with the id param.
-   * @param id  String. The id of the Door. Useful to search a certain door by id.
-   * @see Door
-   */
   public Door(String id){
     this.id = id;
     this.to = null;
@@ -47,21 +42,12 @@ public class Door{
   // ||              Setters and Getters                ||
   // =====================================================
 
-  /**
-   * Settter of the `to` attribute from Door.
-   * @param to  <a href="Area">Area</a>
-   * @see Door
-   */
   public void setTo(Area to){this.to = to;}
 
-  /**
-   * Setter of the `from` attribute from Door
-   * @param from
-   * @see Door
-   */
   public void setFrom(Area from){this.from = from;}
 
   public Area getTo(){return this.to;}
+
   public Area getFrom(){return this.from;}
 
   public boolean isClosed() {
@@ -75,7 +61,6 @@ public class Door{
   public String getStateName() {
     return doorState.getName();
   }
-
 
   public DoorState getDoorState() {
     return doorState;

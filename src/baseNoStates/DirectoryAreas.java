@@ -11,59 +11,92 @@ public class DirectoryAreas {
     // ||              Setters and Getters                ||
     // =====================================================
 
-
-    public static Area getRootArea (){return rootArea;}
+    public static Area getRootArea() {
+        return rootArea;
+    }
 
     // =====================================================
     // ||           Other methods of this class           ||
     // =====================================================
 
-
     public static Area findAreaById(String areaId, Area areaCurrent) {
         Area aux = null;
 
-        if(areaCurrent.getPartitionName().equals(areaId)) {
+        if (areaCurrent.getPartitionName().equals(areaId)) {
             aux = areaCurrent;
-        }
-        else if (areaCurrent.getAreaList() != null){
-            for(Area actualArea : areaCurrent.getAreaList()){
-                //General case: if reason is not empty and permissionConceded is false, means that area has not been found
-                if (aux == null)
-                {
+        } else if (areaCurrent.getAreaList() != null) {
+            for (Area actualArea : areaCurrent.getAreaList()) {
+                //General case: if reason is not empty and permissionConceded
+                // is false, means that area has not been found
+                if (aux == null) {
                     aux = findAreaById(areaId, actualArea);
-                }
-                else{
+                } else {
                     break;
                 }
             }
         }
         return aux;
-
     }
 
-
-
-    public static void makeAreas(){
+    public static void makeAreas() {
         DirectoryDoors initializer = new DirectoryDoors();
-        initializer.makeDoors();  // Getting all Doors to assing them to the Spaces.
+        initializer.makeDoors();  // Getting all Doors to assign them to the Spaces.
         allDoors = initializer.getAllDoors();
 
         // =====================================================
         // ||                Define the Spaces                ||
         // =====================================================
 
-        Space parking = new Space("parking",new ArrayList<Door>(){{add(initializer.findDoorById("D1"));add(initializer.findDoorById("D2"));}}, null);
-        Space hall = new Space("hall",new ArrayList<Door>(){{add(initializer.findDoorById("D3"));add(initializer.findDoorById("D4"));}}, null);
-        Space room1 = new Space("room1",new ArrayList<Door>(){{add(initializer.findDoorById("D5"));}}, null);
-        Space room2 = new Space("room2",new ArrayList<Door>(){{add(initializer.findDoorById("D6"));}}, null);
-        Space room3 = new Space("room3",new ArrayList<Door>(){{add(initializer.findDoorById("D8"));}}, null);
-        Space corridor = new Space("corridor",new ArrayList<Door>(){{add(initializer.findDoorById("D7"));}}, null);
-        Space IT = new Space("IT",new ArrayList<Door>(){{add(initializer.findDoorById("D9"));}}, null);
+        Space parking = new Space("parking",
+                new ArrayList<Door>() {{
+                    add(initializer.findDoorById("D1"));
+                    add(initializer.findDoorById("D2"));
+                }
+                }, null);
+
+        Space hall = new Space("hall",
+                new ArrayList<Door>() {{
+                    add(initializer.findDoorById("D3"));
+                    add(initializer.findDoorById("D4"));
+                }
+                }, null);
+
+        Space room1 = new Space("room1",
+                new ArrayList<Door>() {{
+                    add(initializer.findDoorById("D5"));
+                }
+                }, null);
+
+        Space room2 = new Space("room2",
+                new ArrayList<Door>() {{
+                    add(initializer.findDoorById("D6"));
+                }
+                }, null);
+
+        Space room3 = new Space("room3",
+                new ArrayList<Door>() {{
+                    add(initializer.findDoorById("D8"));
+                }
+                }, null);
+
+        Space corridor = new Space("corridor",
+                new ArrayList<Door>() {
+            {
+                add(initializer.findDoorById("D7"));
+            }
+            }, null);
+
+        Space IT = new Space("IT",
+                new ArrayList<Door>() {{
+                add(initializer.findDoorById("D9"));
+            }
+            }, null);
 
         // =====================================================
         // ||              Define the Partitions              ||
         // ||                and add its Spaces               ||
         // =====================================================
+
         ArrayList<Space> basementSpace = new ArrayList<Space>();
         basementSpace.add(parking);
 
@@ -78,11 +111,11 @@ public class DirectoryAreas {
         floor1Space.add(IT);
 
 
-        Partition basement = new Partition("basement",new ArrayList<>(), null );
-        Partition groundFloor =  new Partition("ground_floor", new ArrayList<>(), null );
-        Partition floor1 = new Partition("floor1", new ArrayList<>(), null );
-        Partition stairs =  new Partition("stairs", new ArrayList<>(), null );
-        Partition exterior =  new Partition("exterior",  new ArrayList<>(), null );
+        Partition basement = new Partition("basement", new ArrayList<>(), null);
+        Partition groundFloor =  new Partition("ground_floor", new ArrayList<>(), null);
+        Partition floor1 = new Partition("floor1", new ArrayList<>(), null);
+        Partition stairs =  new Partition("stairs", new ArrayList<>(), null);
+        Partition exterior =  new Partition("exterior",  new ArrayList<>(), null);
 
         basement.addArea(parking);
 
@@ -97,6 +130,7 @@ public class DirectoryAreas {
         // =====================================================
         // ||             Setting Spaces fathers              ||
         // =====================================================
+
         parking.setFather(basement);
 
         hall.setFather(groundFloor);
@@ -106,7 +140,6 @@ public class DirectoryAreas {
         room3.setFather(floor1);
         corridor.setFather(floor1);
         IT.setFather(floor1);
-
 
         // =====================================================
         // ||          Declaring the Root partitions          ||
@@ -120,21 +153,36 @@ public class DirectoryAreas {
         buildingPartitions.add(stairs);
         buildingPartitions.add(exterior);
 
-
         // =====================================================
         // ||          Setting From and To of Doors           ||
         // =====================================================
 
-        allDoors.get(0).setFrom(exterior); allDoors.get(0).setTo(parking);
-        allDoors.get(1).setFrom(stairs); allDoors.get(1).setTo(parking);
-        allDoors.get(2).setFrom(exterior); allDoors.get(2).setTo(hall);
-        allDoors.get(3).setFrom(stairs); allDoors.get(3).setTo(hall);
-        allDoors.get(4).setFrom(hall); allDoors.get(4).setTo(room1);
-        allDoors.get(5).setFrom(hall); allDoors.get(5).setTo(room2);
-        allDoors.get(6).setFrom(stairs); allDoors.get(6).setTo(corridor);
-        allDoors.get(7).setFrom(corridor); allDoors.get(7).setTo(room3);
-        allDoors.get(8).setFrom(corridor); allDoors.get(8).setTo(IT);
+        allDoors.get(0).setFrom(exterior);
+        allDoors.get(0).setTo(parking);
 
+        allDoors.get(1).setFrom(stairs);
+        allDoors.get(1).setTo(parking);
+
+        allDoors.get(2).setFrom(exterior);
+        allDoors.get(2).setTo(hall);
+
+        allDoors.get(3).setFrom(stairs);
+        allDoors.get(3).setTo(hall);
+
+        allDoors.get(4).setFrom(hall);
+        allDoors.get(4).setTo(room1);
+
+        allDoors.get(5).setFrom(hall);
+        allDoors.get(5).setTo(room2);
+
+        allDoors.get(6).setFrom(stairs);
+        allDoors.get(6).setTo(corridor);
+
+        allDoors.get(7).setFrom(corridor);
+        allDoors.get(7).setTo(room3);
+
+        allDoors.get(8).setFrom(corridor);
+        allDoors.get(8).setTo(IT);
 
         // Declaring rootArea (the root of the building Areas tree)
         rootArea =  new Partition("building", buildingPartitions, null );
@@ -150,23 +198,22 @@ public class DirectoryAreas {
         exterior.setFather(rootArea);
     }
 
-    public Door findDoorById(String id) {  // Find a determined Door by its Id. At this time we don't use the method, but in the future may be useful, thats why we keep it.
+    // Find a determined Door by its Id. At this time we don't use the
+    // method, but in the future may be useful, that's why we keep it.
+    public Door findDoorById(String id) {
         // We search the given Door on the ArrayList of allDoors.
         if (allDoors.contains(new Door(id))) {
             // If allDoors contains the Door we are searching, we get it and return it.
-            for (Door doorFounded:allDoors) {
-                if (doorFounded.getId().equals(id)){  // Searching through the id.
+            for (Door doorFounded : allDoors) {
+                if (doorFounded.getId().equals(id)) {  // Searching through the id.
                     return doorFounded;
                 }
             }
-        }
-        else {
+        } else {
             return null;
         }
         return null;
     }
-    
-
 
 
 }

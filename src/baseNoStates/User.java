@@ -7,7 +7,10 @@ import java.time.LocalTime;
 
 import java.util.ArrayList;
 
-// The User class contains the crucial information of a worker.
+
+/**
+ * The User class contains the crucial information of a worker.
+ */
 public class User {
   private final String name;  // The name of the worker.
   private final String credential;  // The credential or Id given to this worker by the company.

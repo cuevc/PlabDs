@@ -6,7 +6,8 @@ import java.util.Arrays;
 public final class DirectoryDoors {
   private static ArrayList<Door> allDoors;
 
-  public DirectoryDoors makeDoors() {  // Declare all the Doors and put all them in the allDoors ArrayList.
+  // Declare all the Doors and put all them in the allDoors ArrayList.
+  public DirectoryDoors makeDoors() {
 
     // =====================================================
     // ||               Declaring the Doors               ||

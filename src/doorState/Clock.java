@@ -7,6 +7,12 @@ import java.util.Observable;
 
 import static java.lang.Thread.sleep;
 
+/**
+ *
+ * The 'Clock' class is responsible for counting the time that passes since it was called and notifying the 'Observer'
+ * instance when 10 seconds have passed. For this reason, 'Clock' is an 'Observable' class and the 'UnlockedShortly'
+ * class is the one that will be notified.
+ */
 public class Clock extends Observable implements Runnable{
 
     public Clock(){}
