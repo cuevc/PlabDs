@@ -6,27 +6,33 @@ import java.util.Arrays;
 public final class DirectoryDoors {
   private static ArrayList<Door> allDoors;
 
+  // Declare all the Doors and put all them in the allDoors ArrayList.
   public DirectoryDoors makeDoors() {
+
+    // =====================================================
+    // ||               Declaring the Doors               ||
+    // =====================================================
+
     // basement
-    Door d1 = new Door("D1", null, null); // exterior, parking
-    Door d2 = new Door("D2", null, null); // stairs, parking
+    Door d1 = new Door("D1"); // exterior, parking
+    Door d2 = new Door("D2"); // stairs, parking
 
     // ground floor
-    Door d3 = new Door("D3", null, null); // exterior, hall
-    Door d4 = new Door("D4", null, null); // stairs, hall
-    Door d5 = new Door("D5", null, null); // hall, room1
-    Door d6 = new Door("D6", null, null); // hall, room2
+    Door d3 = new Door("D3"); // exterior, hall
+    Door d4 = new Door("D4"); // stairs, hall
+    Door d5 = new Door("D5"); // hall, room1
+    Door d6 = new Door("D6"); // hall, room2
 
     // first floor
-    Door d7 = new Door("D7", null, null); // stairs, corridor
-    Door d8 = new Door("D8", null, null); // corridor, room3
-    Door d9 = new Door("D9", null, null); // corridor, IT
+    Door d7 = new Door("D7"); // stairs, corridor
+    Door d8 = new Door("D8"); // corridor, room3
+    Door d9 = new Door("D9"); // corridor, IT
 
     allDoors = new ArrayList<>(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9));
     return this;
   }
 
-  public static Door findDoorById(String id) {
+  public static Door findDoorById(String id) {  // Finds a Door in the allDoors list by its Id.
     for (Door door : allDoors) {
       if (door.getId().equals(id)) {
         return door;
@@ -41,17 +47,5 @@ public final class DirectoryDoors {
     System.out.println(allDoors);
     return allDoors;
   }
-
-  /*
-  public Door getDoor(String id){
-    Door returned = new Door("null");
-    if (found == true) {
-
-    }
-    }
-    return Door;
-  }
-
-   */
 
 }

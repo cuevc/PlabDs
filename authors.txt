@@ -1,4 +1,4 @@
 # Authors                       - NIU:
-- GERARD JOSEP GUARIN VELEZ     - 1605947 
-- POL COLOMER CAMPOY            - 1605612
-- JOSIAS MICAEL CUEVA CASTRO    - 1603392
+- GERARD JOSEP GUARIN VELEZ     - 1605947 (Main task: Clock (Observer), and DoorStates)
+- POL COLOMER CAMPOY            - 1605612 (Main task: Area, Partition and Spaces (Composite))
+- JOSIAS MICAEL CUEVA CASTRO    - 1603392 (Main task: Groups and Users)

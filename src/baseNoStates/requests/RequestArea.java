@@ -1,7 +1,7 @@
 package baseNoStates.requests;
 import baseNoStates.*;
 
-import baseNoStates.Actions;
+import doorState.Actions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -40,7 +40,7 @@ public class RequestArea implements Request {
       jsonRequests.put(rd.answerToJson());
     }
     json.put("requestsDoors", jsonRequests);
-    json.put("todo", "request areas not yet implemented");
+
     return json;
   }
 

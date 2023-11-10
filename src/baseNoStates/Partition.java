@@ -2,90 +2,80 @@ package baseNoStates;
 
 import java.util.ArrayList;
 
+
+/**
+ * Partition is a part of the Composite between Area (abstract), Partition and Space.
+ * A Partition instance can have a list of Partitions or Spaces.
+ */
 public class Partition extends Area {
 
-    //deberia de ser una lista de areas una sobra
-    //private ArrayList<Partition> partitionList;
-    private ArrayList<Area> areaList;
-    private String partition_name;
-    private Area father;
+    private ArrayList<Area> areaList; // List of Partitions or Spaces in this instance of Partition.
+    private String partitionName;  // Name of the Partition (used to find a Partition by Id).
+    private Area father; // Father of this Partition, very useful to build the building Areas tree.
 
-    public Partition(String part_name, ArrayList<Area> areas, Area fatherNode){
-        partition_name = part_name;
+    public Partition(String partName, ArrayList<Area> areas, Area fatherNode) {
+        partitionName = partName;
         areaList = areas;
-        //partitionList = partitions;
         father = fatherNode;
     }
 
-    void addArea(Area addingArea){
-        this.areaList.add(addingArea);
-    }
+    // =====================================================
+    // ||              Setters and Getters                ||
+    // =====================================================
 
+    // Sets the father of the current Partition, useful to make the building Areas tree.
     @Override
     public void setFather(Area father) {
         this.father = father;
     }
 
-    @Override // Used on the Space Class
-    public Space findAreaById(String id) {
-        return null;
-    }
-
-    @Override // Used on the Space Class
-    public ArrayList<Door> getDoorsGivingAccess() {
-        ArrayList<Door> recollectedDoors = new ArrayList<>();
-        for(Area actualArea : this.areaList){
-            actualArea.getDoorsGivingAccess();
-            recollectedDoors.addAll(actualArea.getDoorsGivingAccess());
-
-        }
-        return recollectedDoors;
-    }
-
-
-
-    @Override
-    public ArrayList<Partition> getPartitionlist() {
-        return null;
-    }
-
+    // Get the current Areas List
     @Override
     public ArrayList<Area> getAreaList() {
         return areaList;
     }
+
+    // Get the name of this instance of Partition.
     @Override
-    public void setAreaList(ArrayList<Area> areaLists) {
-        this.areaList = areaLists;
+    public String getPartitionName() {
+        return partitionName;
     }
 
-    @Override
-    public void setPartitionlist(ArrayList<Partition> partitionlist) {
+    // =====================================================
+    // ||           Other methods of this class           ||
+    // =====================================================
 
+    // Adds an Area to the current AreasList.
+    void addArea(Area addingArea) {
+        this.areaList.add(addingArea);
     }
 
-    @Override
-    public String getPartition_name(){return partition_name;}
+    // Special Getter that gives all the Doors of the current Area.
+    // This method has a recursive call, so at the end the Space will give us its Doors.
+    @Override // Used also in the Space Class
+    public ArrayList<Door> getDoorsGivingAccess() {
+        ArrayList<Door> recollectedDoors = new ArrayList<>();
+        for (Area actualArea : this.areaList) {
+            actualArea.getDoorsGivingAccess();
+            recollectedDoors.addAll(actualArea.getDoorsGivingAccess());
+        }
+        return recollectedDoors;
+    }
 
+    // Searches an Area (Partition), and if it's in the given Area,
+    // we return the instance. Otherwise, we return null.
     @Override
     public Area findPartitionById(String id, Area rootArea) {
         // We search the given Partition on the root.
-        for(Area looking : rootArea.getAreaList()){
-            if (looking.getPartition_name().equals(id)){
+        for (Area looking : rootArea.getAreaList()) {
+            if (looking.getPartitionName().equals(id)) {
                 return looking;
             }
         }
         return null;
     }
 
-    @Override
-    public void setPartFather(Partition father) {
 
-    }
-
-    @Override
-    public void setPartFather(Area father) {
-
-    }
 
 }
 

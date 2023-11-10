@@ -5,15 +5,25 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public class Schedule {
 
+/**
+ * Each group have a Schedule. The Schedule tells us the time and date
+ * when the user can make an action.
+ */
+public class Schedule {
+    // From which date (the date when the user started working on the company
     private LocalDate fromDate;
+    // To which date (the date when the user started working on the company
     private LocalDate toDate;
+    // To check if in this day of the week the user is working (can access to the building).
     private List<DayOfWeek> workDays;
+    // From which hour (the hour when the user start the shift).
     private LocalTime fromHour;
+    // To which hour (the hour when the user start the shift).
     private LocalTime toHour;
 
-    public Schedule(LocalDate initalDate, LocalDate finalDate, LocalTime initalHour, LocalTime finalHour, List<DayOfWeek> weekDays){
+    public Schedule(LocalDate initalDate, LocalDate finalDate, LocalTime initalHour,
+                    LocalTime finalHour, List<DayOfWeek> weekDays) {
         fromDate = initalDate;
         toDate = finalDate;
         fromHour = initalHour;
@@ -21,27 +31,30 @@ public class Schedule {
         workDays = weekDays;
     }
 
-    public LocalDate getFromDate(){ return fromDate;}
-    public LocalDate getToDate() { return toDate;}
-    public LocalTime getFromHour() { return fromHour;}
-    public LocalTime getToHour() { return toHour;}
-    public List<DayOfWeek> getWorkDays() { return workDays;}
+
+    // =====================================================
+    // ||           Other methods of this class           ||
+    // =====================================================
+
+    //If the hour is after initial hour and before end time, the function will
+    // return true, otherwise false.
     public boolean isOnTime(LocalTime hour) {
-        //If the hour is after inital hour and before end time, the function will return true, otherwise false.
-        if( (fromHour.isBefore(hour)) && (toHour.isAfter(hour)) ){
+        if ((fromHour.isBefore(hour)) && (toHour.isAfter(hour))) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-    public boolean isOnDate (LocalDate date){
-        //If the date is after initial date and before end date it will return true, otherwise false.
-        if( (fromDate.isBefore(date)) && (toDate.isAfter(date)) && (this.workDays.contains(date.getDayOfWeek()))){
-            return true;
-        }
-        else{return false;}
-    }
 
+    //If the date is after initial date and before end date it will return true, otherwise false.
+    public boolean isOnDate(LocalDate date) {
+        if ((fromDate.isBefore(date.minusDays(1))) && (toDate.isAfter(date))
+                && (this.workDays.contains(date.getDayOfWeek()))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
