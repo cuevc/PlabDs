@@ -23,8 +23,8 @@ import org.json.JSONObject;
  */
 
 public class Door {
-  private final String id;// Useful to search a certain door by id.
-  private boolean closed; // If true, that means that the door is physically closed.
+  private final String id;  // Useful to search a certain door by id.
+  private boolean closed;  // If true, that means that the door is physically closed.
   private Area to;
   private Area from;
 

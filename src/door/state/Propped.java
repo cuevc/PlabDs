@@ -4,7 +4,8 @@ import base.no.states.Door;
 
 
 /**
- * Door State consequence of UnlockedShortly, just in case that the Door can't be locked passed the time due the Door is open.
+ * Door State consequence of UnlockedShortly, just in case that the Door can't
+ * be locked passed the time due the Door is open.
  */
 public class Propped extends DoorState {
 
@@ -32,8 +33,9 @@ public class Propped extends DoorState {
       doorAttr.setDoorState(new Locked(doorAttr));
       System.out.println("Door Locked");
 
-    } else
+    } else {
       System.out.println("Door isn't closed");
+    }
   }
 
   @Override

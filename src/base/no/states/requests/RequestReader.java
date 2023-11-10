@@ -54,10 +54,11 @@ public class RequestReader implements Request {
         "You don't access to this area"};
     boolean allFalse = true;
     for (int i = 0; i < printable.length; i++) {
-      if (printable[i])
+      if (printable[i]) {
         addReason(reasons[i]);
-      else
+      } else {
         allFalse = false;
+      }
     }
     return allFalse;
   }
@@ -111,10 +112,7 @@ public class RequestReader implements Request {
     if (user == null) {
       authorized = false;
       addReason("User doesn't exists");
-    }
-
-    //Check if this user has the action
-    else {
+    } else { //Check if this user has the action
       LocalDate date = now.toLocalDate();
       LocalTime hour = now.toLocalTime();
       authorized = user.hasAccess(door.getTo(), date, hour, this.action, this.reasons);

@@ -7,8 +7,9 @@ import java.util.Observer;
 
 
 /**
- * The UnlockedShortly DoorState (and Action) will unlock the Door for 10 seconds and then lock it again.
- * If past the time the Door is open, it will be in Propped state, and whet its closed again, will be locked.
+ * The UnlockedShortly DoorState (and Action) will unlock the Door for 10 seconds and
+ * then lock it again. If past the time the Door is open, it will be in Propped
+ * state, and whet its closed again, will be locked.
  * This class is an Observer of a Clock instance, which is an Obervable.
  */
 public class UnlockedShortly extends DoorState implements Observer {
