@@ -1,6 +1,6 @@
 package door.state;
 
-import static java.lang.Thread.sleep;
+// import static java.lang.Thread.sleep;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;

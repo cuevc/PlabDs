@@ -44,8 +44,10 @@ public class DirectoryAreas {
     allDoors = initializer.getAllDoors();
 
     // =====================================================
-    // ||                Define the Spaces                ||
+    // ||      Define the Spaces, the Partitions and      ||
+    // ||        assign each Partition its Spaces.        ||
     // =====================================================
+    Partition basement = new Partition("basement", new ArrayList<>(), null);
 
     Space parking = new Space("parking",
         new ArrayList<Door>() {
@@ -54,6 +56,9 @@ public class DirectoryAreas {
             add(initializer.findDoorById("D2"));
           }
         }, null);
+    basement.addArea(parking);
+
+    Partition groundFloor = new Partition("ground_floor", new ArrayList<>(), null);
 
     Space hall = new Space("hall",
         new ArrayList<Door>() {
@@ -62,6 +67,7 @@ public class DirectoryAreas {
             add(initializer.findDoorById("D4"));
           }
         }, null);
+    groundFloor.addArea(hall);
 
     Space room1 = new Space("room1",
         new ArrayList<Door>() {
@@ -69,6 +75,7 @@ public class DirectoryAreas {
             add(initializer.findDoorById("D5"));
           }
         }, null);
+    groundFloor.addArea(room1);
 
     Space room2 = new Space("room2",
         new ArrayList<Door>() {
@@ -76,6 +83,9 @@ public class DirectoryAreas {
             add(initializer.findDoorById("D6"));
           }
         }, null);
+    groundFloor.addArea(room2);
+
+    Partition floor1 = new Partition("floor1", new ArrayList<>(), null);
 
     Space room3 = new Space("room3",
         new ArrayList<Door>() {
@@ -83,6 +93,7 @@ public class DirectoryAreas {
             add(initializer.findDoorById("D8"));
           }
         }, null);
+    floor1.addArea(room3);
 
     Space corridor = new Space("corridor",
         new ArrayList<Door>() {
@@ -90,6 +101,7 @@ public class DirectoryAreas {
             add(initializer.findDoorById("D7"));
           }
         }, null);
+    floor1.addArea(corridor);
 
     Space spaceIt = new Space("IT",
         new ArrayList<Door>() {
@@ -97,41 +109,12 @@ public class DirectoryAreas {
             add(initializer.findDoorById("D9"));
           }
         }, null);
-
-    // =====================================================
-    // ||              Define the Partitions              ||
-    // ||                and add its Spaces               ||
-    // =====================================================
-
-    ArrayList<Space> basementSpace = new ArrayList<Space>();
-    basementSpace.add(parking);
-
-    ArrayList<Space> groundFloorSpace = new ArrayList<Space>();
-    groundFloorSpace.add(hall);
-    groundFloorSpace.add(room1);
-    groundFloorSpace.add(room2);
-
-    ArrayList<Space> floor1Space = new ArrayList<Space>();
-    floor1Space.add(room3);
-    floor1Space.add(corridor);
-    floor1Space.add(spaceIt);
-
-
-    Partition basement = new Partition("basement", new ArrayList<>(), null);
-    Partition groundFloor = new Partition("ground_floor", new ArrayList<>(), null);
-    Partition floor1 = new Partition("floor1", new ArrayList<>(), null);
+    floor1.addArea(spaceIt);
+    /*
+    // Missing to declare: We will declare later, before its use.
     Partition stairs = new Partition("stairs", new ArrayList<>(), null);
     Partition exterior = new Partition("exterior", new ArrayList<>(), null);
-
-    basement.addArea(parking);
-
-    groundFloor.addArea(hall);
-    groundFloor.addArea(room1);
-    groundFloor.addArea(room2);
-
-    floor1.addArea(room3);
-    floor1.addArea(corridor);
-    floor1.addArea(spaceIt);
+     */
 
     // =====================================================
     // ||             Setting Spaces fathers              ||
@@ -156,6 +139,10 @@ public class DirectoryAreas {
     buildingPartitions.add(basement);
     buildingPartitions.add(groundFloor);
     buildingPartitions.add(floor1);
+
+    Partition stairs = new Partition("stairs", new ArrayList<>(), null);
+    Partition exterior = new Partition("exterior", new ArrayList<>(), null);
+
     buildingPartitions.add(stairs);
     buildingPartitions.add(exterior);
 

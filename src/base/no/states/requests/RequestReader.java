@@ -4,13 +4,10 @@ import base.no.states.DirectoryDoors;
 import base.no.states.DirectoryUsers;
 import base.no.states.Door;
 import base.no.states.User;
-import base.no.states.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -50,7 +47,8 @@ public class RequestReader implements Request {
   }
 
   public boolean setAllAddReason(boolean[] printable) {
-    String[] reasons = {"This user can't make this action", "At this moment the user doesn't have access. Try in a day/hour of your schedule.",
+    String[] reasons = {"This user can't make this action", "At this moment the user "
+        + "doesn't have access. Try in a day/hour of your schedule.",
         "You don't access to this area"};
     boolean allFalse = true;
     for (int i = 0; i < printable.length; i++) {

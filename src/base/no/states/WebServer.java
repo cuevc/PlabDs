@@ -1,10 +1,9 @@
 package base.no.states;
 
 import base.no.states.requests.Request;
+import base.no.states.requests.RequestArea;
 import base.no.states.requests.RequestReader;
 import base.no.states.requests.RequestRefresh;
-import base.no.states.requests.RequestArea;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

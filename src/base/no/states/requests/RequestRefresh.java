@@ -2,9 +2,7 @@ package base.no.states.requests;
 
 import base.no.states.DirectoryDoors;
 import base.no.states.Door;
-
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 

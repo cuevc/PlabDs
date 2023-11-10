@@ -3,8 +3,6 @@ package base.no.states;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-
 import java.util.ArrayList;
 
 
@@ -48,18 +46,21 @@ public class User {
     //element of the areas tree.
     boolean access = false;
 
-    //For those users that doesn't have access to areas (Blank). They have access to no area (their areas tree is null)
+    //For those users that doesn't have access to areas (Blank). They have
+    // access to no area (their areas tree is null)
     //so we have to check it before trying to iterate.
     if (userGroup.getSpaces() != null) {
       for (Area actualArea : this.userGroup.getSpaces()) {
         if (reason.isEmpty() && !access) {
-          access = userGroup.hasAccessToArea(areaToAcces.getPartitionName(), actualArea, date, hour, action, reason);
+          access = userGroup.hasAccessToArea(areaToAcces.getPartitionName(),
+              actualArea, date, hour, action, reason);
         } else {
           break;
         }
       }
     }
-    //If reason is still empty and access is false it means that area has not been found, so the User doesn't have acces to this Area.
+    //If reason is still empty and access is false it means that area has not been
+    // found, so the User doesn't have access to this Area.
     if (reason.isEmpty() && !access) {
       reason.add("You don't have access to this area");
     }

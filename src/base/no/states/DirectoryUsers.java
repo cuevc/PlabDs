@@ -1,7 +1,6 @@
 package base.no.states;
 
 import door.state.Actions;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -91,7 +90,7 @@ public final class DirectoryUsers {
     // all actions
     // all spaces
 
-    Schedule AdminSchedule = new Schedule(LocalDate.of(2023, 1, 1),
+    Schedule adminSchedule = new Schedule(LocalDate.of(2023, 1, 1),
         LocalDate.of(2100, 1, 1), LocalTime.of(0, 0), LocalTime.of(23, 59),
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
             DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY,
@@ -99,12 +98,12 @@ public final class DirectoryUsers {
 
     ArrayList<Area> adminArea = new ArrayList<Area>();
 
-    Group Admin = new Group("Admin", AdminSchedule,
+    Group admin = new Group("Admin", adminSchedule,
         new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE,
             Actions.LOCK, Actions.UNLOCK, Actions.UNLOCK_SHORTLY)), managersAreas);
 
-    Admin.addUser(new User("Ana", "11343", Admin));
-    rols.add(Admin);
+    admin.addUser(new User("Ana", "11343", admin));
+    rols.add(admin);
   }
 
   // Find a User in any rol (group) by its Credential.

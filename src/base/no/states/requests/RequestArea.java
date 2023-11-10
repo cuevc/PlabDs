@@ -1,14 +1,13 @@
 package base.no.states.requests;
 
-import base.no.states.*;
-
+import base.no.states.Area;
+import base.no.states.DirectoryAreas;
+import base.no.states.Door;
 import door.state.Actions;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class RequestArea implements Request {
   private final String credential;
@@ -74,8 +73,8 @@ public class RequestArea implements Request {
     Area area = DirectoryAreas.findAreaById(areaId, DirectoryAreas.getRootArea());
     // an Area is a Space or a Partition
     if (area != null) {
-      // is null when from the app we click on an action but no place is selected because
-      // there (flutter) I don't control like I do in javascript that all the parameters are provided
+      // is null when from the app we click on an action but no place is selected because there
+      // (flutter) I don't control like I do in javascript that all the parameters are provided
 
       // Make all the door requests, one for each door in the area, and process them.
       // Look for the doors in the spaces of this area that give access to them.

@@ -1,10 +1,8 @@
 package door.state;
 
 import base.no.states.Door;
-
 import java.util.Observable;
 import java.util.Observer;
-
 
 /**
  * The UnlockedShortly DoorState (and Action) will unlock the Door for 10 seconds and

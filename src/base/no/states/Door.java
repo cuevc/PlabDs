@@ -1,7 +1,9 @@
 package base.no.states;
 
 import base.no.states.requests.RequestReader;
-import door.state.*;
+import door.state.Actions;
+import door.state.DoorState;
+import door.state.Locked;
 import org.json.JSONObject;
 
 /**
@@ -21,7 +23,6 @@ import org.json.JSONObject;
  * @author Gerard Josep Guarin Velez
  * @author Josias Micael Cueva Castro
  */
-
 public class Door {
   private final String id;  // Useful to search a certain door by id.
   private boolean closed;  // If true, that means that the door is physically closed.
@@ -78,8 +79,9 @@ public class Door {
   }
 
   /**
-   * Setter of the `doorState` attribute. May set the door in a Locked, Unlocked, UnlockedShortly, etc. State.
-   *
+   * Setter of the `doorState` attribute. May set the door in a Locked,
+   * Unlocked, UnlockedShortly, etc. State.
+
    * @param doorState <a href="doorState.DoorState">DoorState</a> instance.
    * @see door.state.DoorState
    */
