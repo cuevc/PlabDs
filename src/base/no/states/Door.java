@@ -1,25 +1,28 @@
-package baseNoStates;
+package base.no.states;
 
-import baseNoStates.requests.RequestReader;
-import doorState.*;
+import base.no.states.requests.RequestReader;
+import door.state.*;
 import org.json.JSONObject;
 
 /**
- * The Door is placed on a Space. The Door also have States to control if its Open, Closed, Locked, Unlocked, etc.
+ * The Door is placed on a Space. The Door also have States to control if
+ * its Open, Closed, Locked, Unlocked, etc.
  * Also has the information of which Area is going to access, and from where.
  * <br/>
  * Door has some attributes:
  * <ul>
  *     <li><a href="Area">Area </a> to -> To which Area the door has access (or is placed).</li>
  *     <li><a href="Area">Area </a> from -> From which Area the door has access (or is placed).</li>
- *     <li><a href="DoorState">DoorState </a> doorState -> In order to determine the States we add a DoorState attribute.</li>
+ *     <li><a href="DoorState">DoorState </a> doorState -> In order to determine the States
+ *     we add a DoorState attribute.</li>
  * </ul>
+ *
  * @author Pol Colomer Campoy
  * @author Gerard Josep Guarin Velez
  * @author Josias Micael Cueva Castro
  */
 
-public class Door{
+public class Door {
   private final String id;// Useful to search a certain door by id.
   private boolean closed; // If true, that means that the door is physically closed.
   private Area to;
@@ -28,7 +31,7 @@ public class Door{
   // In order to determine the States we add a DoorState attribute.
   private DoorState doorState;
 
-  public Door(String id){
+  public Door(String id) {
     this.id = id;
     this.to = null;
     this.from = null;
@@ -42,13 +45,21 @@ public class Door{
   // ||              Setters and Getters                ||
   // =====================================================
 
-  public void setTo(Area to){this.to = to;}
+  public void setTo(Area to) {
+    this.to = to;
+  }
 
-  public void setFrom(Area from){this.from = from;}
+  public void setFrom(Area from) {
+    this.from = from;
+  }
 
-  public Area getTo(){return this.to;}
+  public Area getTo() {
+    return this.to;
+  }
 
-  public Area getFrom(){return this.from;}
+  public Area getFrom() {
+    return this.from;
+  }
 
   public boolean isClosed() {
     return closed;
@@ -68,8 +79,9 @@ public class Door{
 
   /**
    * Setter of the `doorState` attribute. May set the door in a Locked, Unlocked, UnlockedShortly, etc. State.
+   *
    * @param doorState <a href="doorState.DoorState">DoorState</a> instance.
-   * @see doorState.DoorState
+   * @see door.state.DoorState
    */
   public void setDoorState(DoorState doorState) {
     this.doorState = doorState;
@@ -78,7 +90,10 @@ public class Door{
   public void setClosed(boolean closed) {
     this.closed = closed;
   }
-  public Boolean getClosed(){ return this.closed; }
+
+  public Boolean getClosed() {
+    return this.closed;
+  }
 
 
   // =====================================================
@@ -87,10 +102,10 @@ public class Door{
   @Override
   public String toString() {
     return "Door{"
-            + ", id='" + id + '\''
-            + ", closed=" + closed
-            + ", state=" + getStateName()
-            + "}";
+        + ", id='" + id + '\''
+        + ", closed=" + closed
+        + ", state=" + getStateName()
+        + "}";
   }
 
   public JSONObject toJson() {

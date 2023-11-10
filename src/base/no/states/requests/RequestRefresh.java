@@ -1,8 +1,10 @@
-package baseNoStates.requests;
+package base.no.states.requests;
 
-import baseNoStates.DirectoryDoors;
-import baseNoStates.Door;
+import base.no.states.DirectoryDoors;
+import base.no.states.Door;
+
 import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 

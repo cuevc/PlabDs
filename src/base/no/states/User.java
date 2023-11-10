@@ -1,4 +1,4 @@
-package baseNoStates;
+package base.no.states;
 
 
 import java.time.LocalDate;
@@ -30,14 +30,15 @@ public class User {
     return credential;
   }
 
-  public String getName() { return name;}
+  public String getName() {
+    return name;
+  }
 
   // =====================================================
   // ||           Other methods of this class           ||
   // =====================================================
 
-  public boolean hasAccess(Area areaToAcces,LocalDate date, LocalTime hour, String action, ArrayList<String> reason)
-  {
+  public boolean hasAccess(Area areaToAcces, LocalDate date, LocalTime hour, String action, ArrayList<String> reason) {
     //This function is calling another action from Group
     //This checks if the destination area is inside the users group area list
     //At the beginning of the first iteration of this function is null, because once it's executed it will get the first
@@ -46,19 +47,17 @@ public class User {
 
     //For those users that doesn't have access to areas (Blank). They have access to no area (their areas tree is null)
     //so we have to check it before trying to iterate.
-    if(userGroup.getSpaces() != null)
-    {
-      for(Area actualArea : this.userGroup.getSpaces()) {
-        if(reason.isEmpty() && !access){
-          access =  userGroup.hasAccessToArea(areaToAcces.getPartitionName(), actualArea ,date, hour, action, reason);
-        }
-        else {
+    if (userGroup.getSpaces() != null) {
+      for (Area actualArea : this.userGroup.getSpaces()) {
+        if (reason.isEmpty() && !access) {
+          access = userGroup.hasAccessToArea(areaToAcces.getPartitionName(), actualArea, date, hour, action, reason);
+        } else {
           break;
         }
       }
     }
     //If reason is still empty and access is false it means that area has not been found, so the User doesn't have acces to this Area.
-    if(reason.isEmpty() && !access){
+    if (reason.isEmpty() && !access) {
       reason.add("You don't have access to this area");
     }
     return access;

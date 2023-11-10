@@ -1,4 +1,4 @@
-package doorState;
+package door.state;
 
 
 /**

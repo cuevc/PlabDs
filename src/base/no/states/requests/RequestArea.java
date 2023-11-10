@@ -1,7 +1,8 @@
-package baseNoStates.requests;
-import baseNoStates.*;
+package base.no.states.requests;
 
-import doorState.Actions;
+import base.no.states.*;
+
+import door.state.Actions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,7 +22,7 @@ public class RequestArea implements Request {
     this.credential = credential;
     this.areaId = areaId;
     assert action.equals(Actions.LOCK) || action.equals(Actions.UNLOCK)
-            : "invalid action " + action + " for an area request";
+        : "invalid action " + action + " for an area request";
     this.action = action;
     this.now = now;
   }
@@ -53,12 +54,12 @@ public class RequestArea implements Request {
       requestsDoorsStr = requests.toString();
     }
     return "Request{"
-            + "credential=" + credential
-            + ", action=" + action
-            + ", now=" + now
-            + ", areaId=" + areaId
-            + ", requestsDoors=" + requestsDoorsStr
-            + "}";
+        + "credential=" + credential
+        + ", action=" + action
+        + ", now=" + now
+        + ", areaId=" + areaId
+        + ", requestsDoors=" + requestsDoorsStr
+        + "}";
   }
 
   // processing the request of an area is creating the corresponding door requests and forwarding

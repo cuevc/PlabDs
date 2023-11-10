@@ -1,6 +1,7 @@
-package baseNoStates;
+package base.no.states;
 
-import doorState.Actions;
+import door.state.Actions;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,15 +25,14 @@ public final class DirectoryUsers {
     Area root = myAreas.getRootArea();
 
 
-
     // =====================================================
     // ||  Declare Users, Groups, Schedules and Actions   ||
     // =====================================================
 
-    Group Blank = new Group("Blank", null, null, null);
-    Blank.addUser(new User("Bernat", "12345", Blank));
+    Group blank = new Group("Blank", null, null, null);
+    blank.addUser(new User("Bernat", "12345", blank));
 
-    rols.add(Blank);
+    rols.add(blank);
 
     // employees :
     // Sep. 1 2023 to Mar. 1 2024
@@ -42,7 +42,7 @@ public final class DirectoryUsers {
     Schedule employeesSchedule = new Schedule(LocalDate.of(2023, 9, 1),
         LocalDate.of(2024, 3, 1), LocalTime.of(9, 0), LocalTime.of(21, 0),
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
-                DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
+            DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
 
     ArrayList<Area> employeeArea = new ArrayList<Area>();
     employeeArea.add(root.findPartitionById("ground_floor", root));
@@ -51,10 +51,9 @@ public final class DirectoryUsers {
     employeeArea.add(root.findPartitionById("stairs", root));
 
 
-
     Group employees = new Group("Employees", employeesSchedule,
-            new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE,
-                    Actions.UNLOCK_SHORTLY)), employeeArea);
+        new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE,
+            Actions.UNLOCK_SHORTLY)), employeeArea);
 
     employees.addUser(new User("Eulalia", "43295", employees));
 
@@ -69,7 +68,7 @@ public final class DirectoryUsers {
     Schedule managersSchedule = new Schedule(LocalDate.of(2023, 9, 1),
         LocalDate.of(2024, 3, 1), LocalTime.of(8, 0), LocalTime.of(20, 0),
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
-                DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
+            DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
 
     ArrayList<Area> managersAreas = new ArrayList<Area>();
     managersAreas.add(root.findPartitionById("ground_floor", root));
@@ -79,8 +78,8 @@ public final class DirectoryUsers {
     managersAreas.add(root.findPartitionById("basement", root));
 
     Group managers = new Group("Manager", managersSchedule,
-            new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE, Actions.LOCK,
-                    Actions.UNLOCK, Actions.UNLOCK_SHORTLY)), managersAreas);
+        new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE, Actions.LOCK,
+            Actions.UNLOCK, Actions.UNLOCK_SHORTLY)), managersAreas);
 
     managers.addUser(new User("Manel", "95783", managers));
     managers.addUser(new User("Marta", "05827", managers));
@@ -95,14 +94,14 @@ public final class DirectoryUsers {
     Schedule AdminSchedule = new Schedule(LocalDate.of(2023, 1, 1),
         LocalDate.of(2100, 1, 1), LocalTime.of(0, 0), LocalTime.of(23, 59),
         new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
-                DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY,
-                DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)));
+            DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY,
+            DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)));
 
     ArrayList<Area> adminArea = new ArrayList<Area>();
 
     Group Admin = new Group("Admin", AdminSchedule,
-            new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE,
-                    Actions.LOCK, Actions.UNLOCK, Actions.UNLOCK_SHORTLY)), managersAreas);
+        new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE,
+            Actions.LOCK, Actions.UNLOCK, Actions.UNLOCK_SHORTLY)), managersAreas);
 
     Admin.addUser(new User("Ana", "11343", Admin));
     rols.add(Admin);

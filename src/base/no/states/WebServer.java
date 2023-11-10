@@ -1,9 +1,9 @@
-package baseNoStates;
+package base.no.states;
 
-import baseNoStates.requests.Request;
-import baseNoStates.requests.RequestReader;
-import baseNoStates.requests.RequestRefresh;
-import baseNoStates.requests.RequestArea;
+import base.no.states.requests.Request;
+import base.no.states.requests.RequestReader;
+import base.no.states.requests.RequestRefresh;
+import base.no.states.requests.RequestArea;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.util.StringTokenizer;
 public class WebServer {
   private static final int PORT = 8080; // port to listen connection
   private static final DateTimeFormatter formatter =
-          DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
   public WebServer() {
     try {

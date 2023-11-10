@@ -1,8 +1,11 @@
-package baseNoStates.requests;
+package base.no.states.requests;
 
-import baseNoStates.*;
+import base.no.states.DirectoryDoors;
+import base.no.states.DirectoryUsers;
+import base.no.states.Door;
+import base.no.states.User;
+import base.no.states.*;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -50,7 +53,7 @@ public class RequestReader implements Request {
     String[] reasons = {"This user can't make this action", "At this moment the user doesn't have access. Try in a day/hour of your schedule.",
         "You don't access to this area"};
     boolean allFalse = true;
-    for (int i = 0; i < printable.length; i++){
+    for (int i = 0; i < printable.length; i++) {
       if (printable[i])
         addReason(reasons[i]);
       else
@@ -111,7 +114,7 @@ public class RequestReader implements Request {
     }
 
     //Check if this user has the action
-    else{
+    else {
       LocalDate date = now.toLocalDate();
       LocalTime hour = now.toLocalTime();
       authorized = user.hasAccess(door.getTo(), date, hour, this.action, this.reasons);

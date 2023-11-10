@@ -1,4 +1,4 @@
-package baseNoStates;
+package base.no.states;
 
 // Before executing enable assertions :
 // https://se-education.org/guides/tutorials/intellijUsefulSettings.html
