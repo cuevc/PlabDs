@@ -1,5 +1,8 @@
 package base.no.states;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -10,6 +13,8 @@ import java.util.ArrayList;
  * permissions, access areas and Schedules.
  */
 public class Group {
+  static Logger logger = LoggerFactory.getLogger("base.no.states.Group");
+
   // The name of this type of Group
   private String typeGroup;
   // The list of Users that belong to this Group. (who)
@@ -62,8 +67,8 @@ public class Group {
         return actualUser;
       }
     }
-    System.out.println("The user with credential: "
-        + userCredential + " has not been found");
+    //System.out.println("The user with credential: "
+    //    + userCredential + " has not been found");
     return null;
   }
 
@@ -71,11 +76,18 @@ public class Group {
   public void addUser(User newUser) {
     // Check if the User has actually been added. In this case,
     // we won't add it to the list. Otherwise, we will.
+    String thisUser = newUser.toString();
     if (!isOnUsers(newUser)) {
       users.add(newUser);
-      System.out.println(newUser.toString() + " added successfully");
+
+      logger.info("{} this user has been added succesfully", thisUser);
+      logger.debug("{} this user has been added succesfully", thisUser);
+
+      //System.out.println(newUser.toString() + " added successfully");
     } else {
-      System.out.println(newUser.toString() + " is already on the list");
+      logger.debug("{} is already on the list." , thisUser);
+      logger.info("{} is already on the list." , thisUser);
+      //System.out.println(newUser.toString() + " is already on the list");
     }
   }
 
@@ -115,6 +127,7 @@ public class Group {
         }
       }
     }
+    logger.debug("The value of the permission is: {}" , permissionConceded);
     return permissionConceded; // If true then the user have
     // access to this area else, the user doesn't have access.
   }

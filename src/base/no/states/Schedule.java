@@ -1,5 +1,8 @@
 package base.no.states;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,6 +14,8 @@ import java.util.List;
  * when the user can make an action.
  */
 public class Schedule {
+  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Unlocked");
+
   // From which date (the date when the user started working on the company
   private LocalDate fromDate;
   // To which date (the date when the user started working on the company
@@ -40,8 +45,10 @@ public class Schedule {
   // return true, otherwise false.
   public boolean isOnTime(LocalTime hour) {
     if ((fromHour.isBefore(hour)) && (toHour.isAfter(hour))) {
+      logger.debug("This user is on time");
       return true;
     } else {
+      logger.debug("This user is not on time");
       return false;
     }
   }
@@ -50,8 +57,10 @@ public class Schedule {
   public boolean isOnDate(LocalDate date) {
     if ((fromDate.isBefore(date.minusDays(1))) && (toDate.isAfter(date))
         && (this.workDays.contains(date.getDayOfWeek()))) {
+      logger.debug("This user is on date");
       return true;
     } else {
+      logger.debug("This user is not on date");
       return false;
     }
   }

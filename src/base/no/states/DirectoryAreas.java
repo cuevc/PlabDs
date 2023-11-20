@@ -1,11 +1,13 @@
 package base.no.states;
 
 import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DirectoryAreas {
+  static Logger logger = LoggerFactory.getLogger("base.no.states.DirectoryAreas");
   private static ArrayList<Door> allDoors;
   private static Area rootArea;
-
 
   // =====================================================
   // ||              Setters and Getters                ||
@@ -39,6 +41,7 @@ public class DirectoryAreas {
   }
 
   public static void makeAreas() {
+
     DirectoryDoors initializer = new DirectoryDoors();
     initializer.makeDoors();  // Getting all Doors to assign them to the Spaces.
     allDoors = initializer.getAllDoors();
@@ -189,6 +192,8 @@ public class DirectoryAreas {
     floor1.setFather(rootArea);
     stairs.setFather(rootArea);
     exterior.setFather(rootArea);
+
+    logger.debug("All Areas created successfully. Attribute rootArea created.");
   }
 
   // Find a determined Door by its Id. At this time we don't use the

@@ -1,6 +1,9 @@
 package base.no.states;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -10,6 +13,8 @@ import java.util.ArrayList;
  * The User class contains the crucial information of a worker.
  */
 public class User {
+  static Logger logger = LoggerFactory.getLogger("base.no.states.Group");
+
   private final String name;  // The name of the worker.
   private final String credential;  // The credential or Id given to this worker by the company.
   private Group userGroup;  // The group of this User. The group contains information
@@ -64,6 +69,7 @@ public class User {
     if (reason.isEmpty() && !access) {
       reason.add("You don't have access to this area");
     }
+    logger.debug("The result of access: {}", access);
     return access;
   }
 

@@ -3,6 +3,8 @@ package door.state;
 import base.no.states.Door;
 import java.util.Observable;
 import java.util.Observer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The UnlockedShortly DoorState (and Action) will unlock the Door for 10 seconds and
@@ -11,13 +13,16 @@ import java.util.Observer;
  * This class is an Observer of a Clock instance, which is an Obervable.
  */
 public class UnlockedShortly extends DoorState implements Observer {
+  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.UnlockedShortly");
 
   private static Clock clock;
 
   public UnlockedShortly(Door door) {
+    clock = Clock.getInstance();
+    logger.debug("UnlockedShortly asked a Clock instance (getInstance()).");
     doorAttr = door;
     name = "unlocked_shortly";
-    clock = new Clock();
+
     clock.addObserver(this);
     Thread threadClock = new Thread(clock);
     threadClock.start();
@@ -26,48 +31,62 @@ public class UnlockedShortly extends DoorState implements Observer {
   @Override
   public void open() {
     doorAttr.setClosed(false);
-    System.out.println("Door Opened");
+    logger.info("Door opened");
+    logger.debug("Door opened");
+    //System.out.println("Door Opened");
   }
 
   @Override
   public void close() {
     doorAttr.setClosed(true);
-    System.out.println("Door Closed");
+    logger.info("Door Closed");
+    logger.debug("Door Closed");
+    //System.out.println("Door Closed");
   }
 
   @Override
   public void lock() {
     doorAttr.setDoorState(new Locked(doorAttr));
-    System.out.println("Door Locked");
+    logger.info("Door Locked");
+    logger.debug("Door Locked");
+    //System.out.println("Door Locked");
   }
 
   @Override
   public void unlock() {
     doorAttr.setDoorState(new Unlocked(doorAttr));
-    System.out.println("Door Unlocked");
+    logger.info("Door Unlocked");
+    logger.debug("Door Unlocked");
+    //System.out.println("Door Unlocked");
   }
 
   @Override
   public void propped() {
     doorAttr.setDoorState(new Propped(doorAttr));
-    System.out.println("Door Propped");
+    logger.info("Door Propped");
+    logger.debug("Door Propped");
+    //System.out.println("Door Propped");
   }
 
   @Override
   public void unlockedShortly() {
-    System.out.println("Door already unlocked");
+    logger.debug("Door already unlocked");
+    logger.info("Door already unlocked");
+    //System.out.println("Door already unlocked");
   }
 
   @Override
   public void update(Observable o, Object arg) {
-
-    System.out.println("Time runs out");
-
+    
+    //System.out.println("Time runs out");
+    logger.debug("Time is running");
     //if the door is closed, it will be locked
     if (doorAttr.isClosed()) {
+      logger.debug("The door is closed");
       lock();
 
     } else {
+      logger.debug("The doow has not been closed on time, so now it's propped");
       //if door is not closed after 10 sec, It will be propped
       propped();
     }
