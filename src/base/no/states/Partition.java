@@ -1,5 +1,8 @@
 package base.no.states;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 
 
@@ -8,6 +11,7 @@ import java.util.ArrayList;
  * A Partition instance can have a list of Partitions or Spaces.
  */
 public class Partition extends Area {
+  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Unlocked");
 
   private ArrayList<Area> areaList; // List of Partitions or Spaces in this instance of Partition.
   private String partitionName;  // Name of the Partition (used to find a Partition by Id).
@@ -59,6 +63,7 @@ public class Partition extends Area {
       actualArea.getDoorsGivingAccess();
       recollectedDoors.addAll(actualArea.getDoorsGivingAccess());
     }
+    logger.debug("Getting all door which we have access");
     return recollectedDoors;
   }
 
@@ -69,9 +74,11 @@ public class Partition extends Area {
     // We search the given Partition on the root.
     for (Area looking : rootArea.getAreaList()) {
       if (looking.getPartitionName().equals(id)) {
+        logger.debug("The partition has been found.");
         return looking;
       }
     }
+    logger.debug("None partition has been found");
     return null;
   }
 

@@ -1,6 +1,8 @@
 package door.state;
 
 import base.no.states.Door;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -9,6 +11,7 @@ import base.no.states.Door;
  */
 public class Propped extends DoorState {
 
+  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Propped");
 
   protected Propped(Door door) {
     doorAttr = door;
@@ -23,7 +26,9 @@ public class Propped extends DoorState {
   @Override
   public void close() {
     doorAttr.setClosed(false);
-    System.out.print("Door is Propped and Locked");
+    logger.info("Door is Propped and Locked.");
+    logger.debug("Propped close() -> Door is Propped and Locked.");
+    //System.out.print("Door is Propped and Locked");
     doorAttr.setDoorState(new Locked(doorAttr));
   }
 
@@ -31,25 +36,36 @@ public class Propped extends DoorState {
   public void lock() {
     if (doorAttr.isClosed()) {
       doorAttr.setDoorState(new Locked(doorAttr));
-      System.out.println("Door Locked");
+      logger.info("Door Locked.");
+      logger.debug("Propped lock() -> Trying to Lock: Door Locked.");
+      //System.out.println("Door Locked");
 
     } else {
-      System.out.println("Door isn't closed");
+      logger.info("Door isn't closed.");
+      logger.debug("Propped lock() -> Trying to Lock: Can't lock the door.");
+      logger.warn("Propped lock() -> Trying to Lock: Door isn't closed. Can't lock the door.");
+      //System.out.println("Door isn't closed");
     }
   }
 
   @Override
   public void unlock() {
-    System.out.print("Door is Propped");
+    logger.info("Door is Propped.");
+    logger.debug("Propped unlock() -> Door is Propped.");
+    //System.out.print("Door is Propped");
   }
 
   @Override
   public void propped() {
-    System.out.print("Door is Propped");
+    logger.info("Door is Propped.");
+    logger.debug("Propped propped() -> Door is Propped.");
+    //System.out.print("Door is Propped");
   }
 
   @Override
   public void unlockedShortly() {
-    System.out.println("Door is Prooped");
+    //System.out.println("Door is Prooped");
+    logger.info("Door is Propped.");
+    logger.debug("Propped unlockedShortly() -> Door is Propped.");
   }
 }

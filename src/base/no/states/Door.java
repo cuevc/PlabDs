@@ -5,6 +5,8 @@ import door.state.Actions;
 import door.state.DoorState;
 import door.state.Locked;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Door is placed on a Space. The Door also have States to control if
@@ -31,6 +33,9 @@ public class Door {
 
   // In order to determine the States we add a DoorState attribute.
   private DoorState doorState;
+
+  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Unlocked");
+
 
   public Door(String id) {
     this.id = id;
@@ -126,7 +131,9 @@ public class Door {
       String action = request.getAction();
       doAction(action);
     } else {
-      System.out.println("not authorized");
+      logger.info("This user is not authorized");
+      //System.out.println("not authorized");
+
     }
     request.setDoorStateName(getStateName());
   }

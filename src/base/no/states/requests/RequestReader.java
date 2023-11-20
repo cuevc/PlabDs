@@ -1,13 +1,15 @@
 package base.no.states.requests;
 
+import base.no.states.User;
 import base.no.states.DirectoryDoors;
 import base.no.states.DirectoryUsers;
 import base.no.states.Door;
-import base.no.states.User;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 

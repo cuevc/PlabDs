@@ -1,6 +1,9 @@
 package base.no.states;
 
 import door.state.Actions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class DirectoryUsers {
+  static Logger logger = LoggerFactory.getLogger("base.no.states.DirectoryUsers");
 
   private static final ArrayList<Group> rols = new ArrayList<>();
 
@@ -104,6 +108,8 @@ public final class DirectoryUsers {
 
     admin.addUser(new User("Ana", "11343", admin));
     rols.add(admin);
+
+    logger.debug("All rols created and added to the rols attribute.");
   }
 
   // Find a User in any rol (group) by its Credential.
@@ -111,9 +117,11 @@ public final class DirectoryUsers {
 
     for (Group aux : rols) {
       if (aux.searchUser(credential) != null) {
+        logger.debug("findUserByCredential() -> The user with credential {} has been found", credential);
         return aux.searchUser(credential);
       }
     }
+    logger.warn("The user with credential {} has not been found", credential);
     return null;
   }
 }
