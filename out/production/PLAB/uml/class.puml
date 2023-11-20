@@ -1,0 +1,208 @@
+@startuml
+skinparam classAttributeIconSize 0
+' this is to use the standard notation for public, protected, private
+title AccessControlSystem
+class User {
+- name : string
+- credential : String
+- userGroup : Group
+
++ User(name:string, credential:String, groupies : Group)
++hasAccess(areaToAccess : Area, date : LocalDate, hour : LocalTime, action : String, reason : ArrayList<String>)
++ toString()
+}
+
+
+
+class Group{
+    - typeGroup : string
+    - users : ArrayList<User>
+    - schedules : Schedule
+    - actions : ArrayList<String>
+    - accesAreas: ArrayList<Area>
+
+   + Group(name : string, setSchedule : Schedule, operativeAction : ArrayList<String>, myArea : ArrayList<Area>)
+   + isOnUser(User searchUser) : Boolean
+   + searchUser(String userCredentuial) : User
+   + addUser(User newUser)
+   + hasAccessToArea(areToAccess : String, currentArea : Area, date : LocalDate, hour : LocalTime, action : String, reason : ArrayList<String>)
+}
+
+
+class Schedule{
+    - fromDate : LocalDate
+    - toDate : LocalDate
+    - workDays : List <DayOfWeek>
+    - fromHour : LocalTime
+    - toHour : LocalTime
+
+    + Schedule(initialDate : LocalDate, finalDate : LocalDate,initialHour : LocalTime, finalHour: LocalTime,
+    weekDays : List<DayOfWeek>)
+    + isOnTime(LocalTime hour) : Boolean
+    + isOnDate(LocalDate date) : Boolean
+
+}
+
+
+class Door{
+    -id : string
+    -closed : boolean
+    -doorState : DoorState
+    -to : Area
+    -from : Area
+    + Door(id : String)
+    + update(o : Observable , arg : Object)
+    + processRequest(request RequestReader)
+    - doAction(action : String)
+    + isClosed() : boolean
+    + toString() : String
+    +toJson() : JSONObject
+}
+
+namespace doorState #DDDDDD{
+    class States{
+       +{static}LOCKED:String
+       +{static}UNLOCKED:String
+    }
+
+    class Actions{
+        {static}OPEN:String
+        {static}CLOSE:String
+        {static}LOCK:String
+        {static}UNLOCK:String
+        {static}UNLOCK_SHORTLY:String
+    }
+
+    abstract DoorState{
+        #doorAttr: Door
+        #name: String
+        {abstract}+open()
+        {abstract}+close()
+        {abstract}+lock()
+        {abstract}+unlock()
+        {abstract}+propped()
+        {abstract}+unlockedShortly()
+    }
+
+    class Unlocked extends DoorState{
+        +Unlock(door:Door)
+        +open()
+        +close()
+        +lock()
+        +unlock()
+        +propped()
+        +unlockedShortly()
+
+    }
+
+    class UnlockedShortly extends DoorState{
+        +UnlockedShortly(door : Door)
+        +open()
+        +close()
+        +lock()
+        +unlock()
+        +propped()
+        +unlockedShortly()
+        +update(o : Observable, arg : Object)
+
+
+    }
+
+    class Propped extends DoorState{
+        +Propped(door : Door)
+        +UnlockedShortly(door : Door)
+        +open()
+        +close()
+        +lock()
+        +unlock()
+        +propped()
+        +unlockedShortly()
+    }
+
+    class Locked extends DoorState{
+        +Locked(door : Door)
+        +open()
+        +close()
+        +lock()
+        +unlock()
+        +propped()
+        +unlockedShortly()
+
+    }
+}
+
+
+abstract Area{
+    {abstract}#findPartitionById(id:String, rootArea:Area): Area
+    {abstract}+getAreaList() : ArrayList<Area>
+    {abstract}+getDoorsGivingAcces(): ArrayList<Door>
+    {abstract}+getPartitionName() : String
+    {abstract}+setFather(Area father)
+}
+
+class Partition extends Area{
+    - areaList : ArrayList<Area>
+    - partitionName : String
+    - father : Area
+
+    + Partition(part_naeme : String, areas : ArrayList<Area>, fatherNode : Area)
+    + getDoorsGivingAcces() : ArrayList<Door>
+    + findPartitionById(id:String, rootArea:Area): Area
+}
+
+ class Space Extends Area{
+    - doorList : ArrayList<Door>
+    - spaceName : String
+    - partFather : Area
+    + Space(mySpaceName: String, doors : List<Door> , partitionFather <Partition>)
+    + findPartitionById(id:String, rootArea:Area): Area
+    + getDoorsGivingAcces() : ArrayList<Door>
+}
+
+
+abstract Observable{
+    +addObserver(ob:Observer)
+    +deleteObserver(ob:Observer)
+    +setChanged()
+    +notifyObserver(arg0:Observable, arg1:Object)
+}
+
+interface Observer{
+    +update(arg0:Observable, obj2:Object)
+}
+
+
+class Clock extends Observable{
+    +Clock()
+    +run()
+
+
+}
+
+Group -left-> "n..1" Actions : actions
+Group -down-> "n..1" Schedule : schedules
+Group -down-* "0..n"  User: users
+User -up-> "1..1" Group:userGroup
+
+
+Door --up->"1..n" Space: to
+Door --up->"1..n" Space: from
+Door -right-*"n..1" DoorState : status
+
+
+Area --down*"n..1" Partition:partition
+
+Space --down->"*" Door:doorsList
+
+Group -->"*" Area: accesAreas
+
+Observable o-right-> "observers *" Observer
+
+UnlockedShortly ..Up.> Observer
+
+
+
+
+@enduml
+
+//manito no se hacer un commit
