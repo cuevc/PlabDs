@@ -20,7 +20,9 @@ public class Propped extends DoorState {
 
   @Override
   public void open() {
-    System.out.print("Door is Propped");
+    logger.info("Door is Propped.");
+    logger.debug("Locked propped() -> Door is Propped.");
+    //System.out.print("Door is Propped");
   }
 
   @Override

@@ -1,12 +1,15 @@
 package door.state;
 
 import base.no.states.Door;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * The Locked DoorState doesn't let to open the door until its unlocked.
  */
 public class Locked extends DoorState {
+  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Locked");
 
   public Locked(Door door) {
     door.setClosed(true);
@@ -16,37 +19,49 @@ public class Locked extends DoorState {
 
   @Override
   public void open() {
-    System.out.println("Door could not be opened. It is Locked");
+    logger.info("Door could not be opened. It is Locked.");
+    logger.debug("Locked open() -> Door could not be opened. It is Locked.");
+    //System.out.println("Door could not be opened. It is Locked");
   }
 
   @Override
   public void close() {
     doorAttr.setClosed(true);
-    System.out.println("Door closed");
+    logger.info("Door closed.");
+    logger.debug("Locked close() -> Door closed.");
+    //System.out.println("Door closed");
 
 
   }
 
   @Override
   public void lock() {
-    System.out.println("Door is already locked");
+    logger.info("Door is already locked.");
+    logger.debug("Locked lock() -> Door is already locked.");
+    //System.out.println("Door is already locked.");
   }
 
   @Override
   public void unlock() {
     doorAttr.setDoorState(new Unlocked(doorAttr));
-    System.out.println("Door unlocked");
+    logger.info("Door unlocked.");
+    logger.debug("Locked unlocked() -> Door unlocked.");
+    //System.out.println("Door unlocked.");
   }
 
   @Override
   public void propped() {
-    System.out.println("Door locked, It could not be Propped");
+    logger.info("Door locked. It could not be Propped.");
+    logger.debug("Locked propped() -> Door locked. It could not be Propped.");
+    //System.out.println("Door locked. It could not be Propped.");
   }
 
   @Override
   public void unlockedShortly() {
     doorAttr.setDoorState(new UnlockedShortly(doorAttr));
-    System.out.println("Door Unlocked shortly");
+    logger.info("Door Unlocked shortly.");
+    logger.debug("Locked unlockedShortly() -> Door Unlocked shortly.");
+    //System.out.println("Door Unlocked shortly.");
   }
 
 }
