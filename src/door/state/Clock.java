@@ -4,6 +4,8 @@ package door.state;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The 'Clock' class is responsible for counting the time that passes since it was called and
@@ -33,7 +35,8 @@ public class Clock extends Observable implements Runnable {
       @Override
       public void run() {
 
-        System.out.println("NOTIFY to observers: ");
+        logger.debug("Clock run() -> Clock NOTIFIES its observers");
+        //System.out.println("NOTIFY to observers: ");
         setChanged();
         notifyObservers();
         timer.cancel();  // Stop the timer-task, it will only be executed once

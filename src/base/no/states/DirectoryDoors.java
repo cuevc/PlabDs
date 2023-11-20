@@ -1,9 +1,14 @@
 package base.no.states;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class DirectoryDoors {
+  static Logger logger = LoggerFactory.getLogger("base.no.states.DirectoryDoors");
+
   private static ArrayList<Door> allDoors;
 
   // Declare all the Doors and put all them in the allDoors ArrayList.
@@ -29,6 +34,7 @@ public final class DirectoryDoors {
     Door d9 = new Door("D9"); // corridor, IT
 
     allDoors = new ArrayList<>(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9));
+    logger.debug("All doors created successfully and added to the allDoors attribute.");
     return this;
   }
 
@@ -38,13 +44,14 @@ public final class DirectoryDoors {
         return door;
       }
     }
-    System.out.println("door with id " + id + " not found");
+    logger.warn("Door with id {} not found.", id);
+    // System.out.println("door with id " + id + " not found");
     return null; // otherwise we get a Java error
   }
 
   // this is needed by RequestRefresh
   public static ArrayList<Door> getAllDoors() {
-    System.out.println(allDoors);
+    //System.out.println(allDoors);
     return allDoors;
   }
 
