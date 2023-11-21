@@ -15,10 +15,17 @@
     </encoder>
     <file>test.html</file>
 </appender>
-<root level = "debug">
-    <appender-ref ref = "STDOUT"></appender-ref>
-    <appender-ref ref = "FILE"></appender-ref>
-</root>
-<logger name="base.no.states.DirectoryAreas" level="debug" />
+
+        <root level = "DEBUG">
+            <appender-ref ref = "STDOUT"/>
+            <appender-ref ref = "FILE"/>
+        </root>
+        <logger name="base.no.states" level="DEBUG" /> <!--level = "OFF" para desactivar debug del html -->
+        <logger name="door.state" level="DEBUG" /> <!--level = "OFF" para desactivar debug del html -->
 
 </configuration>
+
+
+
+
+
