@@ -193,7 +193,13 @@ public class DirectoryAreas {
     stairs.setFather(rootArea);
     exterior.setFather(rootArea);
 
-    logger.debug("All Areas created successfully. Attribute rootArea created.");
+    ArrayList<String> loggerNamePartitions = new ArrayList<>();
+    for(Area p : buildingPartitions){
+      loggerNamePartitions.add(p.getPartitionName());
+    }
+
+    logger.debug("makeAreas() => The areas were created: {}", loggerNamePartitions);
+    logger.info("All Areas created successfully. Attribute rootArea created.");
   }
 
   // Find a determined Door by its Id. At this time we don't use the

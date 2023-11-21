@@ -34,7 +34,7 @@ public class Door {
   // In order to determine the States we add a DoorState attribute.
   private DoorState doorState;
 
-  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Unlocked");
+  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Door");
 
 
   public Door(String id) {
@@ -131,7 +131,8 @@ public class Door {
       String action = request.getAction();
       doAction(action);
     } else {
-      logger.info("This user is not authorized");
+      //String reasonRequest = request.getReasons().get(0);
+      logger.info("This user is not authorized to this door: {} . The reason is: {}" , id, request.getReasons());
       //System.out.println("not authorized");
 
     }

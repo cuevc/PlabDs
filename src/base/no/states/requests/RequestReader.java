@@ -36,6 +36,7 @@ public class RequestReader implements Request {
     doorStateName = name;
   }
 
+  public ArrayList<String> getReasons() { return reasons; }
   public String getAction() {
     return action;
   }

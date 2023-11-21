@@ -109,7 +109,18 @@ public final class DirectoryUsers {
     admin.addUser(new User("Ana", "11343", admin));
     rols.add(admin);
 
-    logger.debug("All rols created and added to the rols attribute.");
+    ArrayList<String> loggerNameGroups = new ArrayList<>();
+    ArrayList<String> loggerNameUsers = new ArrayList<>();
+    for(Group g : rols){
+      loggerNameGroups.add(g.getTypeGroup());
+      for(User u : g.getUsers()){
+        loggerNameUsers.add(u.getName());
+      }
+    }
+
+    logger.debug("MakeUsers() => This groups were created: {} \n This users were added: {}", loggerNameGroups, loggerNameUsers );
+    logger.info("All rols created and added to the rols attribute.");
+    //logger.debug("");
   }
 
   // Find a User in any rol (group) by its Credential.

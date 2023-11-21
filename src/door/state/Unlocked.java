@@ -22,6 +22,8 @@ public class Unlocked extends DoorState {
       // We can open the Door freely.
       if (doorAttr.isClosed()) {
         doorAttr.setClosed(false);
+        logger.info("Door {} open.",this.doorAttr.getId());
+        logger.debug("Unlocked close() => Door {} open.", this.doorAttr.getId());
       }
     }
   }
@@ -30,8 +32,8 @@ public class Unlocked extends DoorState {
   public void close() {
     // We can close the Door freely.
     doorAttr.setClosed(true);
-    logger.info("Door closed.");
-    logger.debug("Unlocked close() -> Door closed.");
+    logger.info("Door {} closed.",this.doorAttr.getId());
+    logger.debug("Unlocked close() => Door {} closed.", this.doorAttr.getId());
   }
 
   @Override
@@ -40,15 +42,15 @@ public class Unlocked extends DoorState {
     //only if Door is closed, it could be locked
     if (doorAttr.isClosed()) {
       doorAttr.setDoorState(new Locked(doorAttr));
-      logger.info("Door locked");
-      logger.debug("Unlocked lock() -> Door is closed. It can be locked. Door is locked.");
+      logger.info("Door {} locked", this.doorAttr.getId());
+      logger.debug("Unlocked lock() -> Door {} is closed. It can be locked. Door is locked." , this.doorAttr.getId());
       //System.out.println("Door locked");
 
     } else {
       // Can't lock the Door. The Door is open/propped.
-      logger.info("Can't lock the door.");
-      logger.debug("Unlocked lock() -> Door can't be locked. Door is open/propped.");
-      logger.warn("Unlocked lock() -> Trying to lock: Door can't be locked. Door is open/propped.");
+      logger.info("Can't lock the door {} .", this.doorAttr.getId());
+      logger.debug("Unlocked lock() -> Door {} can't be locked. Door is open/propped.", this.doorAttr.getId());
+      logger.warn("Unlocked lock() -> Trying to lock: Door {} can't be locked. Door is open/propped.", this.doorAttr.getId());
       //System.out.println("Door can't be locked. Door is open/propped.");
     }
 
@@ -56,8 +58,8 @@ public class Unlocked extends DoorState {
 
   @Override
   public void unlock() {
-    logger.info("Door already unlocked.");
-    logger.debug("Unlocked unlock() -> Door already unlocked.");
+    logger.info("Door {} already unlocked.", this.doorAttr.getId());
+    logger.debug("Unlocked unlock() -> Door {} already unlocked.", this.doorAttr.getId());
     //System.out.println("Door already unlocked");
 
   }
@@ -65,17 +67,17 @@ public class Unlocked extends DoorState {
   @Override
   public void propped() {
     doorAttr.setDoorState(new Propped(doorAttr));
-    logger.info("Door Propped.");
-    logger.info("Unlocked propped() -> Door Propped.");
+    logger.info("Door {} Propped." , this.doorAttr.getId());
+    logger.info("Unlocked propped() -> Door Propped {}.", this.doorAttr.getId());
     //System.out.println("Door Propped");
 
   }
 
   @Override
   public void unlockedShortly() {
-    logger.info("Door already unlocked");
-    logger.debug("Unlock unlockedShortly() -> Door already unlocked");
-    System.out.println("Door already unlocked");
+    logger.info("Door {} already unlocked",this.doorAttr.getId());
+    logger.debug("Unlock unlockedShortly() -> Door {} already unlocked", this.doorAttr.getId());
+    //System.out.println("Door already unlocked");
   }
 
 }

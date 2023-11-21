@@ -14,7 +14,7 @@ import java.util.List;
  * when the user can make an action.
  */
 public class Schedule {
-  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Unlocked");
+  static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Schedule");
 
   // From which date (the date when the user started working on the company
   private LocalDate fromDate;
@@ -45,10 +45,10 @@ public class Schedule {
   // return true, otherwise false.
   public boolean isOnTime(LocalTime hour) {
     if ((fromHour.isBefore(hour)) && (toHour.isAfter(hour))) {
-      logger.debug("This user is on time");
+      logger.debug("isOnTime() => This user is on time");
       return true;
     } else {
-      logger.debug("This user is not on time");
+      logger.debug("isOnTime() => This user is not on time");
       return false;
     }
   }
@@ -57,10 +57,10 @@ public class Schedule {
   public boolean isOnDate(LocalDate date) {
     if ((fromDate.isBefore(date.minusDays(1))) && (toDate.isAfter(date))
         && (this.workDays.contains(date.getDayOfWeek()))) {
-      logger.debug("This user is on date");
+      logger.debug("isOnDate() => This user is on date");
       return true;
     } else {
-      logger.debug("This user is not on date");
+      logger.debug("isOnDate() => This user is not on date");
       return false;
     }
   }

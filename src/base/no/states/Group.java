@@ -43,6 +43,9 @@ public class Group {
     return accesAreas;
   }
 
+  String getTypeGroup() { return typeGroup; }
+  ArrayList<User> getUsers() { return users; }
+
   // =====================================================
   // ||           Other methods of this class           ||
   // =====================================================
@@ -79,14 +82,10 @@ public class Group {
     String thisUser = newUser.toString();
     if (!isOnUsers(newUser)) {
       users.add(newUser);
-
-      logger.info("{} this user has been added succesfully", thisUser);
-      logger.debug("{} this user has been added succesfully", thisUser);
-
       //System.out.println(newUser.toString() + " added successfully");
     } else {
-      logger.debug("{} is already on the list." , thisUser);
-      logger.info("{} is already on the list." , thisUser);
+      logger.warn("{} is already on the list." , thisUser);
+      //logger.info("{} is already on the list." , thisUser);
       //System.out.println(newUser.toString() + " is already on the list");
     }
   }
@@ -95,6 +94,8 @@ public class Group {
   // Area (correct: Action, Date, Time, and current Area).
   public boolean hasAccessToArea(String areaToAccess, Area currentArea, LocalDate date,
                                  LocalTime hour, String action, ArrayList<String> reason) {
+    String loggerArea="";
+
     boolean permissionConceded = false;
     if (currentArea.getPartitionName().equals(areaToAccess)) {
       // In this 'if' we check if the user can do the
@@ -120,6 +121,7 @@ public class Group {
         //General case: if reason is not empty and permissionConceded
         // is false, means that area has not been found
         if (reason.isEmpty() && !permissionConceded) {
+          loggerArea = actualArea.getPartitionName();
           permissionConceded = hasAccessToArea(areaToAccess,
               actualArea, date, hour, action, reason);
         } else {
@@ -127,7 +129,10 @@ public class Group {
         }
       }
     }
-    logger.debug("The value of the permission is: {}" , permissionConceded);
+
+    logger.debug("hasAccessToArea() => This function is recursive. For this iteration values are: {}, {}, {}, {}, {}, {}",
+            areaToAccess, loggerArea, date, hour, action, reason);
+    logger.debug("The value of the permission is: {}",permissionConceded);
     return permissionConceded; // If true then the user have
     // access to this area else, the user doesn't have access.
   }
