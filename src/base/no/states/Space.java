@@ -29,35 +29,23 @@ public class Space extends Area {
     partFather = father;
   }
 
-  // Get the current Areas List
-  @Override
-  public ArrayList<Area> getAreaList() {
-    return null;
-  }
-
   // Get the name of this instance of Space.
   @Override
   public String getPartitionName() {
     return spaceName;
   }
 
-  // In this case, this is not a special getter method because Space
-  // has a DoorList that we can return without any recursive call.
-  @Override
-  public ArrayList<Door> getDoorsGivingAccess() {
-    return doorList;
+
+  public ArrayList<Door> getDoors(){
+    return this.doorList;
   }
 
   // =====================================================
   // ||           Other methods of this class           ||
   // =====================================================
 
-  // Due to the fact that Space doesn't have Spaces or Partitions, we don't use this method
-  // with an Space instance, but we have to implement it somehow because Area
-  // (the father class of Space) has it.
   @Override
-  public Partition findPartitionById(String id, Area rootArea) {
-    return null;
+  public void accept(Visitor v) {
+    v.visitSpace(this);
   }
-
 }

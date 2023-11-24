@@ -173,7 +173,9 @@ interface Observer{
 
 
 class Clock extends Observable{
-    +Clock()
+    -uniqueClock : Clock
+    +getInstance() : Clock
+    -Clock()
     +run()
 
 

@@ -69,7 +69,7 @@ public class User {
     if (reason.isEmpty() && !access) {
       reason.add("You don't have access to this area");
     }
-    logger.debug("The result of access: {}", access);
+    logger.debug("hasAccess() => The result of access: {}", access);
     return access;
   }
 

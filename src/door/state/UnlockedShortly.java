@@ -19,7 +19,7 @@ public class UnlockedShortly extends DoorState implements Observer {
 
   public UnlockedShortly(Door door) {
     clock = Clock.getInstance();
-    logger.debug("UnlockedShortly asked a Clock instance (getInstance()).");
+    logger.debug("Constructor UnlockedShortyl() => UnlockedShortly asked a Clock instance (getInstance()).");
     doorAttr = door;
     name = "unlocked_shortly";
 
@@ -31,24 +31,24 @@ public class UnlockedShortly extends DoorState implements Observer {
   @Override
   public void open() {
     doorAttr.setClosed(false);
-    logger.info("Door opened");
-    logger.debug("Door opened");
+    logger.info("Door {} opened", this.doorAttr.getId());
+    logger.debug("open() => Door {} opened", this.doorAttr.getId());
     //System.out.println("Door Opened");
   }
 
   @Override
   public void close() {
     doorAttr.setClosed(true);
-    logger.info("Door Closed");
-    logger.debug("Door Closed");
+    logger.info("Door {} Closed", this.doorAttr.getId());
+    logger.debug("close() => Door {} Closed", this.doorAttr.getId());
     //System.out.println("Door Closed");
   }
 
   @Override
   public void lock() {
     doorAttr.setDoorState(new Locked(doorAttr));
-    logger.info("Door Locked");
-    logger.debug("Door Locked");
+    logger.info("Door {} Locked", this.doorAttr.getId());
+    logger.debug("lock() => Door {} Locked", this.doorAttr.getId());
     //System.out.println("Door Locked");
   }
 
@@ -56,22 +56,25 @@ public class UnlockedShortly extends DoorState implements Observer {
   public void unlock() {
     doorAttr.setDoorState(new Unlocked(doorAttr));
     logger.info("Door Unlocked");
-    logger.debug("Door Unlocked");
+    logger.debug("unlock() => Door Unlocked");
     //System.out.println("Door Unlocked");
   }
 
   @Override
   public void propped() {
+    logger.warn("propped() -> Door {} is Propped.", this.doorAttr.getId());
+
     doorAttr.setDoorState(new Propped(doorAttr));
-    logger.info("Door Propped");
-    logger.debug("Door Propped");
+    logger.info("Door {} is  Propped", this.doorAttr.getId());
+    logger.debug("propped() => Door {} Propped", this.doorAttr.getId());
+    //logger.warn("propped() => Door {} Propped", this.doorAttr.getId());
     //System.out.println("Door Propped");
   }
 
   @Override
   public void unlockedShortly() {
-    logger.debug("Door already unlocked");
-    logger.info("Door already unlocked");
+    logger.debug("unlockedShortyl() => Door {} already unlocked", this.doorAttr.getId());
+    logger.info("Door {} already unlocked", this.doorAttr.getId());
     //System.out.println("Door already unlocked");
   }
 
@@ -79,14 +82,16 @@ public class UnlockedShortly extends DoorState implements Observer {
   public void update(Observable o, Object arg) {
     
     //System.out.println("Time runs out");
-    logger.debug("Time is running");
+    logger.debug("update() => Time is running");
     //if the door is closed, it will be locked
     if (doorAttr.isClosed()) {
-      logger.debug("The door is closed");
+      logger.debug("update() => The door {} is closed", this.doorAttr.getId());
       lock();
 
     } else {
-      logger.debug("The doow has not been closed on time, so now it's propped");
+      logger.debug("update() => Door {} has not been closed on time, so now it's propped", this.doorAttr.getId());
+      //logger.warn("propped() -> Door {} is Propped.", this.doorAttr.getId());
+
       //if door is not closed after 10 sec, It will be propped
       propped();
     }

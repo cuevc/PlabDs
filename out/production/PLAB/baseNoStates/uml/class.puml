@@ -1,0 +1,163 @@
+@startuml
+skinparam classAttributeIconSize 0
+' this is to use the standard notation for public, protected, private
+
+class User {
+- name : string
+- credential : String
+- adjecentGroup : Group
++ User(name:string, credential:String, groupies : Group)
++ getCredential() : String
++ getName() : String
++ hasPermision(String act) : Boolean
++ toString()
+}
+
+
+
+class Group{
+    - typeGroup : string
+    - users : ArrayList<User>
+    - schedules : Schedules
+    - actions : ArrayList<String>
+    - accesAreas: List<Area>
+
+   + Group(typeGroup : string, setSchedule : Schedule, operativeAction : ArrayList<String>)
+   + getTypeGroup() : String
+   + getUsers() : ArrayList<User>
+   + getSchedules() : Schedule
+   + getActions() : ArrayList<String>
+   + isOnUser(User searchUser) : Boolean
+   + searchUser(String userCredentuial) : User
+   + addUser(User newUser)
+   + removeUser(User deleteUser)
+   - hasAction(String act) : boolean
+
+}
+
+
+class Schedule{
+    - fromDate : LocalDate
+    - toDate : LocalDate
+    - workDays : List <DayOfWeek>
+    - fromHour : LocalTime
+    - to Hour : LocalTime
+
+    + Schedule(initialDate : LocalDate, finalDate : LocalDate,initialHour : LocalTime, finalHour: LocalTime,
+    weekDays : List<DayOfWeek>)
+    + getFromDate() : LocalDate
+    + getToDate() : LocalDate
+    + getFromHour() : LocalTime
+    + getToHour() : LocalTime
+    + getWorkDays() : List<DayOfWeek>
+    + isOnTime(LocalTime hour) : Boolean
+    + isOnDate(LocalDate date) : Boolean
+
+}
+
+
+class Door{
+    -id:string
+    -close:boolean
+    -status:DoorState
+    -to:Area
+    -from:Area
+}
+
+namespace doorState #DDDDDD{
+    class States{
+       +{static}LOCKED:String
+       +{static}UNLOCKED:String
+    }
+
+    class Action{
+        {static}OPEN:String
+        {static}CLOSE:String
+        {static}LOCK:String
+        {static}UNLOCK:String
+        {static}UNLOCK_SHORTLY:String
+    }
+
+    abstract DoorState{
+        #door: Door
+        #name: String
+        +setUnlock()
+        +setPropped()
+        +setLock()
+        +setUnlockShortly()
+    }
+
+    class Unlocked extends DoorState{
+
+    }
+
+    class UnlockedShortly extends DoorState{
+
+    }
+
+    class Propped extends DoorState{
+
+    }
+
+    class Locked extends DoorState{
+
+    }
+}
+
+
+abstract Area{
+    {abstract}+findAreaById(id:String): Area
+    {abstract}+getDoorsGivingAcces(): Door[]
+}
+
+class Partition extends Area{
+    -partitions:List<Partition>
+    -areas:List<Area>
+
+    +findAreaById(id:String): Area
+}
+
+ class Space Extends Area{
+    -doorsList:List<Door>
+
+    +getDoorsGivingAcces(): Door[]
+}
+
+
+abstract Observable{
+    +addObserver(ob:Observer)
+    +deleteObserver(ob:Observer)
+    +setChanged()
+    +notifyObserver(arg0:Observable, arg1:Object)
+}
+
+interface Observer{
+    +update(arg0:Observable, obj2:Object)
+}
+
+
+class ClockThread extends Observable{
+
+}
+
+Group -left-> "n..1" Action : actions
+Group -down-> "n..1" Schedule : schedules
+Group -down-> "1..n"  User: users
+User -up-> "1..n" Group:adjecentGroup
+
+
+Door --up->"1..n" Space: to
+Door --up->"1..n" Space: from
+Door -right-*"n..1" DoorState : status
+
+Partition --right*"n..1" Partition : partition
+Partition --down*"n..1" Area: areas
+
+Space --down->"*" Door:doorsList
+
+Group -->"*" Area: accesAreas
+
+Observable o-right-> "observers *" Observer
+
+DoorState ..Up.> Observer
+@enduml

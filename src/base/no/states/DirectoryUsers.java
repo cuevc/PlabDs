@@ -48,10 +48,22 @@ public final class DirectoryUsers {
             DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
 
     ArrayList<Area> employeeArea = new ArrayList<Area>();
-    employeeArea.add(root.findPartitionById("ground_floor", root));
-    employeeArea.add(root.findPartitionById("floor1", root));
-    employeeArea.add(root.findPartitionById("exterior", root));
-    employeeArea.add(root.findPartitionById("stairs", root));
+
+    FindPartitionByIdVistor findPartitionByIdVistor=new FindPartitionByIdVistor("ground_floor");
+    root.accept(findPartitionByIdVistor);
+    employeeArea.add(findPartitionByIdVistor.getLooking());
+
+    findPartitionByIdVistor.setId("floor1");
+    root.accept(findPartitionByIdVistor);
+    employeeArea.add(findPartitionByIdVistor.getLooking());
+
+    findPartitionByIdVistor.setId("exterior");
+    root.accept(findPartitionByIdVistor);
+    employeeArea.add(findPartitionByIdVistor.getLooking());
+
+    findPartitionByIdVistor.setId("stairs");
+    root.accept(findPartitionByIdVistor);
+    employeeArea.add(findPartitionByIdVistor.getLooking());
 
 
     Group employees = new Group("Employees", employeesSchedule,
@@ -74,11 +86,22 @@ public final class DirectoryUsers {
             DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
 
     ArrayList<Area> managersAreas = new ArrayList<Area>();
-    managersAreas.add(root.findPartitionById("ground_floor", root));
-    managersAreas.add(root.findPartitionById("floor1", root));
-    managersAreas.add(root.findPartitionById("exterior", root));
-    managersAreas.add(root.findPartitionById("stairs", root));
-    managersAreas.add(root.findPartitionById("basement", root));
+
+    findPartitionByIdVistor.setId("ground_floor");
+    root.accept(findPartitionByIdVistor);
+    managersAreas.add(findPartitionByIdVistor.getLooking());
+
+    findPartitionByIdVistor.setId("floor1");
+    root.accept(findPartitionByIdVistor);
+    managersAreas.add(findPartitionByIdVistor.getLooking());
+
+    findPartitionByIdVistor.setId("stairs");
+    root.accept(findPartitionByIdVistor);
+    managersAreas.add(findPartitionByIdVistor.getLooking());
+
+    findPartitionByIdVistor.setId("basement");
+    root.accept(findPartitionByIdVistor);
+    managersAreas.add(findPartitionByIdVistor.getLooking());
 
     Group managers = new Group("Manager", managersSchedule,
         new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE, Actions.LOCK,
@@ -109,7 +132,18 @@ public final class DirectoryUsers {
     admin.addUser(new User("Ana", "11343", admin));
     rols.add(admin);
 
-    logger.debug("All rols created and added to the rols attribute.");
+    ArrayList<String> loggerNameGroups = new ArrayList<>();
+    ArrayList<String> loggerNameUsers = new ArrayList<>();
+    for(Group g : rols){
+      loggerNameGroups.add(g.getTypeGroup());
+      for(User u : g.getUsers()){
+        loggerNameUsers.add(u.getName());
+      }
+    }
+
+    logger.debug("MakeUsers() => This groups were created: {} \n This users were added: {}", loggerNameGroups, loggerNameUsers );
+    logger.info("All rols created and added to the rols attribute.");
+    //logger.debug("");
   }
 
   // Find a User in any rol (group) by its Credential.

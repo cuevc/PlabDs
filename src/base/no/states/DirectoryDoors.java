@@ -34,7 +34,9 @@ public final class DirectoryDoors {
     Door d9 = new Door("D9"); // corridor, IT
 
     allDoors = new ArrayList<>(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9));
-    logger.debug("All doors created successfully and added to the allDoors attribute.");
+
+    logger.debug("makeDoor() => This doors were created: {}", allDoors);
+    logger.info("All doors created successfully and added to the allDoors attribute.");
     return this;
   }
 
