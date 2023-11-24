@@ -115,17 +115,20 @@ public class Group {
       }
       //If we are in a Space class and does exist partition list it
       // will return null.
-    } else if (currentArea.getAreaList() != null) {
-
-      for (Area actualArea : currentArea.getAreaList()) {
-        //General case: if reason is not empty and permissionConceded
-        // is false, means that area has not been found
-        if (reason.isEmpty() && !permissionConceded) {
-          loggerArea = actualArea.getPartitionName();
-          permissionConceded = hasAccessToArea(areaToAccess,
-              actualArea, date, hour, action, reason);
-        } else {
-          break;
+    } else {
+      GetAreaListVisitor listAreas=new GetAreaListVisitor();
+      currentArea.accept(listAreas);
+      if (listAreas.getAreas() != null) {
+        for (Area actualArea : listAreas.getAreas()) {
+          //General case: if reason is not empty and permissionConceded
+          // is false, means that area has not been found
+          if (reason.isEmpty() && !permissionConceded) {
+            loggerArea = actualArea.getPartitionName();
+            permissionConceded = hasAccessToArea(areaToAccess,
+                    actualArea, date, hour, action, reason);
+          } else {
+            break;
+          }
         }
       }
     }

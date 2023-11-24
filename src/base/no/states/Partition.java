@@ -34,7 +34,6 @@ public class Partition extends Area {
   }
 
   // Get the current Areas List
-  @Override
   public ArrayList<Area> getAreaList() {
     return areaList;
   }
@@ -54,34 +53,9 @@ public class Partition extends Area {
     this.areaList.add(addingArea);
   }
 
-  // Special Getter that gives all the Doors of the current Area.
-  // This method has a recursive call, so at the end the Space will give us its Doors.
-  @Override // Used also in the Space Class
-  public ArrayList<Door> getDoorsGivingAccess() {
-    ArrayList<Door> recollectedDoors = new ArrayList<>();
-    for (Area actualArea : this.areaList) {
-      actualArea.getDoorsGivingAccess();
-      recollectedDoors.addAll(actualArea.getDoorsGivingAccess());
-    }
-    logger.debug("getDoorGivingAccess() => Getting all door which we have access");
-    return recollectedDoors;
-  }
-
-  // Searches an Area (Partition), and if it's in the given Area,
-  // we return the instance. Otherwise, we return null.
   @Override
-  public Area findPartitionById(String id, Area rootArea) {
-    // We search the given Partition on the root.
-    for (Area looking : rootArea.getAreaList()) {
-      if (looking.getPartitionName().equals(id)) {
-        logger.debug("findPartitionById() => The partition has been found.");
-        return looking;
-      }
-    }
-    logger.debug("None partition has been found");
-    return null;
+  public void accept(Visitor v) {
+    v.visitPartition(this);
   }
-
-
 }
 

@@ -26,14 +26,18 @@ public class DirectoryAreas {
 
     if (areaCurrent.getPartitionName().equals(areaId)) {
       aux = areaCurrent;
-    } else if (areaCurrent.getAreaList() != null) {
-      for (Area actualArea : areaCurrent.getAreaList()) {
-        //General case: if reason is not empty and permissionConceded
-        // is false, means that area has not been found
-        if (aux == null) {
-          aux = findAreaById(areaId, actualArea);
-        } else {
-          break;
+    } else{
+      GetAreaListVisitor getAreaListVisitor=new GetAreaListVisitor();
+      areaCurrent.accept(getAreaListVisitor);
+      if (getAreaListVisitor.getAreas() != null) {
+        for (Area actualArea : getAreaListVisitor.getAreas()) {
+          //General case: if reason is not empty and permissionConceded
+          // is false, means that area has not been found
+          if (aux == null) {
+            aux = findAreaById(areaId, actualArea);
+          } else {
+            break;
+          }
         }
       }
     }
