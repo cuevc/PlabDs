@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Unlocked extends DoorState {
   static Logger logger = LoggerFactory.getLogger("door.state.DoorState.Unlocked");
+
   public Unlocked(Door door) {
     doorAttr = door;
     door.setClosed(true);
@@ -22,7 +23,7 @@ public class Unlocked extends DoorState {
       // We can open the Door freely.
       if (doorAttr.isClosed()) {
         doorAttr.setClosed(false);
-        logger.info("Door {} open.",this.doorAttr.getId());
+        logger.info("Door {} open.", this.doorAttr.getId());
         logger.debug("Unlocked close() => Door {} open.", this.doorAttr.getId());
       }
     }
@@ -32,7 +33,7 @@ public class Unlocked extends DoorState {
   public void close() {
     // We can close the Door freely.
     doorAttr.setClosed(true);
-    logger.info("Door {} closed.",this.doorAttr.getId());
+    logger.info("Door {} closed.", this.doorAttr.getId());
     logger.debug("Unlocked close() => Door {} closed.", this.doorAttr.getId());
   }
 
@@ -43,14 +44,17 @@ public class Unlocked extends DoorState {
     if (doorAttr.isClosed()) {
       doorAttr.setDoorState(new Locked(doorAttr));
       logger.info("Door {} locked", this.doorAttr.getId());
-      logger.debug("Unlocked lock() -> Door {} is closed. It can be locked. Door is locked." , this.doorAttr.getId());
+      logger.debug("Unlocked lock() -> Door {} is closed. It can be locked. Door "
+          + "is locked.", this.doorAttr.getId());
       //System.out.println("Door locked");
 
     } else {
       // Can't lock the Door. The Door is open/propped.
       logger.info("Can't lock the door {} .", this.doorAttr.getId());
-      logger.debug("Unlocked lock() -> Door {} can't be locked. Door is open/propped.", this.doorAttr.getId());
-      logger.warn("Unlocked lock() -> Trying to lock: Door {} can't be locked. Door is open/propped.", this.doorAttr.getId());
+      logger.debug("Unlocked lock() -> Door {} can't be locked. Door is open/propped.",
+          this.doorAttr.getId());
+      logger.warn("Unlocked lock() -> Trying to lock: Door {} can't be locked. Door "
+          + "is open/propped.", this.doorAttr.getId());
       //System.out.println("Door can't be locked. Door is open/propped.");
     }
 
@@ -67,7 +71,7 @@ public class Unlocked extends DoorState {
   @Override
   public void propped() {
     doorAttr.setDoorState(new Propped(doorAttr));
-    logger.info("Door {} Propped." , this.doorAttr.getId());
+    logger.info("Door {} Propped.", this.doorAttr.getId());
     logger.info("Unlocked propped() -> Door Propped {}.", this.doorAttr.getId());
     //System.out.println("Door Propped");
 
@@ -75,7 +79,7 @@ public class Unlocked extends DoorState {
 
   @Override
   public void unlockedShortly() {
-    logger.info("Door {} already unlocked",this.doorAttr.getId());
+    logger.info("Door {} already unlocked", this.doorAttr.getId());
     logger.debug("Unlock unlockedShortly() -> Door {} already unlocked", this.doorAttr.getId());
     //System.out.println("Door already unlocked");
   }

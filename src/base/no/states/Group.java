@@ -1,18 +1,17 @@
 package base.no.states;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class contains Users in a Group. Each group has determined
  * permissions, access areas and Schedules.
  */
 public class Group {
+
   static Logger logger = LoggerFactory.getLogger("base.no.states.Group");
 
   // The name of this type of Group
@@ -43,8 +42,13 @@ public class Group {
     return accesAreas;
   }
 
-  String getTypeGroup() { return typeGroup; }
-  ArrayList<User> getUsers() { return users; }
+  String getTypeGroup() {
+    return typeGroup;
+  }
+
+  ArrayList<User> getUsers() {
+    return users;
+  }
 
   // =====================================================
   // ||           Other methods of this class           ||
@@ -84,7 +88,7 @@ public class Group {
       users.add(newUser);
       //System.out.println(newUser.toString() + " added successfully");
     } else {
-      logger.warn("{} is already on the list." , thisUser);
+      logger.warn("{} is already on the list.", thisUser);
       //logger.info("{} is already on the list." , thisUser);
       //System.out.println(newUser.toString() + " is already on the list");
     }
@@ -94,7 +98,7 @@ public class Group {
   // Area (correct: Action, Date, Time, and current Area).
   public boolean hasAccessToArea(String areaToAccess, Area currentArea, LocalDate date,
                                  LocalTime hour, String action, ArrayList<String> reason) {
-    String loggerArea="";
+    String loggerArea = "";
 
     boolean permissionConceded = false;
     if (currentArea.getPartitionName().equals(areaToAccess)) {
@@ -116,7 +120,7 @@ public class Group {
       //If we are in a Space class and does exist partition list it
       // will return null.
     } else {
-      GetAreaListVisitor listAreas=new GetAreaListVisitor();
+      GetAreaListVisitor listAreas = new GetAreaListVisitor();
       currentArea.accept(listAreas);
       if (listAreas.getAreas() != null) {
         for (Area actualArea : listAreas.getAreas()) {
@@ -133,9 +137,10 @@ public class Group {
       }
     }
 
-    logger.debug("hasAccessToArea() => This function is recursive. For this iteration values are: {}, {}, {}, {}, {}, {}",
+    logger.debug("hasAccessToArea() => This function is recursive. For this iteration" 
+            + " values are: {}, {}, {}, {}, {}, {}",
             areaToAccess, loggerArea, date, hour, action, reason);
-    logger.debug("The value of the permission is: {}",permissionConceded);
+    logger.debug("The value of the permission is: {}", permissionConceded);
     return permissionConceded; // If true then the user have
     // access to this area else, the user doesn't have access.
   }

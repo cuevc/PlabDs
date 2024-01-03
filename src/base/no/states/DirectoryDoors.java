@@ -1,10 +1,11 @@
 package base.no.states;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public final class DirectoryDoors {
   static Logger logger = LoggerFactory.getLogger("base.no.states.DirectoryDoors");

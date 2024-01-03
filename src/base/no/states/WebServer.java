@@ -20,8 +20,11 @@ public class WebServer {
   private static final DateTimeFormatter formatter =
       DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
+  public RequestChildren myChildren;
+
   public WebServer() {
     try {
+      myChildren = new RequestChildren(null);
       ServerSocket serverConnect = new ServerSocket(PORT);
       System.out.println("Server started.\nListening for connections on port : " + PORT + " ...\n");
       // we listen until user halts server execution
@@ -109,7 +112,8 @@ public class WebServer {
 
     private RequestChildren makeRequestChildren(String[] tokens) {
       String areaId = tokens[1];
-      return new RequestChildren(areaId);
+      myChildren.setRequestChildren(areaId);
+      return myChildren;
     }
 
     private Request makeRequest(String[] tokens) {

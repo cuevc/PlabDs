@@ -22,15 +22,21 @@ public class DirectoryAreas {
   // =====================================================
 
   public static Area findAreaById(String areaId, Area areaCurrent) {
+    //areaCurrent = lastAreaVisited;
+    //System.out.println(areaCurrent);
     if (areaId.equals("ROOT")) {
       // Special id that means that the wanted area is the root.
       // This is because the Flutter app client doesn't know the
       // id of the root, differently from the simulator
+      //lastAreaVisited = rootArea;
       return rootArea;
     } else {
+
       Area aux = null;
+      //areaCurrent = lastAreaVisited;
       if (areaCurrent.getPartitionName().equals(areaId)) {
         aux = areaCurrent;
+        //lastAreaVisited = aux;
       } else{
         GetAreaListVisitor getAreaListVisitor=new GetAreaListVisitor();
         areaCurrent.accept(getAreaListVisitor);

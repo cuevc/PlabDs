@@ -1,14 +1,13 @@
 package base.no.states;
 
 import door.state.Actions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class DirectoryUsers {
   static Logger logger = LoggerFactory.getLogger("base.no.states.DirectoryUsers");
@@ -42,14 +41,11 @@ public final class DirectoryUsers {
     // week days 9-17h
     // just shortly unlock
     // ground floor, floor1, exterior, stairs (this, for all), that is, everywhere but the parking
-    Schedule employeesSchedule = new Schedule(LocalDate.of(2023, 9, 1),
-        LocalDate.of(2024, 3, 1), LocalTime.of(9, 0), LocalTime.of(21, 0),
-        new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
-            DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
+
 
     ArrayList<Area> employeeArea = new ArrayList<Area>();
 
-    FindPartitionByIdVistor findPartitionByIdVistor=new FindPartitionByIdVistor("ground_floor");
+    FindPartitionByIdVistor findPartitionByIdVistor = new FindPartitionByIdVistor("ground_floor");
     root.accept(findPartitionByIdVistor);
     employeeArea.add(findPartitionByIdVistor.getLooking());
 
@@ -65,6 +61,10 @@ public final class DirectoryUsers {
     root.accept(findPartitionByIdVistor);
     employeeArea.add(findPartitionByIdVistor.getLooking());
 
+    Schedule employeesSchedule = new Schedule(LocalDate.of(2023, 9, 1),
+        LocalDate.of(2024, 3, 1), LocalTime.of(9, 0), LocalTime.of(21, 0),
+        new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
+            DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)));
 
     Group employees = new Group("Employees", employeesSchedule,
         new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE,
@@ -80,10 +80,6 @@ public final class DirectoryUsers {
     // week days + saturday, 8-20h
     // all actions
     // all spaces
-    Schedule managersSchedule = new Schedule(LocalDate.of(2023, 9, 1),
-        LocalDate.of(2024, 3, 1), LocalTime.of(8, 0), LocalTime.of(20, 0),
-        new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
-            DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
 
     ArrayList<Area> managersAreas = new ArrayList<Area>();
 
@@ -102,6 +98,11 @@ public final class DirectoryUsers {
     findPartitionByIdVistor.setId("basement");
     root.accept(findPartitionByIdVistor);
     managersAreas.add(findPartitionByIdVistor.getLooking());
+
+    Schedule managersSchedule = new Schedule(LocalDate.of(2023, 9, 1),
+        LocalDate.of(2024, 3, 1), LocalTime.of(8, 0), LocalTime.of(20, 0),
+        new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
+            DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
 
     Group managers = new Group("Manager", managersSchedule,
         new ArrayList<>(Arrays.asList(Actions.OPEN, Actions.CLOSE, Actions.LOCK,
@@ -134,14 +135,15 @@ public final class DirectoryUsers {
 
     ArrayList<String> loggerNameGroups = new ArrayList<>();
     ArrayList<String> loggerNameUsers = new ArrayList<>();
-    for(Group g : rols){
+    for (Group g : rols) {
       loggerNameGroups.add(g.getTypeGroup());
-      for(User u : g.getUsers()){
+      for (User u : g.getUsers()) {
         loggerNameUsers.add(u.getName());
       }
     }
 
-    logger.debug("MakeUsers() => This groups were created: {} \n This users were added: {}", loggerNameGroups, loggerNameUsers );
+    logger.debug("MakeUsers() => This groups were created: {} \n This users were added: {}",
+        loggerNameGroups, loggerNameUsers);
     logger.info("All rols created and added to the rols attribute.");
     //logger.debug("");
   }
@@ -151,7 +153,8 @@ public final class DirectoryUsers {
 
     for (Group aux : rols) {
       if (aux.searchUser(credential) != null) {
-        logger.debug("findUserByCredential() -> The user with credential {} has been found", credential);
+        logger.debug("findUserByCredential() -> The user with credential {} has been found",
+            credential);
         return aux.searchUser(credential);
       }
     }

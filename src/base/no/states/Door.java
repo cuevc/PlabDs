@@ -132,7 +132,8 @@ public class Door {
       doAction(action);
     } else {
       //String reasonRequest = request.getReasons().get(0);
-      logger.info("This user is not authorized to this door: {} . The reason is: {}" , id, request.getReasons());
+      logger.info("This user is not authorized to this door: {} . The reason is: {}",
+          id, request.getReasons());
       //System.out.println("not authorized");
 
     }

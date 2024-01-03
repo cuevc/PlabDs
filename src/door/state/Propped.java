@@ -39,13 +39,14 @@ public class Propped extends DoorState {
   public void lock() {
     if (doorAttr.isClosed()) {
       doorAttr.setDoorState(new Locked(doorAttr));
-      logger.info("Door {} Locked." , this.doorAttr.getId());
-      logger.debug("lock() => Trying to Lock: Door{} Locked." , this.doorAttr.getId());
+      logger.info("Door {} Locked.", this.doorAttr.getId());
+      logger.debug("lock() => Trying to Lock: Door{} Locked.", this.doorAttr.getId());
       //System.out.println("Door Locked");
 
     } else {
       logger.info("Door {} isn't closed.", this.doorAttr.getId());
-      logger.debug("lock() -> Trying to Lock: Can't lock the door {} is it open", this.doorAttr.getId());
+      logger.debug("lock() -> Trying to Lock: Can't lock the door {} is it open",
+          this.doorAttr.getId());
       //logger.warn("lock() -> Trying to Lock: Door isn't closed. Can't lock the door.");
       //System.out.println("Door isn't closed");
     }
@@ -69,6 +70,7 @@ public class Propped extends DoorState {
   public void unlockedShortly() {
     //System.out.println("Door is Prooped");
     logger.info("Door {} is Propped.", this.doorAttr.getId());
-    logger.debug("unlockedShortly() -> Door {} is Propped, not unlock shortly until close.", this.doorAttr.getId());
+    logger.debug("unlockedShortly() -> Door {} is Propped, not unlock shortly "
+        + "until close.", this.doorAttr.getId());
   }
 }

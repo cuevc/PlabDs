@@ -19,7 +19,8 @@ public class UnlockedShortly extends DoorState implements Observer {
 
   public UnlockedShortly(Door door) {
     clock = Clock.getInstance();
-    logger.debug("Constructor UnlockedShortyl() => UnlockedShortly asked a Clock instance (getInstance()).");
+    logger.debug("Constructor UnlockedShortyl() => UnlockedShortly asked "
+        + "a Clock instance (getInstance()).");
     doorAttr = door;
     name = "unlocked_shortly";
 
@@ -89,7 +90,8 @@ public class UnlockedShortly extends DoorState implements Observer {
       lock();
 
     } else {
-      logger.debug("update() => Door {} has not been closed on time, so now it's propped", this.doorAttr.getId());
+      logger.debug("update() => Door {} has not been closed on time, "
+          + "so now it's propped", this.doorAttr.getId());
       //logger.warn("propped() -> Door {} is Propped.", this.doorAttr.getId());
 
       //if door is not closed after 10 sec, It will be propped

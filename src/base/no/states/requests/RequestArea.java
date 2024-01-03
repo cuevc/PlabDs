@@ -48,7 +48,7 @@ public class RequestArea implements Request {
   @Override
   public String toString() {
     String requestsDoorsStr;
-    if (requests.size() == 0) {
+    if (requests.isEmpty()) {
       requestsDoorsStr = "";
     } else {
       requestsDoorsStr = requests.toString();
@@ -67,7 +67,7 @@ public class RequestArea implements Request {
   // it won't be authorized and nothing will happen to them.
   public void process() {
     // commented out until Area, Space and Partition are implemented
-    DoorsGivingAccessVisitor visitorDoors=new DoorsGivingAccessVisitor();
+    DoorsGivingAccessVisitor visitorDoors = new DoorsGivingAccessVisitor();
 
     // make the door requests and put them into the area request to be authorized later and
     // processed later

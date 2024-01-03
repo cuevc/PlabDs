@@ -5,6 +5,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Space is the lowest level of the Composite between Area (abstract), Partition and Space.
@@ -39,7 +41,7 @@ public class Space extends Area {
   }
 
 
-  public ArrayList<Door> getDoors(){
+  public ArrayList<Door> getDoors() {
     return this.doorList;
   }
 

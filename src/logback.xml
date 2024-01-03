@@ -20,9 +20,9 @@
             <appender-ref ref = "STDOUT"/>
             <appender-ref ref = "FILE"/>
         </root>
-        <logger name="base.no.states" level="debug" /> <!--level = "OFF" para desactivar debug del html -->
-        <logger name="door.state" level="debug" /> <!--level = "OFF" para desactivar debug del html -->
-        <logger name="milestone2" level="debug" /> <!--level = "OFF" para desactivar debug del html -->
+        <logger name="base.no.states" level="info" /> <!--level = "OFF" para desactivar debug del html -->
+        <logger name="door.state" level="info" /> <!--level = "OFF" para desactivar debug del html -->
+        <logger name="milestone2" level="info" /> <!--level = "OFF" para desactivar debug del html -->
 
 </configuration>
 
