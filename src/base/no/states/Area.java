@@ -1,5 +1,7 @@
 package base.no.states;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -36,5 +38,7 @@ public abstract class Area {
   //protected abstract Area findPartitionById(String id, Area rootArea);
 
   public abstract void accept(Visitor v);
+
+  public abstract JSONObject toJson(int depth);
 
 }

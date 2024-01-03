@@ -22,26 +22,32 @@ public class DirectoryAreas {
   // =====================================================
 
   public static Area findAreaById(String areaId, Area areaCurrent) {
-    Area aux = null;
-
-    if (areaCurrent.getPartitionName().equals(areaId)) {
-      aux = areaCurrent;
-    } else{
-      GetAreaListVisitor getAreaListVisitor=new GetAreaListVisitor();
-      areaCurrent.accept(getAreaListVisitor);
-      if (getAreaListVisitor.getAreas() != null) {
-        for (Area actualArea : getAreaListVisitor.getAreas()) {
-          //General case: if reason is not empty and permissionConceded
-          // is false, means that area has not been found
-          if (aux == null) {
-            aux = findAreaById(areaId, actualArea);
-          } else {
-            break;
+    if (areaId.equals("ROOT")) {
+      // Special id that means that the wanted area is the root.
+      // This is because the Flutter app client doesn't know the
+      // id of the root, differently from the simulator
+      return rootArea;
+    } else {
+      Area aux = null;
+      if (areaCurrent.getPartitionName().equals(areaId)) {
+        aux = areaCurrent;
+      } else{
+        GetAreaListVisitor getAreaListVisitor=new GetAreaListVisitor();
+        areaCurrent.accept(getAreaListVisitor);
+        if (getAreaListVisitor.getAreas() != null) {
+          for (Area actualArea : getAreaListVisitor.getAreas()) {
+            //General case: if reason is not empty and permissionConceded
+            // is false, means that area has not been found
+            if (aux == null) {
+              aux = findAreaById(areaId, actualArea);
+            } else {
+              break;
+            }
           }
         }
       }
+      return aux;
     }
-    return aux;
   }
 
   public static void makeAreas() {
@@ -205,6 +211,7 @@ public class DirectoryAreas {
     logger.debug("makeAreas() => The areas were created: {}", loggerNamePartitions);
     logger.info("All Areas created successfully. Attribute rootArea created.");
   }
+
 
   // Find a determined Door by its Id. At this time we don't use the
   // method, but in the future may be useful, that's why we keep it.
