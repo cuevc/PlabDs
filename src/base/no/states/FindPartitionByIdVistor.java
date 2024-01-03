@@ -1,8 +1,13 @@
 package base.no.states;
 
-import static base.no.states.Partition.logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
+/**
+ * This class applies the Visitor pattern design.
+ * As its name explains, this visitor part is the referent to FindPartitionByID
+ */
 public class FindPartitionByIdVistor extends Visitor {
 
   private String id;

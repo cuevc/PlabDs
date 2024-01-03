@@ -7,11 +7,14 @@ import org.slf4j.LoggerFactory;
 
 public class GetAreaListVisitor extends Visitor {
 
-    ArrayList<Area> areas;
+  ArrayList<Area> areas;
+  static Logger logger =
+      LoggerFactory.getLogger("base.no.states.Visitor.GetAreaListVisitor");
 
-    public GetAreaListVisitor() {
-        this.areas = new ArrayList<>();
-    }
+  public GetAreaListVisitor() {
+    logger.debug("GetAreaListVisitor() => A new GetAreaListVisitor has been created");
+    this.areas = new ArrayList<>();
+  }
 
   @Override
   public void visitPartition(Partition partition) {

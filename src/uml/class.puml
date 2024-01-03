@@ -12,6 +12,42 @@ class User {
 + toString()
 }
 
+abstract class Visitor {
+    {abstract}+visitPartition(partition : Partition)
+    {abstract}+visitSpace(space: Space)
+
+
+}
+
+class FindPartitionByIdVisitor extends Visitor{
+- id : String
+- looking : Area 
++ FindPartitionByIdVisitor (id : String) 
++ DoorsGivingAccessVisitor()
++ visitPartition(partition : Partition)
++ visitSpace(space: Space)
++ getLooking() : Area
++ setId(id : String)
+}
+
+class DoorsGivingAccessVisitor extends Visitor{
+- recollectedDoors : ArrayList<Door>
++ DoorsGivingAccessVisitor()
++ visitPartition(partition : Partition)
++ visitSpace(space: Space)
++ getRecollectedDoors() : ArrayList<Door>
+
+}
+
+class GetAreaListVisitor extends Visitor{
+- areas: ArrayList<Area>
++ GetAreaListVisitor() 
++ visitPartition(partition : Partition)
++ visitSpace(space: Space)
++ getAreas() : ArrayList<Area>
+
+}
+
 
 
 class Group{
@@ -56,7 +92,7 @@ class Door{
     - doAction(action : String)
     + isClosed() : boolean
     + toString() : String
-    +toJson() : JSONObject
+    + toJson() : JSONObject
 }
 
 namespace doorState #DDDDDD{
@@ -138,6 +174,8 @@ abstract Area{
     {abstract}+getDoorsGivingAcces(): ArrayList<Door>
     {abstract}+getPartitionName() : String
     {abstract}+setFather(Area father)
+    {abstract}+accept(Visitpr : v)
+
 }
 
 class Partition extends Area{
@@ -148,15 +186,17 @@ class Partition extends Area{
     + Partition(part_naeme : String, areas : ArrayList<Area>, fatherNode : Area)
     + getDoorsGivingAcces() : ArrayList<Door>
     + findPartitionById(id:String, rootArea:Area): Area
+    + accept(Visitpr : v)
+
 }
 
  class Space Extends Area{
     - doorList : ArrayList<Door>
     - spaceName : String
     - partFather : Area
-    + Space(mySpaceName: String, doors : List<Door> , partitionFather <Partition>)
-    + findPartitionById(id:String, rootArea:Area): Area
-    + getDoorsGivingAcces() : ArrayList<Door>
+    + addArea(Area : a)
+    + accept(Visitpr : v)
+
 }
 
 
@@ -206,5 +246,3 @@ UnlockedShortly ..Up.> Observer
 
 
 @enduml
-
-//manito no se hacer un commit

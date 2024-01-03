@@ -16,6 +16,9 @@ public class Space extends Area {
   private ArrayList<Door> doorList; // List of Doors in this instance of Space.
   private String spaceName; // The name of this Space
   private Area partFather;  // It's Father (it's a Partition)
+  static Logger logger =
+      LoggerFactory.getLogger("door.state.DoorState.Space");
+
 
   public Space(String mySpaceName, List<Door> doors, Partition partitionFather) {
     spaceName = mySpaceName;
@@ -51,6 +54,7 @@ public class Space extends Area {
 
   @Override
   public void accept(Visitor v) {
+    logger.debug("This space {} has accept a visitor", this.spaceName);
     v.visitSpace(this);
   }
 

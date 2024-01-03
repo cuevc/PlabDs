@@ -13,9 +13,11 @@ public class DoorsGivingAccessVisitor extends Visitor {
   static Logger logger =
         LoggerFactory.getLogger("base.no.states.Visitor.DoorsGivingAccessVisitor");
 
-    public DoorsGivingAccessVisitor() {
-        this.recollectedDoors = new ArrayList<>();
-    }
+  public DoorsGivingAccessVisitor() {
+    logger.debug(" DoorsGivingAccessVisitor() => A new DoorsGivingAccessVisitor"
+        + " has been created");
+    this.recollectedDoors = new ArrayList<>();
+  }
 
   @Override
   public void visitPartition(Partition partition) {

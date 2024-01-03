@@ -58,6 +58,7 @@ public class Partition extends Area {
   @Override
   public void accept(Visitor v) {
     v.visitPartition(this);
+    logger.debug("This partition {} has accept a visitor", this.partitionName);
   }
 
 
